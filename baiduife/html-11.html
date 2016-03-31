@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html11</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/meyer-reset/2.0/reset.min.css">-->
+    <style>
+        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+
+        html{background: #dedede;}
+        body{max-width: 768px;margin: 0 auto}
+        #head{height:.36rem;background: #91d4da;position: relative}
+        #head span{height:.18rem;width:.5rem;position: absolute;font-size: .14rem;color: #fff;display: block;background: url(img/left.png) no-repeat 0 center ;left:0;top:.1rem;line-height: .18rem;padding-left:.22rem;}
+        #head h1{font-size: .14rem;color: #fff;text-align: center;line-height:.36rem}
+        nav ul{display: flex;display: -webkit-flex; flex-flow: row wrap;justify-content:space-between;background: #fff;}
+        nav ul li{text-align: center;width:20%;;height:.34rem;line-height:.34rem;font-size: .14rem}
+        nav ul .active{border-bottom:3px solid #78d1da;}
+        #bannar img{width:100%;}
+        #tag{display: flex;display: -webkit-flex; flex-flow: row wrap;justify-content:space-between;background: #fff}
+        #tag li{text-align: center;width:12.5%;height:.28rem;background: url(img/list_bg.png) no-repeat center .14rem;background-size: 100%;padding-top:.66rem;font-size: .14rem}
+        #fenlei{display: flex;display: -webkit-flex; justify-content:space-between;border-top:2px solid #eee;padding:.1em 0;background: #fff}
+        #fenlei li{width:30%;text-align: center;border-left: 1px solid #e7e7e7}
+        #fenlei li:first-child{border-left:none}
+        #fenlei img{width:100%}
+        #fenlei  h2{font-weight: 600;font-size: .16rem}
+        #fenlei  h3{font-size: .12rem}
+       /*模块一*/
+        .model{margin-top:.1rem;background: #fff;padding:0 0.1rem .08rem;}
+        .model h2{height:.38rem;line-height: .38rem;font-size: .16rem}
+        .model .model_div{padding-top: .02rem;clear: both;height:.74rem}
+        .model .model_div img{display: inline-block;width:25%;border: 2px solid #f0c757;height:.7rem;vertical-align: top}
+        /*.model .model_div .model_img img{ width:100%;}*/
+        .model .model_div ul{float:right;width:73.333%;font-size: .12rem}
+        .model .model_div li{display: inline-block;width:44%;height:.32rem;margin:0 0 .08rem   .07rem;background: #f8f8f8;line-height: .32rem;text-align: center}
+
+        .model3{padding:.08rem .1rem;background: #fff;margin-top:.1rem }
+        .model3 li{clear: both;display: block;height:.64rem;margin-top: .1rem}
+        .model3 li:nth-of-type(1){margin-top: 0}
+        .model3 img{width:30.6%;margin-right:.1rem;float:left}
+        .model3 h3{font-size: .14rem;width:92.6%;}
+        .model3 p{font-size: .12rem;margin-top: .22rem;color: #dcdcdc;}
+        .model4{background: #fff;padding:0 .1rem;margin: .01rem 0 .42rem;}
+        .model4 h3{font-size: .14rem;height:.32rem;line-height: .32rem}
+        .model4 p{font-size: .12rem;color: #dcdcdc;height:.26rem;line-height: .26rem}
+        .model4 div{display: flex;display: -webkit-flex; flex-flow: row wrap;justify-content:space-between;}
+        .model4 div img{width:33%;}
+    </style>
+</head>
+<body>
+<script>
+
+    function setFontSize(){
+        document.documentElement.style.fontSize = document.body.clientWidth* (100/320) + 'px';
+    }
+    setFontSize();
+    window.onresize =setFontSize;
+</script>
+<div id="head">
+    <span>返回</span>
+    <h1>这是标题</h1>
+</div>
+
+<nav>
+    <ul>
+        <li>导航</li>
+        <li>导航</li>
+        <li class="active">导航</li>
+        <li>导航</li>
+        <li>导航</li>
+    </ul>
+</nav>
+<div id="bannar">
+    <img src="img/bear.png" alt="">
+</div>
+<ul id="tag">
+    <li>标签</li>
+    <li>标签</li>
+    <li>标签</li>
+    <li>标签</li>
+    <li>标签</li>
+</ul>
+<ul id="fenlei">
+    <li>
+        <img src="img/sub-2.png" alt="">
+        <h2>分类一</h2>
+        <h3>分类小标题</h3>
+    </li>
+    <li>
+        <img src="img/sub-2.png" alt="">
+        <h2>分类一</h2>
+        <h3>分类小标题</h3>
+    </li>
+    <li>
+        <img src="img/sub-2.png" alt="">
+        <h2>分类一</h2>
+        <h3>分类小标题</h3>
+    </li>
+</ul>
+<section class="model">
+    <h2>模块一</h2>
+    <div class="model_div">
+            <img src="img/mod.png" alt="">
+        <ul>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+        </ul>
+    </div>
+    <div class="model_div">
+            <img src="img/mod.png" alt="">
+        <ul>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+        </ul>
+    </div>
+
+</section>
+<section class="model">
+    <h2>模块二</h2>
+    <div class="model_div">
+        <img src="img/mod.png" alt="">
+        <ul>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+        </ul>
+    </div>
+    <div class="model_div">
+        <img src="img/mod.png" alt="">
+        <ul>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+            <li>这是文案</li>
+        </ul>
+    </div>
+</section>
+<ul class="model3">
+   <li>
+       <img src="img/article.png" alt="">
+       <h3>这是文章标题自豪是22的文章标题</h3>
+        <p>文章来源 <span>6分钟之前</span></p>
+   </li>
+    <li>
+        <img src="img/article.png" alt="">
+        <h3>这是文章标撒打发撒打发22字体</h3>
+        <p>文章来源 <span>6分钟之前</span></p>
+    </li>
+</ul>
+
+<div class="model4">
+    <h3>这是文章标题自豪是22的文章标题</h3>
+    <div>
+        <img src="img/article.png" alt="">
+        <img src="img/article.png" alt="">
+        <img src="img/article.png" alt="">
+    </div>
+    <p>文章来源 <span>6分钟之前</span></p>
+</div>
+</body>
+</html>
