@@ -77,14 +77,14 @@ getByid("rand").onclick =function(){
 var rand = {};
 rand.get = function (begin,end){
     return Math.floor(Math.random()*(end-begin))+begin;
-}
+};
 
 //增加排序事件
 
 getByid("paixu").onclick =function (){
     insertSort(data);
     console.log(data);
-}
+};
 
 //paixu
 var timer = null;
@@ -96,10 +96,9 @@ function insertSort (arr) {
     }
 
 var oLi = getByid("ul1").getElementsByTagName("li");
-   var i=0
+   var i=0;
    timer =  setInterval(function(){
        var tmp = arr[i];
-       oLi[i].style.backgroundColor="black";
        for (var j = i; j > 0 && arr[j - 1] > tmp; j--) {
            arr[j] = arr[j - 1];
            oLi[j].style.height =  arr[j - 1]+"px";
@@ -109,12 +108,7 @@ var oLi = getByid("ul1").getElementsByTagName("li");
        oLi[j].style.height =  tmp+"px";
        oLi[j].style.backgroundColor="blue";
        i++;
-    },100)
-    if(i>= len){clearInterval(timer)}
-}
+       if(i>= len){clearInterval(timer)}
+    },100);
 
-function sleep(n)
-{
-    var  start=new Date().getTime();
-    while(true) if(new Date().getTime()-start>n)  break;
 }
