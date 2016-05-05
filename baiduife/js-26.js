@@ -10,21 +10,32 @@
 //
 //adultTv .trigger(  'play',  { 'name': '麻生希' }  );
 
-var plan = {};
-function plan() {
+function plan(json) {
     //飞船有两个状态：飞行中和停止
     //能源耗尽时，飞船会自动停止飞行
-
+    this.id = json.id;
+    this.commond = json.commond;
+    _that = this;
 }
 
 //zhuangtai
 plan.prototype.state = function () {
-    this.energy = 100 %
-        setInterval(200, funciton()
+    var i = 0, timer, energy;
+    this.timer = setInterval(200, function ()
     {
-
+        this.energy = 100 - i * 2;
+        if (this.energy <= 0) {
+            clearInterval(this.timer)
+        }
+        $(".circle" + _that.id).css({"width": this.energy + "%"});
+        $(".circle" + _that.id).html(this.energy);
     }
+
     )
 }
 
-var plan1 = new plan({id: 1, con});
+var plan1 = new plan({
+        id: 1,
+        commond: 'stop'
+    }
+);
