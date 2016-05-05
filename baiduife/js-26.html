@@ -9,34 +9,102 @@
             margin: 0
         }
 
-        #ul1 {
+        body {
+            padding-top: 200px;
         }
 
-        li {
-            list-style: none;
+        .circular {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: blue;
+            margin: 0 auto;
+        }
+
+        div.circle {
             height: 50px;
-            background: red;
-            float: left;
-            margin: 10px;
-            font-size: 12px;
-            color: white;
-            line-height: 50px;
-            text-align: center
+            width: 10px;
+            /* border-radius: 25px; */
+            background-color: red;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -25px;
+            margin-left: -70px;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            transform-origin: 70px;
+            animation-name: circle;
         }
 
-        button {
-            border: 1px solid #eee;
+        div.circle1 {
+            margin-left: -80px;
+            transform-origin: 80px;
         }
+
+        div.circle2 {
+            margin-left: -60px;
+            transform-origin: 60px;
+            animation-delay: .5s;
+        }
+
+        div.circle3 {
+            margin-left: -100px;
+            transform-origin: 100px;
+            animation-delay: 1.5s;
+        }
+
+        div.circle4 {
+            margin-left: -120px;
+            transform-origin: 120px;
+            animation-delay: 2s;
+        }
+
+        #bg {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: blue;
+            margin-top: -50px;
+            margin-left: -50px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+
+        @keyframes circle {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .inner {
+            width: 100%;
+            background: black;
+        }
+
     </style>
 </head>
 <body>
-<input type="text" id="tag" value="shurutag">
-<textarea id="text" style="width:300px;height:100px;">
-阿斯顿发  阿斯顿发  撒打发 ,撒打发 _阿斯顿发  阿斯顿发
-</textarea>
-<button id="Add">左侧入</button>
-<ul id="ul1"></ul>
-<ul id="ul2"></ul>
+
+<div id="bg"></div>
+<div class="circle circle1">
+    <div class="inner" style="height:50%;"></div>
+</div>
+<div class="circle circle2">
+    <div class="inner" style="height:30%;"></div>
+</div>
+<div class="circle circle3">
+    <div class="inner" style="height:100%;"></div>
+</div>
+<div class="circle circle4">
+    <div class="inner" style="height:5%;"></div>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="js-26.js"></script>
 </body>
 </html>
