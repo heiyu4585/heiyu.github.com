@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <style>
         * {
             padding: 0;
             margin: 0
         }
 
+        #Commander ul {
+            width: 300px;
+            height: 30px;
+            display: table-cell;
+            background: #eee;
+        }
+
+        li {
+            float: left;
+            list-style: none;
+            padding: 10px;
+        }
+
         body {
-            padding-top: 200px;
+            padding-top: 100px;
         }
 
         .circular {
@@ -22,15 +36,15 @@
         }
 
         div.circle {
-            height: 50px;
-            width: 10px;
+            height: 100px;
+            width: 20px;
             /* border-radius: 25px; */
             background-color: red;
             position: absolute;
             left: 50%;
             top: 50%;
-            margin-top: -25px;
-            margin-left: -70px;
+            margin-top: -50px;
+            margin-left: -140px;
             animation-duration: 4s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
@@ -38,36 +52,40 @@
             animation-name: circle;
         }
 
-        div.circle1 {
-            margin-left: -80px;
-            transform-origin: 80px;
+        div.circle2 {
+            margin-left: -160px;
+            transform-origin: 160px;
+            animation-play-state: paused;
         }
 
-        div.circle2 {
-            margin-left: -60px;
-            transform-origin: 60px;
-            animation-delay: .5s;
+        div.circle1 {
+            margin-left: -120px;
+            transform-origin: 120px;
+            /*animation-delay: .5s;*/
+            animation-play-state: paused;
         }
 
         div.circle3 {
-            margin-left: -100px;
-            transform-origin: 100px;
-            animation-delay: 1.5s;
+            margin-left: -200px;
+            transform-origin: 200px;
+            /*animation-delay: 1.5s;*/
+            animation-play-state: paused;
         }
 
         div.circle4 {
-            margin-left: -120px;
-            transform-origin: 120px;
-            animation-delay: 2s;
+            margin-left: -240px;
+            transform-origin: 240px;
+            /*animation-delay: 2s;*/
+            animation-play-state: paused;
         }
 
         #bg {
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background-color: blue;
-            margin-top: -50px;
-            margin-left: -50px;
+            margin-top: -100px;
+            margin-left: -100px;
             position: absolute;
             left: 50%;
             top: 50%;
@@ -85,26 +103,282 @@
         .inner {
             width: 100%;
             background: black;
+            font-size: 10px;
+            color: white;
         }
 
+        p, span {
+            padding: 10px;
+        }
+
+        #console {
+            background: #eee;
+            color: #0000FF;
+            position: absolute;
+            bottom: 0;
+            width: 40%;
+            height: 200px;
+            overflow: scroll;
+            overflow-scrolling: auto;
+            font-size: 10px;
+        }
+
+        #console p {
+            padding: 0;
+            font-size: 10px;
+        }
     </style>
 </head>
 <body>
+<div id="plan">
+    <div id="bg"></div>
+</div>
+<div id="Commander">
+    <p data-commond="create" id="create">
+        新建飞机
+    </p>
+</div>
 
-<div id="bg"></div>
-<div class="circle circle1">
-    <div class="inner" style="height:50%;"></div>
+<div id="console">
+    <h2>上帝视角</h2>
+
+    <div id="content">
+        <p></p>
+    </div>
 </div>
-<div class="circle circle2">
-    <div class="inner" style="height:30%;"></div>
-</div>
-<div class="circle circle3">
-    <div class="inner" style="height:100%;"></div>
-</div>
-<div class="circle circle4">
-    <div class="inner" style="height:5%;"></div>
-</div>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="js-26.js"></script>
+<script>
+    /**
+     * Created by wangning on 2016/5/6.
+     */
+    var mediator = (function () {
+        if (Math.random() <= 0.3) {
+            $("#content").append("<p>丢包,未发送成功!</p>");
+        } else {
+            return {
+                clientList: [],
+                // 增加订阅者
+                listen: function (ship) {
+                    this.clientList.push(ship);
+                },
+                // 发布通知
+                trigger: function (messJson) {
+//                    console.log(mediator.clientList);
+                    if (Math.random() <= 0.3) {
+                        $("#content").append (messJson.commond + "命令丢失!<br>");
+                    } else {
+                        for (var i = 0, ship; ship = mediator.clientList[i++];) {
+                            ship.acceptSystem(messJson);
+                        }
+                    }
+
+                    // 控制台操作不受丢包率影响
+                    if (messJson.commond == "start") {
+                        ConsolePanel.start(messJson);
+                    } else if (messJson.commond == "stop") {
+                        ConsolePanel.stop(messJson);
+                    } else if (messJson.commond == "destroy") {
+                        Commander.mediator.remove(messJson.id); // 取消订阅
+                        ConsolePanel.destory(messJson.id);           // 处理控制台
+                        Commander.info[messJson.id] = "destroy";        //修改指挥官日志
+                    }
+                },
+                remove: function (id) {
+                    for (var l = this.clientList.length - 1; l >= 0; l--) {
+                        var _ship = this.clientList[l];
+                        if (_ship.id == id) {
+                            this.clientList.splice(l, 1); //取消订阅者
+                        }
+                    }
+                }
+            };
+        }
+    })();
+    // * 指挥官并不知道自己的指令是不是真的传给了飞船，飞船的状态他是不知道的，他只能通过自己之前的操作来假设飞船当前的状态
+    //* 每个飞船通过信号接收器，接受到通过Mediator传达过来的指挥官的广播信号，但因为是广播信号，所以每个飞船能接受到指挥官发出给所有飞船的所有指令，因此需要通过读取信息判断这个指令是不是发给自己的
+
+    //指挥官  { id: 1, commond: 'stop' }
+    var Commander = {
+        //记录当前各个飞机的状态.destroy 代表销毁      // 默认最多四个
+        info: {1: "destroy", 2: "destroy", 3: "destroy", 4: "destroy"},
+        //当前命令
+        nowOrder: {},
+        mediator: mediator,
+        //创建一个新的飞船进入轨道，默认最多可以创建4个飞船，刚被创建的飞船会停留在某一个轨道上静止不动
+        //命令某个飞船开始飞行，飞行后飞船会围绕行星做环绕运动，需要模拟出这个动画效果,命令某个飞船停止飞行
+        //命令某个飞船销毁，销毁后飞船消失、飞船标示可以用于下次新创建的飞船,代表对应的元素为空
+
+        create: function () {
+            var $content = $("#content");
+            for (x in Commander.info) {
+//                debugger;
+                if (Commander.info[x] == "destroy") {
+                    Commander.info[x] = "stop";
+//                    console.log(Commander.info);
+                    var domNode = '<div id="plan' + x + 'Cortol"><p>对' + x + '号操作<span data-id="' + x + '" data-commond="start">开始</span><i data-id="' + x + '" data-commond="destroy">删除</i> </p>';
+                    $("#Commander").append(domNode).find("span").on("click", Commander.sendMess.startStop);
+                    $("i").on("click", Commander.sendMess.startStop);
+
+                    //模拟,新建飞船的丢包率
+                    if (Math.random() <= 0.3) {
+                        $content.append("当前指挥官日志为<br>" + console.log(Commander.info));
+                        return "增加飞船命令丢失!";
+
+                    } else {
+                        this.plan = new PlanShip(x);
+                        Commander.mediator.listen(this.plan);
+                        $("#plan").append('<div class="circle circle' + x + '"><div class="inner" style="height:100%;"></div></div>');
+                        return ("新建飞机id为" + x);
+                        //zhiwei 职位输出日志
+                        var str = "";
+                        for (x in Commander.info) {
+                            str += Commander.info[x] + "-";
+                        }
+                        $content.append("当前指挥官日志为<br>" + str);
+                        //end 输出日志
+
+                    }
+
+                }
+            }
+            $content.append("飞船数量已达上限4!<br>");
+            $("#create").off();
+        },
+        sendMess: {
+            startStop: function () {
+//                console.log(Commander.clientList);
+//                console.log(typeof Commander.mediator);
+//                console.log(this.dataset);
+                if (typeof Commander.mediator == "object") {
+                    Commander.mediator.trigger(this.dataset);
+                }
+            },
+            create: function () {
+                $("#content").append("<p>" + Commander.create() + "</p>");
+            }
+        }
+    };
+
+
+    //控制台,
+    var ConsolePanel = {
+        start: function (dataset) {
+            //   * Mediator是单向传播的，只能从行星发射到宇宙中(通过闭包模拟??)，在发射过程中，有30%的信息传送失败（丢包）概率，你需要模拟这个丢包率，另外每次信息正常传送的时间需要1秒
+            $("span").eq(dataset.id - 1).html("停止").attr("data-commond", "stop");
+        },
+        stop: function (dataset) {
+            $("span").eq(dataset.id - 1).html("开始").attr("data-commond", "start");
+        },
+        destory: function (id) {
+            $("#plan" + id + "Cortol").remove(); //移除操作台对应的按钮
+        }
+
+    };
+
+
+    function PlanShip(id, speed) {
+        this.id = id;
+        this.speed = speed || 20;
+        this.energy = 100;
+        // * 飞船有两个状态：飞行中和停止，飞船的行为会改变这个属性状态
+        this.state = "stop";
+    }
+    PlanShip.prototype = {
+        constructor: PlanShip,
+
+        //信号接收处理系统，用于接收行星上的信号
+        acceptSystem: function (messJson) {
+            if (messJson.commond == "destroy") {
+                this.destroySystem(messJson.id);
+            } else {
+                this.powerSystem(messJson)
+            }
+        },
+        //摧毁系统
+        destroySystem: function (messJsonId) {
+            if (this.id == messJsonId) {
+                $(".circle" + messJsonId).remove();
+                $("#content").append(messJsonId + "号飞机已被摧毁<br>")
+            }
+
+        },
+        //动力系统，可以完成飞行和停止飞行两个行为，暂定所有飞船的动力系统飞行速度是一致的，比如每秒20px，飞行过程中会按照一定速率消耗能源（比如每秒减5%）
+        powerSystem: function (messJson) {
+            //每个飞船的能源是有限的，用一个属性来表示能源剩余量，这是一个百分比，表示还剩余多少能源。能源耗尽时，飞船会自动停止飞行
+//            console.log(messJson);
+//            console.log(this.id);
+            if (this.id == messJson.id) {
+                if (messJson.commond == "start") {
+                    $("#content").append(messJson.id + "号飞船接受start名称成功!<br>");
+                    $(".circle" + messJson.id).css({"animation-play-state": "running"});
+                    this.energySystem(messJson.id, "start");   //当前命令
+                } else {
+                    $("#content").append(messJson.id + "号飞船接受stop名称成功!<br>");
+                    $(".circle" + messJson.id).css({"animation-play-state": "paused"});
+//                    this.state = "stop";
+                    this.energySystem(messJson.id, "stop");
+                }
+            }
+        },
+        //能源系统，提供能源，并且在宇宙中通过太阳能充电（比如每秒增加2%，具体速率自定）
+        energySystem: function (id, commond) {
+            var _this = this;
+            _this.id = id;   //不设置_this.id可能会出现,点击第二个飞机时,互相影响.
+//            min命令为start时执行的函数
+            this.commondStart = function () {
+                if (_this.state == "start") {
+                    _this.move();
+                    if (_this.energy <= 0) {
+                        _this.state = "stop";
+                        _this.stop();
+                    }
+                } else if (_this.state = "stop") {
+                    if (_this.energy >= 100) {
+                        _this.state = "start";
+                        _this.move();
+//                            clearInterval(_this.timer);
+                    } else {
+                        _this.stop();
+                    }
+                }
+            };
+//            命令为stop时执行的函数
+            this.commondStop = function () {
+                _this.stop();
+                if (_this.energy >= 100) {
+                    clearInterval(_this.timer);
+                }
+            };
+            this.move = function () {
+                $(".circle" + _this.id).css({"animation-play-state": "running"});
+                _this.speed = -10;
+                _this.energy += _this.speed;
+                $(".circle" + _this.id + " .inner").css({"height": _this.energy + "%"}).html(_this.energy + "%");
+            };
+            this.stop = function () {
+                $(".circle" + _this.id).css({"animation-play-state": "paused"});
+                _this.speed = 10;
+                _this.energy += _this.speed;
+                _this.energy >= 100 && (_this.energy = 100);
+                $(".circle" + _this.id + " .inner").css({"height": _this.energy + "%"}).html(_this.energy + "%");
+            };
+            this.init = function () {
+                clearInterval(this.timer);
+                if (commond == "start") {
+                    this.commondStart();
+                    this.timer = setInterval(this.commondStart, 1000);
+                } else if (commond == "stop") {
+                    this.commondStop();
+                    this.timer = setInterval(this.commondStop, 1000);
+                }
+            };
+            this.init();
+        }
+    };
+
+
+    $("#create").on("click", function () {
+        Commander.sendMess.create()
+    }); //为新建飞船绑定事件
+</script>
 </body>
 </html>
