@@ -220,22 +220,17 @@
 
                     //模拟,新建飞船的丢包率
                     if (Math.random() <= 0.3) {
-                        $content.append("当前指挥官日志为<br>" + console.log(Commander.info));
+                       console.log("当前指挥官日志为");
+                       console.log(Commander.info);
                         return "增加飞船命令丢失!";
 
                     } else {
                         this.plan = new PlanShip(x);
                         Commander.mediator.listen(this.plan);
                         $("#plan").append('<div class="circle circle' + x + '"><div class="inner" style="height:100%;"></div></div>');
+                        console.log("当前指挥官日志为");
+                        console.log(Commander.info);
                         return ("新建飞机id为" + x);
-                        //zhiwei 职位输出日志
-                        var str = "";
-                        for (x in Commander.info) {
-                            str += Commander.info[x] + "-";
-                        }
-                        $content.append("当前指挥官日志为<br>" + str);
-                        //end 输出日志
-
                     }
 
                 }
