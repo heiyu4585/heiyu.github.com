@@ -124,6 +124,9 @@
             padding: 0;
             font-size: 10px;
         }
+        #content p:first-child{
+            background: #4a90e2;
+        }
     </style>
 </head>
 <body>
@@ -133,15 +136,15 @@
 <div id="Commander">
     <ul>
         <li>动力系统选择:</li>
-        <li><input type="radio" checked="checked" name="speed" value=2 />前进</li>
-        <li><input type="radio" checked="checked" name="speed" value=5 />奔腾</li>
-        <li><input type="radio" checked="checked" name="speed" value=25 />超越</li>
+        <li><input type="radio" checked="checked" name="speed" value="one"/>前进</li>
+        <li><input type="radio" checked="checked" name="speed" value="two" />奔腾</li>
+        <li><input type="radio" checked="checked" name="speed" value="three" />超越</li>
     </ul>
     <ul>
         <li>能源系统选择</li>
-        <li><input type="radio" checked="checked" name="energy" value="2" />尽量性</li>
-        <li><input type="radio" checked="checked" name="energy" value="6" />光能</li>
-        <li><input type="radio" checked="checked" name="energy" value=25 />永久</li>
+        <li><input type="radio" checked="checked" name="energy" value="one" />尽量性</li>
+        <li><input type="radio" checked="checked" name="energy" value="two" />光能</li>
+        <li><input type="radio" checked="checked" name="energy" value="three" />永久</li>
     </ul>
     <input type="button" data-commond="create" id="create" value="  新建飞机"/>
 </div>
@@ -259,6 +262,8 @@
     //中介
     var mediator ={
         spaceships:[],
+        delayTime:300,
+        failureRate:0.1,//失败率
         // 增加飞机
         register: function (options) {
             var planId = options.id;
@@ -274,44 +279,92 @@
         },
         // 接受信息,并广播信息
         sendMsg: function (messJson) {
-            if (Math.random() <= 0.3) {
-                //上帝视角输出
-                ConsolePanel.update({
-                    id:messJson.id,
-                    commond:"发送>"+messJson.commond,
-                    result:"丢包"
-                })
-            } else {
-                switch (messJson.commond){
-                    case "creat":  //新增飞机命令
-                        this.register(messJson);
-                        break;
-                    case "destroy":    //取消订阅
-                        this.remove(messJson.id);
-                    case "stop":
-                    case "start":
-                        var isHasplan = false; //是否有对应的飞机
-                        for (var i = 0;i<this.spaceships.length;i++) {
-                            //广播命令
-                            this.spaceships[i].acceptSystem(messJson);
-                            this.spaceships[i].id == messJson.id && (isHasplan = true);
-                        }
-                        !isHasplan &&                     //上帝视角输出
-                        ConsolePanel.update({
-                            id:messJson.id,
-                            commond:"发送>"+messJson.commond,
-                            result:"没有对应的飞机!"
-                        });
-                        break;
-                    default:
-                        ConsolePanel.update({
-                            id:messJson.id,
-                            commond:"发送>"+messJson.commond,
-                            result:"执行失败!"
-                        });
-                        return false;
+            setTimeout(()=>{
+                if (Math.random() <= this.failureRate) {
+                    //判断是否转换完成
+                    messJson = typeof messJson === "object"?messJson:this.Adapter(messJson);
+                    //上帝视角输出
+                    ConsolePanel.update({
+                        id:messJson.id,
+                        commond:"发送>"+messJson.commond,
+                        result:"丢包,3s后将再次发送!"
+                    });
+                    setTimeout(mediator.sendMsg(messJson),3000)
+                } else {
+                    //判断是否转换完成
+                    messJson = typeof messJson === "object"?messJson:this.Adapter(messJson);
+                    switch (messJson.commond){
+                        case "creat":  //新增飞机命令
+                            this.register(messJson);
+                            break;
+                        case "destroy":    //取消订阅
+                            this.remove(messJson.id);
+                        case "stop":
+                        case "start":
+                            var isHasplan = false; //是否有对应的飞机
+                            for (var i = 0;i<this.spaceships.length;i++) {
+                                //广播命令
+                                this.spaceships[i].acceptSystem(messJson); //发送信号
+                                this.spaceships[i].id == messJson.id && (isHasplan = true);
+                            }
+                            !isHasplan &&                     //上帝视角输出
+                            ConsolePanel.update({
+                                id:messJson.id,
+                                commond:"发送>"+messJson.commond,
+                                result:"没有对应的飞机!"
+                            });
+                            break;
+                        default:
+                            ConsolePanel.update({
+                                id:messJson.id,
+                                commond:"发送>"+messJson.commond,
+                                result:"执行失败!"
+                            });
+                            return false;
+                    }
                 }
-            }
+            },this.delayTime);
+
+        },
+        /**
+         * （0001：开始飞行，0010：停止飞行，0011:创建飞机,1100：自我销毁）
+         * //动力系统
+         * （0001：前进，0010：奔腾，0011：超越）
+         * //能源系统
+         * （0001：尽量，0010：光能，0011：永久）
+         * 前四位: 命令
+         * 4位   : 速度
+         * 4位   : 能源
+         * 剩余  :  id
+         * */
+        Adapter:function(messJson){
+            var configJson = {
+                commond:{
+                   "0001": "start",//1
+                    "0010":"stop",//2
+                    "0011":"creat",//3
+                    "0100":"destroy"//4
+                },
+                speed:{
+                    "0001":1,//1
+                    "0010":8,//2
+                    "0011":25,//3
+                    "0100":33//4
+                },
+                energy:{
+                    "0001":1,//1
+                    "0010":8,//2
+                    "0011":25,//3
+                    "0100":33//4
+                }
+            };
+            messJson = {
+                commond: configJson.commond[messJson.substring(0,4)],
+                speed:configJson.speed[messJson.substring(4,8)],
+                energy:configJson.energy[messJson.substring(8,12)],
+                id:parseInt( messJson.substring(12),2)
+            };
+            return messJson;
         },
         remove: function (id) {
             //取消订阅
@@ -332,7 +385,7 @@
         element: document.getElementById('console'),
         // 更新分数显示
         update: function (msg) {
-            $(this.element).append("命令为("+msg.commond +"),针对\<"+msg.id+"\>号飞机,执行结果为\<"+msg.result+"\><br>");
+            $(this.element).find("#content").prepend("<p>命令为("+msg.commond +"),针对\<"+msg.id+"\>号飞机,执行结果为\<"+msg.result+"\></p>");
         }
     };
     //指挥者
@@ -356,11 +409,11 @@
             });
             //在指挥者菜单内增加 控制按钮// 操作控制台
             var domNode = '<div id="plan' + planId + 'Cortol"><p>对' + planId + '号操作<button data-id="' + planId + '" data-commond="start">开始</button><button data-id="' + planId + '" data-commond="stop">停止</button><button data-id="' + planId+ '" data-commond="destroy">删除</button> </p>';
-            $("#Commander").append(domNode).find("button").on("click",function(){
+            $("#Commander").append(domNode).find("button[data-id="+planId+"]").on("click",function(){
                 //发送命令
                 Commander.sendMess({
-                    id:planId,
-                    commond:$(this).data("commond")
+                    id:$(this).data("id"),
+                    commond:$(this).data("commond"),
                 });
             });
             Commander.sendMess({
@@ -376,7 +429,44 @@
         },
         //通过中介发布信息
         sendMess: function (data) {
+            var data = this.Adapter(data);
             mediator.sendMsg(data);
+        },
+        /**
+         * （0001：开始飞行，0010：停止飞行，0011:创建飞机,1100：自我销毁）
+         * //动力系统
+         * （0001：前进，0010：奔腾，0011：超越）
+         * //能源系统
+         * （0001：尽量，0010：光能，0011：永久）
+         * */
+        Adapter:function (data) { //编译为二进制
+            var configJson = {
+                commond:{
+                    "start":"0001",//1
+                    "stop":"0010",//2
+                    "creat":"0011",//3
+                    "destroy":"0100"//4
+                },
+                speed:{
+                    "one":"0001",//1
+                    "two":"0010",//2
+                    "three":"0011",//3
+                    "four":"0100"//4
+                },
+                energy:{
+                    "one":"0001",//1
+                    "two":"0010",//2
+                    "three":"0011",//3
+                    "four":"0100"//4
+                }
+            };
+    //前四位 命令
+            //4位: 速度
+            //4位:能源
+            //剩余 :id
+
+           var data = configJson.commond[data.commond]+ (data.speed ? configJson.speed[data.speed]:"0000")+ (data.energy ?　configJson.energy[data.energy]:"0000")+data.id.toString(2);
+            return data;
         },
         init:function(){
             $("#create").on("click", function () {
