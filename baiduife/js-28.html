@@ -9,7 +9,9 @@
             padding: 0;
             margin: 0
         }
-
+        #Commander{
+            width:50%;
+        }
         #Commander ul {
             height:40px;
         }
@@ -127,6 +129,25 @@
         #content p:first-child{
             background: #4a90e2;
         }
+        #DC{
+            width:60%;
+            position: absolute;
+            right:0;
+            top:0;
+        }
+        #DC ul{
+            height:30px;
+            width:100%;
+        }
+        #DC li{
+            list-style: none;
+        }
+        #DC .inline li {
+            list-style: none;
+            float:right;
+            width:20%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +176,21 @@
     <div id="content">
         <p></p>
     </div>
+</div>
+
+<div id="DC">
+    <ul>
+        <li>
+            <ul class="inline">
+                <li>飞船</li>
+                <li>动力系统</li>
+                <li>能源系统</li>
+                <li>当前飞行状态</li>
+                <li>剩余能耗</li>
+            </ul>
+        </li>
+        <li></li>
+    </ul>
 </div>
 <script>
     //中介者模式
@@ -322,8 +358,11 @@
     };
 //信号发射器
     AdapterPlanShip.prototype.SignalTransmitter = function(messJson){
-        let Binary = this.Adapter(messJson);
-        this.mediator.sendMsg("",Binary,"DC");
+//        let Binary = this.Adapter(this);
+
+        setInterval( function(){
+            this.mediator.sendMsg("",this,"DC")
+        }.bind(this),1000)
     };
 
     //中介
@@ -334,7 +373,9 @@
         // 增加飞机
         register: function (options) {
             var planId = options.id;
-            this.spaceships.push(new AdapterPlanShip(options));
+            var Plan  =new AdapterPlanShip(options);
+            Plan.SignalTransmitter();
+            this.spaceships.push(Plan);
             console.log(this.spaceships);
             $("#plan").append('<div class="circle circle' + planId + '"><div class="inner" style="height:100%;">100</div></div>');
             //上帝视角输出
@@ -390,6 +431,8 @@
                             };
                             break;
                         case "DC":
+                            let _this = this;
+                            DC.getData(Binary);
                             break;
                     }
 
@@ -421,12 +464,35 @@
     };
 
     var DC={
-        data:[],
+        data:{},
         getData:function(messJson){
-            this.data.push(messJson);
+           var id =  messJson.id ;
+           !this.data.hasOwnProperty(id) && (this.data[id] = messJson);
+           this.show();
         },
         show:function(){
-
+            var str='<li>'+
+                    '<ul class="inline">'+
+                    '<li>飞船</li>'+
+                    '<li>动力系统</li>'+
+                    '<li>能源系统</li>'+
+                    '<li>当前飞行状态</li>'+
+                    '<li>剩余能耗</li>'+
+                    '</ul>'+
+                    '</li>';
+           for(var x in this.data){
+               str+=
+              '<li>'+
+              '<ul class="inline">'+
+              '    <li>'+this.data[x].id+'</li>'+
+              '<li>'+this.data[x].speed+'</li>'+
+              '<li>'+this.data[x].energy+'</li>'+
+              '<li>'+this.data[x].state+'</li>'+
+              '<li>'+this.data[x].power+'%</li>'+
+              '</ul>'+
+              '</li>';
+           }
+           $("#DC ul").html(str);
         }
     }
     //指挥者
