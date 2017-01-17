@@ -34,6 +34,7 @@ plan.prototype.state = function () {
     )
 }
 
+
 var plan1 = new plan({
         id: 1,
         commond: 'stop'
