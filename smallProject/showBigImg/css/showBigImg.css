@@ -1,0 +1,73 @@
+/**
+点击查看大图css
+*/
+html,body{
+    position: relative;height: 100%;
+}
+#EV-swiper{
+    height:96%;
+    width:90%;
+    margin: 0 auto;
+    padding:10px 0 ;
+}
+
+#EV-swiper .swiper-container {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#EV-swiper .swiper-slide {
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+#EV-swiper .swiper-slide img {
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-height: 100%;
+}
+#EV-swiper .gallery-top {
+    height: 80%;
+    width: 100%;
+}
+
+#EV-swiper .gallery-top .swiper-slide img {
+    /*max-heigth:100%;*/
+    /*width: 80%;*/
+}
+
+#EV-swiper .gallery-thumbs {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+#EV-swiper .gallery-thumbs .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+#EV-swiper .gallery-thumbs .swiper-slide img {
+    height: 60%;
+    width: 80%;
+}
+
+#EV-swiper  .gallery-thumbs .swiper-slide-active {
+    opacity: 1;
+}
+
+#EV-swiper  .closeBtn {
+    position: absolute;
+    right: 1.25rem;
+    top: 1rem;
+    background:url("//m.medplus.net/image/details/demand/close.png") no-repeat;
+    width:1.2rem;
+    height:1.2rem;
+    background-size: 100%;
+    z-index: 2;
+}
