@@ -172,7 +172,7 @@ var picShow = {
                 $(_this.options.swiperToggle).hide();
                 //评论内部
                  _this.swiperInit($(this).data("index"));
-                $("#EV-swiper .closeBtn").on("click", () => {
+                $("#EV-swiper .closeBtn").on("click",function() {
                     $(_this.options.swiperToggle).show();
                     $("#EV-swiper").remove();
                 });

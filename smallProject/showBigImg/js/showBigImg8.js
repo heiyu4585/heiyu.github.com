@@ -6,7 +6,7 @@
  *      --body
  *
  */
-
+//如果往开发者工具中传递信息
 var picShow = {
     init: function (options) {
         if(options.domIdList && options.ajaxOptions){
@@ -47,6 +47,7 @@ var picShow = {
         var _this = this;
         for(var j=0;j<domIdList.length;j++){
             $(domIdList[j]).each(function(index,ele){
+                //为每个图片绑定对应索引
                var  imgS =  $(ele).find("img").each(function(index,ele){
                    $(ele).data("index",index);
                });
@@ -59,6 +60,7 @@ var picShow = {
                     var windowScrollY = window.scrollY;
                     $("#EV-swiper").length && $("#EV-swiper").remove();
                         var str="";
+                    //与上面的循环是否可以合并
                         for (var i = 0; i < imgS.length; i++) {
                             str += '<div class="swiper-slide"><img src=' + imgS[i].src + ' /></div>';
                         }
@@ -73,7 +75,9 @@ var picShow = {
         }
 
     },
-
+    /**
+     * 拼接swiper结构并初始化
+     * */
     addSwiperDom: function (str,index) {
         var swiperDom =
             '<div id="EV-swiper">' +
@@ -95,10 +99,12 @@ var picShow = {
             '      <div class="closeBtn"></div>' +
             '      </div>';
         $("body").append(swiperDom);
+        //swiper初始化
         this.swiperInit(index);
+        //同级元素隐藏
         $("#EV-swiper").siblings().hide();
     },
-    /*
+    /**
      * 绑定关闭事件
      * */
     addBindClose:function(windowScrollY){
@@ -141,28 +147,28 @@ var picShow = {
 };
 //点击查看大图
 picShow.init({
-    domIdList:[ ".docInt",".productSwiper",".talkImgMore"],
-    // ajaxOptions:{
-    //     beforeSend: function (XHR) {
-    //         console.log("发送之前");
-    //     },
-    //     url:"imgListData.json",
-    //     data:{
-    //         "sessionCustomerId":0,
-    //         "visitSiteId":9,
-    //         "recommendPosition":2
-    //     },
-    //     success:function(data){
-    //         if(data){
-    //             var str="";
-    //             for (var i = 0; i < data.adList.length; i++) {
-    //                 str += '<div class="swiper-slide"><img src=' + data.adList[i].adAttUrl + ' /></div>';
-    //             }
-    //             picShow.addSwiperDom(str);
-    //         }
-    //         //callBack();
-    //     }
-    // },
+    //domIdList:[ ".docInt",".productSwiper",".talkImgMore"],
+     ajaxOptions:{
+         beforeSend: function (XHR) {
+             console.log("发送之前");
+         },
+         url:"imgListData.json",
+         data:{
+             "sessionCustomerId":0,
+             "visitSiteId":9,
+             "recommendPosition":2
+         },
+         success:function(data){
+             if(data){
+                 var str="";
+                 for (var i = 0; i < data.adList.length; i++) {
+                     str += '<div class="swiper-slide"><img src=' + data.adList[i].adAttUrl + ' /></div>';
+                 }
+                 picShow.addSwiperDom(str);
+             }
+             //callBack();
+         }
+     },
     topSwiperOptions:{
         // loop: true, // 开启循环模式,必须设置loopedSlides
         // loopedSlides: 5, //looped slides should be the same
