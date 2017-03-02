@@ -166,7 +166,7 @@ picShow.init({
             console.log(swiper.activeIndex);
             console.log(swiper.realIndex);
         },
-        onSlideChangeStart(swiper){ //滑块释放时如果触发slider切换则执行
+        onSlideChangeStart:function(swiper){ //滑块释放时如果触发slider切换则执行
             console.log(swiper.activeIndex);
             console.log(swiper.realIndex);
         }

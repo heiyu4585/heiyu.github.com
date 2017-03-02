@@ -59,7 +59,7 @@ var picShow = {
                         var swiperToggle = $("#EV-swiper").siblings();
                         swiperToggle.hide();
                         _this.swiperInit($(this).data("index"));
-                        $("#EV-swiper .closeBtn").on("click", () => {
+                        $("#EV-swiper .closeBtn").on("click", function() {
                             swiperToggle.show();
                             $("#EV-swiper").remove();
                             window.scrollTo(0, windowScrollY)
