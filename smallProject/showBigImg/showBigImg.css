@@ -2,13 +2,17 @@
 点击查看大图css
 */
 html,body{
-    position: relative;height: 100%;
+    position: relative;
+    height: 100%;
 }
 #EV-swiper{
-    height:96%;
-    width:90%;
+    height:100%;
+    width:100%;
     margin: 0 auto;
-    padding:10px 0 ;
+    background: #fff;
+    left:0;
+    z-index: 6;
+    position: absolute;
 }
 
 #EV-swiper .swiper-container {

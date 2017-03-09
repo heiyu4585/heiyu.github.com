@@ -1484,7 +1484,7 @@ iframe.appBindIframe{
 
 @charset"utf-8";
 .detials_doc .docCon {
-    padding: 0 4.8%;
+    padding:2.1875rem 4.8% 0;
     margin-bottom: 0.4375rem;
     border-bottom: 1px solid #e9e9e9;
 }
@@ -1511,7 +1511,6 @@ iframe.appBindIframe{
     font-size: 1.25rem;
     color: #333;
     font-weight: bold;
-    margin-top: 2.1875rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

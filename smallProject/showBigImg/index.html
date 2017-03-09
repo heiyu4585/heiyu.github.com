@@ -14,7 +14,7 @@
     <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/Swiper/3.4.1/js/swiper.min.js"></script>
     <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/showBigImg.css">
+    <link rel="stylesheet" type="text/css" href="showBigImg.css">
 </head>
 <body>
 <input type="hidden" value=1456367908716 id="refId"/>
@@ -440,7 +440,89 @@
         </div>
     </div>
 </div>
-<script src="js/showBigImg8.js"></script>
-</body>
+<script src="showBigImg.js"></script>
 
+<script>
+
+    picShow.init({
+        /**
+         * 指定多个class|| ID
+         * */
+        domIdList:[ ".docInt",".productSwiper",".talkImgMore"],
+        // ajaxOptions:{
+        //     beforeSend: function (XHR) {
+        //         console.log("发送之前");
+        //     },
+        //     url:"imgListData.json",
+        //     data:{
+        //         "sessionCustomerId":0,
+        //         "visitSiteId":9,
+        //         "recommendPosition":2
+        //     },
+        //     success:function(data){
+        //         if(data){
+        //             var str="";
+        //             for (var i = 0; i < data.adList.length; i++) {
+        //                 str += '<div class="swiper-slide"><img src=' + data.adList[i].adAttUrl + ' /></div>';
+        //             }
+        //             picShow.addSwiperDom(str);
+        //         }
+        //         //callBack();
+        //     }
+        // },
+        topSwiperOptions:{
+            loop: true, // 开启循环模式,必须设置loopedSlides
+            loopedSlides: 5, //looped slides should be the same
+            autoplay : 5000,//自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换。
+            preventClicks:false,//当swiper在触摸时阻止默认事件（preventDefault），用于防止触摸时触发链接跳转。
+            pagination : '.swiper-pagination', //分页器
+            /**
+             * ‘bullets’  圆点（默认）
+             ‘fraction’  分式
+             ‘progress’  进度条
+             ‘custom’ 自定义
+             * */
+            paginationType : 'fraction',
+            prevButton:'.swiper-button-prev',
+            nextButton:'.swiper-button-next',//前进按钮的css选择器或HTML元素。
+            onInit:function(){     //回调函数，初始化后执行。
+                console.log("sipwer初始化完成!")
+            },
+            /**
+             * 回调函数，当你轻触(tap)Swiper后执行。在移动端，click会有 200~300 ms延迟，所以请用tap代替click作为点击事件。
+             * */
+            onTap:function(swiper,event){
+                console.log(swiper.activeIndex); //swiper当前的活动块的索引
+                console.log(swiper.realIndex);//swiper当前的活动块的真实索引,排除loop模式下添加的滑块DOM
+                console.log(swiper.clickedIndex);//返回最后点击Slide的索引。(click)
+                swiper.stopAutoplay();    //停止自动切换
+                swiper.startAutoplay();    //开始自动切换
+            },
+            onSlideChangeStart:function(swiper){ //滑块释放时如果触发slider切换则执行
+                console.log(swiper.activeIndex);
+                console.log(swiper.realIndex);
+            }
+        },
+        bottomSwiperOptions:{
+            loop: true, // 开启循环模式,必须设置loopedSlides
+            loopedSlides: 5, //looped slides should be the same
+        },
+        addBindClose:function(){
+            console.log(1);
+        },
+//        swiperToggle:".detials_doc",
+    });
+
+
+    var mySwiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: 5000,//可选选项，自动滑动,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplayDisableOnInteraction: false, //用户操作后,继续自动轮播
+        slidesPerView: 3,
+        spaceBetween: 5,
+    });
+</script>
+</body>
 </html>
