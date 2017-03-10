@@ -169,7 +169,6 @@
             galleryThumbs.params.control = galleryTop;
         }
     };
-    console.log("poicshow 方法执行了");
     window.picShow = picShow;
 }());
 
