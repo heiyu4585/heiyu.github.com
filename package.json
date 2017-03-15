@@ -1,0 +1,24 @@
+{
+  "name": "heiyu4585.github.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "browser-sync": "^2.18.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heiyu4585/heiyu4585.github.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heiyu4585/heiyu4585.github.com/issues"
+  },
+  "homepage": "https://github.com/heiyu4585/heiyu4585.github.com#readme"
+}
