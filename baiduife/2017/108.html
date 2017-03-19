@@ -4,40 +4,46 @@
     <meta charset="UTF-8">
     <title>任务七：JavaScript和树（一）</title>
     <style>
-        #main{
+        #main {
             position: absolute;
-            top:50%;
-            left:50%;
-            width:660px;
-            transform:translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            width: 660px;
+            transform: translate(-50%, -50%);
             text-align: center;
             border: 1px solid #ccc;
         }
+
         .div1 {
             display: flex;
             width: 640px;
             height: 100px;
             padding: 10px;
-            margin:0 auto;
+            margin: 0 auto;
         }
+
         .div1:first-of-type {
-          margin-right: 10px;
+            margin-right: 10px;
         }
-        .div1>div {
+
+        .div1 > div {
             flex: 1;
             border: 1px solid #ccc;
             padding: 10px;
             display: flex;;
         }
-        .div1>div:first-of-type {
+
+        .div1 > div:first-of-type {
             margin-right: 10px;
         }
-        .div1>div>div{
+
+        .div1 > div > div {
             flex: 1;
             border: 1px solid #ccc;
             padding: 10px;
         }
-        .div1>div>div:first-of-type {
+
+        .div1 > div > div:first-of-type {
             margin-right: 5px;
         }
     </style>
@@ -55,16 +61,16 @@
                 <div></div>
             </div>
         </div>
+        <div>
             <div>
-                <div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div>
-                    <div></div>
-                    <div></div>
-                </div>
+                <div></div>
+                <div></div>
             </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     </div>
     <div class="div1">
         <div>
@@ -77,17 +83,16 @@
                 <div></div>
             </div>
         </div>
+        <div>
             <div>
-                <div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div>
-                    <div></div>
-                    <div></div>
-                </div>
+                <div></div>
+                <div></div>
             </div>
-
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -108,13 +113,21 @@
         this.preOrder = preOrder;
         this.postOrder = postOrder;
     }
-
+        /**
+         * 插入
+         * */
     function insert(data) {
+        /*
+        *
+        * */
+        console.log(1);
         var n = new Node(data, null, null);
         if (this.root == null) {
             this.root = null;
-        }
-        else {
+        }else {
+            /*
+            * 如果存在父节点
+            * */
             var current = this.root;
             var parent;
             while (true) {
@@ -138,6 +151,7 @@
     }
     // 中序遍历，先遍历左子树
     function inOrder(node) {
+        console.log(node);
         if (!(node == null)) {
             inOrder(node.left);
             putstr(node.show() + " ");
