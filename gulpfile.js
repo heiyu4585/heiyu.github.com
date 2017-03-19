@@ -7,9 +7,9 @@ gulp.task('default', function() {
     console.log(123);
     browserSync({
         server: {
-            baseDir: 'vue'
+            baseDir: 'baiduife/2017'
         }
     });
 
-    gulp.watch(['*.html', '*.css', '*.js'], {cwd: 'vue'}, reload);
+    gulp.watch(['*.html', '*.css', '*.js'], {cwd: 'baiduife/2017'}, reload);
 });

@@ -4,9 +4,10 @@
 * 任务八：JavaScript和树（二）
 * 任务九：JavaScript和树（三）
 
+* vue
 #### 可选
 Vue koa socket.io mongodb
 综合实战：在线德州扑克（一）
 
 ### 进阶
- [CSS3饼状loading效果 ](http://ife.baidu.com/course/detail/id/36)
+ [CSS3饼状loading效果](http://ife.baidu.com/course/detail/id/36)
