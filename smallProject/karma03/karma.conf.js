@@ -44,7 +44,7 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
     htmlReporter: {
-        outputDir: 'report/ut',
+        outputDir: 'report/',
         reportName: 'result' //outputDir+reportName组成完整的输出报告格式，如没有定义，会自动生成浏览器+OS信息的文件夹，不方便读取报告
     },
     // Continuous Integration mode
