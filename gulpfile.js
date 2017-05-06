@@ -11,5 +11,5 @@ gulp.task('default', function() {
         }
     });
 
-    gulp.watch(['*.html', '*.css', '*.js'], {cwd: 'baiduife/2017'}, reload);
+    gulp.watch(['**/*.html', '**/*.css', '*.js'], {cwd: 'baiduife/2017'}, reload);
 });
