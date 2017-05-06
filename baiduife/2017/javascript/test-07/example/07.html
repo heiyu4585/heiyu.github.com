@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务七：JavaScript和树（一）</title>
+    <style>
+        #main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 660px;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        div {
+            background: #fff;
+        }
+
+        .div1 {
+            display: flex;
+            width: 640px;
+            height: 100px;
+            padding: 10px;
+            margin: 0 auto;
+        }
+
+        .div1:first-of-type {
+            margin-right: 10px;
+        }
+
+        .div1 > div {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;;
+        }
+
+        .div1 > div:first-of-type {
+            margin-right: 10px;
+        }
+
+        .div1 > div > div {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .div1 > div > div:first-of-type {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="div1">
+        <div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+        <div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="div1">
+        <div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+        <div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="pre">前序</button>
+<button id="cen">中序</button>
+<button id="after">后序</button>
+<script>
+    /**
+     * 前序遍历
+     * */
+    function pre(node, list) {
+        if (node != null) {
+            list.push(node);
+            pre(node.firstElementChild, list);
+            pre(node.lastElementChild, list);
+        }
+    }
+    /**
+     * 中序遍历
+     * */
+    function cen(node, list) {
+        if (node != null) {
+            cen(node.firstElementChild, list);
+            list.push(node)
+            cen(node.lastElementChild, list);
+        }
+    }
+    /**
+     * 后续
+     * */
+    function after(node, list) {
+        if (node != null) {
+            after(node.firstElementChild, list);
+            after(node.lastElementChild, list);
+            list.push(node);
+        }
+    }
+    /***/
+    function styleChange(list) {
+        console.log(list);
+        let len = list.length;
+        let i = 0;
+        let timer = setInterval(function () {
+            console.log(list[i]);
+            if (i < len) {
+                (i>0) && (list[i-1].style.background = null);
+                list[i].style.background = "blue";
+                i++;
+            } else {
+                (i>0) && (list[i-1].style.background = null);
+                clearInterval(timer);
+            }
+        }, 400)
+    }
+
+    document.querySelector("#pre").addEventListener("click", function () {
+        let list = [];
+        let node = document.querySelector("#main");
+        pre(node, list);
+        styleChange(list);
+    })
+  document.querySelector("#cen").addEventListener("click", function () {
+        let list = [];
+        let node = document.querySelector("#main");
+        cen(node, list);
+        styleChange(list);
+    })
+  document.querySelector("#after").addEventListener("click", function () {
+        let list = [];
+        let node = document.querySelector("#main");
+      after(node, list);
+        styleChange(list);
+    })
+
+
+</script>
+</body>
+</html>
