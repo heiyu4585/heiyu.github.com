@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务九：JavaScript和树（三）</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        #main {
+            margin: 200px auto;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        div {
+            background: #fff;
+        }
+
+        .div1 {
+            display: flex;
+            height: 100px;
+            padding: 10px;
+            margin: 0 auto;
+        }
+
+        .div1 div {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+        }
+
+        .div1 div:first-of-type {
+            margin-right: 10px;
+        }
+
+        .div1 div:first-of-type {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="div1" id="main">0
+    <div>1
+        <div>2
+            <div>3
+            </div>
+            <div>阿萨德刚
+            </div>
+            <div>阿萨德刚
+            </div>
+            <div>噶电饭锅和
+            </div>
+        </div>
+        <div>2
+        </div>
+        <div>测试
+            <div>3
+            </div>
+            <div>发个
+            </div>
+        </div>
+    </div>
+    <div>4儿童
+        <div>阿斯顿发
+            <div>电饭锅
+            </div>
+            <div>阿萨德刚
+            </div>
+            <div>4444
+            </div>
+        </div>
+        <div>2
+            <div>3
+                <div>4
+                </div>
+            </div>
+            <div>3
+            </div>
+        </div>
+    </div>
+    <div>6
+    </div>
+</div>
+<button id="pre">前序遍历</button>
+<button id="after">中序遍历</button>
+<input type="text" id="text">
+<button id="preFind">前序搜索</button>
+<button id="afterFind">后续搜索</button>
+<button id="del">删除</button>
+<button id="add">增加</button>
+<script>
+    /*定时器,循环列表(针对遍历和查找),选中的玄素(针对删除,添加)*/
+    var timer, list = [],choose;
+    /**
+     * 前序遍历
+     * */
+    function pre(node, list) {
+        if (node != null) {
+            list.push(node);
+            for (let i = 0; i < node.children.length; i++) {
+                pre(node.children[i], list);
+            }
+        }
+    }
+    /**
+     * 后序遍历
+     * */
+    function after(node, list) {
+        if (node != null) {
+            for (var i = 0; i < node.children.length; i++) {
+                after(node.children[i], list);
+            }
+            list.push(node);
+        }
+    }
+    /**
+     * 删除
+     * */
+    function del(node) {
+        if (node != null) {
+            for (var i = 0; i < node.children.length; i++) {
+                del(node.children[i], list);
+            }
+            /*找到父元素后,在删除本身*/
+            var _parentElement = node.parentNode;
+            if(_parentElement){
+                _parentElement.removeChild(node);
+            }
+        }
+    }
+    /**
+     * 增加
+     * */
+    function add(node,text) {
+        if (node != null) {
+            var div = document.createElement("div");
+            div.innerHTML = text;
+            node.appendChild(div);
+        }
+    }
+    /*样式改变**/
+    function styleChange(list, text) {
+        let len = list.length;
+        let i = 0;
+        timer = setInterval(function () {
+            if (i < len) {
+                (i > 0) && (list[i - 1].style.background = null);
+                if (list[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g, "") == text) {
+                    list[i].style.background = "red";
+                    clearInterval(timer);
+                    setTimeout(function () {
+                        alert("find it");
+                    }, 0)
+                } else {
+                    list[i].style.background = "blue";
+                }
+                i++;
+            } else {
+                (i > 0) && (list[i - 1].style.background = null);
+                text && alert("con't find it");
+                clearInterval(timer);
+            }
+        }, 400)
+    }
+
+    function reset() {
+        clearInterval(timer);
+        timer = null;
+        /*如果list为空时,赋值为全部div*/
+        if(list.length==0){
+            let node = document.querySelector("#main");
+            pre(node, list);
+        }
+        for (var i = 0; i < list.length; i++) {
+            list[i].style.backgroundColor = "#fff";
+            list[i].style.borderColor='#ccc';
+        }
+        list = [];
+    }
+
+    /*
+     * 对应的方法
+     * */
+    document.querySelector("#pre").addEventListener("click", function () {
+        reset();
+        let node = document.querySelector("#main");
+        pre(node, list);
+        styleChange(list);
+    });
+    document.querySelector("#after").addEventListener("click", function () {
+        reset();
+        let node = document.querySelector("#main");
+        after(node, list);
+        styleChange(list);
+    });
+    /*前序搜索*/
+    document.querySelector("#preFind").addEventListener("click", function () {
+        reset();
+        let node = document.querySelector("#main");
+        pre(node, list);
+        let text = document.querySelector("#text").value;
+        if (text.replace(/(^\s*)|(\s*$)/g, "")) {
+            styleChange(list, text);
+        }
+    });
+    /*后续搜索*/
+    document.querySelector("#afterFind").addEventListener("click", function () {
+        reset();
+        let node = document.querySelector("#main");
+        after(node, list);
+        let text = document.querySelector("#text").value;
+        if (text.replace(/(^\s*)|(\s*$)/g, "")) {
+            styleChange(list, text);
+        }
+    });
+/*点击事件*/
+    [].forEach.call( document.querySelectorAll("div"), function(div) {
+        div.addEventListener("click", function () {
+            reset();
+            event.stopPropagation();
+            this.style.borderColor='yellow';
+            choose = this;
+        },false)
+    });
+    /*删除*/
+    document.querySelector("#del").addEventListener("click", function () {
+        reset();
+        del(choose);
+    })
+    /*增加*/
+    document.querySelector("#add").addEventListener("click", function () {
+        reset();
+        let text = document.querySelector("#text").value;
+        text && add(choose,text);
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript和树（二）</title>
+    <script type="text/javascript" src="main.js"></script>
+    <style>
+        body{
+            font-size: 5px;
+        }
+        section{
+            width: 250px;
+            margin: 0 auto;
+        }
+        #root{
+            display: flex;
+            width: 1300px;
+            height: 300px;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #000;
+            justify-content: space-between;
+        }
+        div[class^="child"]{
+            display: flex;
+            padding: 2px;
+            border: 1px solid #000000;
+            justify-content: space-between;
+        }
+        div[class$="1"]{
+            width: 420px;
+            height: 230px;
+        }
+        div[class$="2"]{
+            width: 120px;
+            height: 210px;
+        }
+        div[class$="3"]{
+            width: 20px;
+            height: 170px;
+        }
+        div[class$="4"]{
+            width:5px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <!--<button id="preOrder" >前序遍历</button>-->
+    <!--<button id="inOrder" >中序遍历</button>-->
+    <!--<button id="postOrder">后序遍历</button>-->
+
+    <button>深度优先遍历</button>
+    <button>广度优先遍历</button>
+    <input type="text">
+    <button>深度优先查询</button>
+    <button>广度优先查询</button>
+</section>
+<div id="root">1
+    <div class="child1">2
+        <div class="child2">5
+            <div class="child3">10</div>
+            <div class="child3">11</div>
+            <div class="child3">12</div>
+            <div class="child3">13</div>
+        </div>
+        <div class="child2">6
+        </div>
+        <div class="child2">7
+            <div class="child3">14</div>
+            <div class="child3">15</div>
+        </div>
+    </div>
+    <div class="child1">3
+        <div class="child2">8
+            <div class="child3">16</div>
+            <div class="child3">17</div>
+            <div class="child3">18</div>
+        </div>
+        <div class="child2">9
+            <div class="child3">19
+            </div>
+            <div class="child3">20</div>
+        </div>
+    </div>
+    <div class="child1">4
+    </div>
+</div>
+</body>
+</html>
