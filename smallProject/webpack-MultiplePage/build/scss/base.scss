@@ -1,0 +1,13 @@
+//消除手机浏览器点击高亮
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  @include link-colors(#222, #222, #222, #222)
+}
+
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
+/*end other*/
