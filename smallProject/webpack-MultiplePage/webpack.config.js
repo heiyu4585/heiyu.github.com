@@ -6,7 +6,7 @@ let path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let proxy = require('http-proxy-middleware');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var autoprefixer = require('autoprefixer');
 var glob = require('glob');
 var entries = getEntryJs('build/**/*.js', 'build/');
 var chunks = Object.keys(entries);
@@ -64,7 +64,7 @@ var config= {
             {
                 test: /\.scss$/,
                 // loader: "style-loader!css-loader!sass-loader",
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer!sass-loader'),
             },
             {
                 //图片加载器，雷同file-loader，更适合图片，可以将较小的图片转成base64，减少http请求
@@ -141,8 +141,15 @@ function getEntryHtml(globPath, pathDir) {
 let htmlEentries = getEntryHtml('build/template/**/*.html', 'build\\template\\');
 
 for(var x  in htmlEentries){
+  let filename;
+  if(x == 'index'){
+      filename=  htmlEentries[x] + '.html';
+  }else{
+      filename= 'pages/' + htmlEentries[x] + '.html';
+  }
+
     var conf = {
-        filename: 'pages/' + htmlEentries[x] + '.html', //生成的html存放路径，相对于path
+        filename: filename, //生成的html存放路径，相对于path
         template:  'build/template/'+htmlEentries[x] + '.html', //html模板路径
         inject: 'body', //js插入的位置，true/'head'/'body'/false
         hash: true, //为静态资源生成hash值
@@ -153,7 +160,6 @@ for(var x  in htmlEentries){
         }
     };
     config.plugins.push(new HtmlWebpackPlugin(conf));
-    console.log(conf);
 }
 
 module.exports = config;
