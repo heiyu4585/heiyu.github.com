@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE Task 6_4</title>
+</head>
+<body>
+<script>
+    function Observer(obj){
+        this.data=obj;
+        if(isObject(this.data)){
+            mapKey(this.data);
+        }
+
+        //支持传入自定义的get和set输出,isDeep为true的话，其下所有的变量变化都会传递事件
+        this.$watch=function(key,funcGet,funcSet,isDeep){
+            if(isObject(this.data[key])){
+                //为对象注册事件
+                this.data[key].observerEvent={
+                    set:funcSet,
+                    get:funcGet
+                };
+                Object.defineProperty(this.data[key],"observerEvent",{//防止被枚举
+                    enumerable:false
+                });
+                if(isDeep)mapKeyNode(this.data[key]);//注册多层传递
+            }
+            else{
+                defineKey(this.data,key,funcGet,funcSet);
+            }
+        }
+        function isObject(object){//判断是否是原始对象
+            if(object instanceof Object){
+                if(object.toString()==="[object Object]")return true;
+            }
+            return false;
+        }
+        function mapKey(object){
+            var keys=Object.keys(object);
+            for(var a=0;a<keys.length;a++){
+                if(object.hasOwnProperty(keys[a])){//避免沿着原型链查找
+                    if(isObject(object[keys[a]])){//是原始对象，继续遍历
+                        mapKey(object[keys[a]]);
+                    }
+                    else{//不是，则重新定义set和get
+                        defineKey(object,keys[a]);
+                    }
+                }
+            }
+        }
+        function mapKeyNode(object){
+            var keys=Object.keys(object);
+            for(var a=0;a<keys.length;a++){
+                if(object.hasOwnProperty(keys[a])){//避免沿着原型链查找
+                    if(isObject(object[keys[a]])){//是原始对象，继续遍历
+                        //为对象注册事件
+                        defineKeyNode(object,keys[a]);
+                        mapKeyNode(object[keys[a]]);
+                    }
+                }
+            }
+        }
+        function defineKeyNode(objectNode,key,funcGet,funcSet){
+            if(!objectNode[key].observerEvent){//只给未定义的定义
+                objectNode[key].observerEvent={
+                    set:function(object,key_,value,old){
+                        //向上个对象传递
+                        if(objectNode.observerEvent && objectNode.observerEvent.set){
+                            objectNode.observerEvent.set(object,key_,value,old);
+                        }
+                    },
+                    get:function(object,key_,value){
+                        //向上个对象传递
+                        if(objectNode.observerEvent && objectNode.observerEvent.get){
+                            objectNode.observerEvent.get(object,key_,value);
+                        }
+                    }
+                };
+                Object.defineProperty(objectNode[key],"observerEvent",{//防止被枚举
+                    enumerable:false
+                });
+            }
+        }
+        function defineKey(object,key,funcGet,funcSet){
+
+            var value=object[key];
+            Object.defineProperty(object,key,{
+                set:function(newValue){
+                    if (newValue === value) return;
+                    var old=value;
+                    value = newValue;
+                    if(funcSet){
+                        funcSet(object,key,value,old);
+                    }
+                    else{//默认情况
+                        console.log("你设置了'"+key+"'，旧值为 "+old+" ，新值为 "+value);
+                    }
+                    //向上传递
+                    if(object.observerEvent && object.observerEvent.set){
+                        object.observerEvent.set(object,key,value,old);
+                    }
+                },
+                get:function(){
+                    if(funcGet){
+                        funcGet(object,key,value);
+                    }
+                    else{//默认情况
+                        console.log("你访问了 ’"+key+"'，值为 "+value);
+                    }
+                    //向上传递
+                    if(object.observerEvent && object.observerEvent.get){
+                        object.observerEvent.get(object,key,value);
+                    }
+                    return value;
+                }
+            });
+        }
+    }
+    var app1 = new Observer({
+        name: {
+            lastName: 'zhang',
+            firstName: 'shirong',
+            nickName:{
+                nickLastName: 'da',
+                nickFirstName: 'gege',
+            }
+        },
+        age: 25
+    });
+    app1.$watch('name',null, function (object,key,value,old) {
+        console.log("我的姓名发生了变化，可能是姓氏变了，也可能是名字变了。但是我可以告诉你是 "+key+" 由 "+old+" 变成了 "+value);
+    },true);
+    console.log("一层传递");
+    app1.data.name.firstName='kailong';
+    console.log("多层传递");
+    app1.data.name.nickName.nickFirstName='hehe';
+</script>
+</body>
+
+</html>
