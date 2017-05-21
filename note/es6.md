@@ -432,7 +432,6 @@ const { SourceMapConsumer, SourceNode } = require("source-map");
 # 字符串的扩展
 ## 字符的unicode表示法
 >js允许采用\uxxxxx形式表示一个字符,
-
 有了这种表示法之后，JavaScript 共有6种方法可以表示一个字符。
 ```markdown
 '\z' === 'z'  // true
@@ -441,4 +440,5 @@ const { SourceMapConsumer, SourceNode } = require("source-map");
 '\u007A' === 'z' // true
 '\u{7A}' === 'z' // true
 ```
-
+## codePointAt()
+>可以正确的处理4个字节储存的字符,返回一个字符的码点.
