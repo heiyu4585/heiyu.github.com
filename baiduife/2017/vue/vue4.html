@@ -11,7 +11,7 @@
  <p>年龄：{{user.age}}</p>
 </div>
 <script>
-    /***********   3-BEGIN   *****************/
+    /***********   5-BEGIN   *****************/
 
     // 观察者构造函数
     function Observer(data,parents,parentsKey) {
@@ -97,24 +97,23 @@
 
     /***********   3 - END *****************/
     function Vue(options){
-     let app =new Observer(options.data);
+        let app =new Observer(options.data);
         app.$watch('user', function (newName,key) {
             console.log(key);
-            let inner  = document.getElementById("app").innerHTML;
+            let inner  = document.querySelector(options.el).innerHTML;
             let arr = inner.match(/{{.*}}/g);
             for(var i =0;i<arr.length;i++){
                 if(arr[i].indexOf(key)!= -1){
-                    let newText  = document.getElementById("app").innerHTML.replace(arr[i],newName);
-                    document.getElementById("app").innerHTML=newText;
+                    let newText  = inner.replace(arr[i],newName);
+                    document.querySelector(options.el).innerHTML=newText;
                 }
             }
         });
-        app.data.user.name = options.data.user.name;
-        app.data.user.age = options.data.user.age;
+        app.$data = options.data;
 
 //        console.log(inner.match(/{{.*}}/g));
 //        document.getElementById("app").innerHTML.replace("/({{(.*)}})/g","$2 $1");
-
+        return app;
     }
     let app = new Vue({
         el: '#app',
@@ -122,10 +121,11 @@
             user: {
                 name: 'youngwind',
                 age: 25
-            }
+            },
         }
     });
-
+    app.data.user.name = 'sdfasdf';
+    app.data.user.age = 11;
 </script>
 </body>
 </html>
