@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>动态数据绑定(三)</title>
+</head>
+<body>
+<!-- 页面中原本的 html 模板片段 -->
+<div id="app">
+ <p>姓名：{{user.name}}</p>
+ <p>年龄：{{user.age}}</p>
+</div>
+<script>
+    /***********   3-BEGIN   *****************/
+
+    // 观察者构造函数
+    function Observer(data,parents,parentsKey) {
+        this.data = data;
+        this.walk(data);
+        this.handlers = {};
+        this.parents = parents;
+        this.parentsKey = parentsKey;
+    }
+
+    let p = Observer.prototype;
+
+    // 此函数用于深层次遍历对象的各个属性
+    // 采用的是递归的思路
+    // 因为我们要为对象的每一个属性绑定getter和setter
+    p.walk = function (obj) {
+        let val;
+        for (let key in obj) {
+            // 这里为什么要用hasOwnProperty进行过滤呢？
+            // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
+            // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
+            if (obj.hasOwnProperty(key)) {
+                val = obj[key];
+
+                // 这里进行判断，如果还没有遍历到最底层，继续new Observer
+                if (typeof val === 'object') {
+                    new Observer(val,this,key);
+                }
+
+                this.convert(key, val);
+            }
+        }
+    };
+    p.$watch= function(eventType,handler){
+        if(!(eventType in this.handlers)){
+            this.handlers[eventType] =[];
+        }
+        this.handlers[eventType].push(handler);
+    };
+
+    p.$emit = function(eventType){
+        var self = this;
+        var handlerArgs = Array.prototype.slice.call(arguments,1);
+        console.log(handlerArgs)
+        if(self.handlers[eventType]){
+            for(var i = 0; i < self.handlers[eventType].length; i++) {
+                self.handlers[eventType][i].apply(self,handlerArgs);
+            }
+        }
+        if(self.parents && self.parents.handlers){
+            for(var i = 0; i < self.parents.handlers[self.parentsKey].length; i++) {
+                self.parents.handlers[eventType][i].apply(self.parents,handlerArgs);
+            }
+        }
+        return self;
+    };
+    p.convert = function (key, val) {
+        var _this =this;
+        Object.defineProperty(this.data, key, {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                console.log('你访问了' + key);
+                return val
+            },
+            set: function (newVal) {
+                // 这里进行判断，如果还没有遍历到最底层，继续new Observer
+                if (typeof newVal === 'object') {
+                    new Observer(newVal,_this,key);
+                }else{
+                    if(_this.handlers[key]){
+                        _this.$emit(key,newVal);
+                    }
+                    if(_this.parents && _this.parents.handlers){
+                        _this.parents.$emit(_this.parentsKey,newVal,key);
+                    }
+                }
+                if (newVal === val) return;
+                val = newVal
+            }
+        })
+    };
+
+    /***********   3 - END *****************/
+    function Vue(options){
+     let app =new Observer(options.data);
+        app.$watch('user', function (newName,key) {
+            console.log(key);
+            let inner  = document.getElementById("app").innerHTML;
+            let arr = inner.match(/{{.*}}/g);
+            for(var i =0;i<arr.length;i++){
+                if(arr[i].indexOf(key)!= -1){
+                    let newText  = document.getElementById("app").innerHTML.replace(arr[i],newName);
+                    document.getElementById("app").innerHTML=newText;
+                }
+            }
+        });
+        app.data.user.name = options.data.user.name;
+        app.data.user.age = options.data.user.age;
+
+//        console.log(inner.match(/{{.*}}/g));
+//        document.getElementById("app").innerHTML.replace("/({{(.*)}})/g","$2 $1");
+
+    }
+    let app = new Vue({
+        el: '#app',
+        data: {
+            user: {
+                name: 'youngwind',
+                age: 25
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
