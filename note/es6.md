@@ -441,4 +441,116 @@ const { SourceMapConsumer, SourceNode } = require("source-map");
 '\u{7A}' === 'z' // true
 ```
 ## codePointAt()
->可以正确的处理4个字节储存的字符,返回一个字符的码点.
+可以正确的处理4个字节储存的字符,返回一个字符的码点.
+## String.fromCodePoint()
+es5的String.fromCharCode(0x20BB7)不能识别大于0xFFFF的码点,
+## 字符串的便利器接口遍历器接口
+使得字符串可以被for....of循环遍历
+```markdown
+for(let codePoint of 'foo'){
+    console.log(codePoint)
+}
+// "f"
+// "o"
+// "o"
+```
+ ## at()
+ 返回字符串给定位置的字符,改方法不能识别码点大于0xFFFF的字符.
+## normalize()
+ 识别欧洲有语调符号和重音符号
+## includes(),startsWidth(),endsWith()
+   -includes() : 返回布尔值,表示是否找到了参数字符串
+   -startsWith():返回布尔值,表示参数字符串是否在源字符串的头部.
+   -endsWith();返回布尔值,表示参数字符串是否在源字符串的尾部.
+```markdown
+var s = 'Hello world!';
+
+s.startsWith('world', 6) // true
+s.endsWith('Hello', 5) // true
+s.includes('Hello', 6) // false                                                                                       s
+```
+上面代码表示，使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束.
+
+## repeat()
+返回一个新字符串,表示将原字符串重复n次
+1. 参数是小数,会被取整.
+2. 负数或者Infinity,会报错.
+3. NaN等同于0.
+4. 字符串先转为数字.
+## padStart(),padEnd()
+1. 字符串补全长度,头部补全,尾部补全
+2. 等于或大于指定的最小长度,返回源字符
+3. 如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串。
+4. 如果省略第二个参数，默认使用空格补全长度。
+5. padStart的常见用途是为数值补全指定位数。下面代码生成10位的数值字符串。
+6. 另一个用途是提示字符串格式。
+```
+'x'.padStart(5, 'ab') // 'ababx'
+'xxx'.padStart(2, 'ab') // 'xxx'
+'abc'.padStart(10, '0123456789') // '0123456abc'
+'123456'.padStart(10, '0') // "0000123456"
+'12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
+'09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
+```
+
+
+## 模板字符串
+```markdown
+// 字符串中嵌入变量
+var name = "Bob", time = "today";
+`Hello ${name}, how are you ${time}?`
+```
+模板中使用反引号,用反斜杠转义.
+```markdown
+var greeting = `\`Yo\` World!`;
+```
+* 模板字符串的空格和换行,都会被保留.
+* 变量名鞋子啊${}之中
+* 大括号内可放入js表达式,也可以进行运算,引用对象,甚至方法
+* 大括号内的变量未声明会报错
+* 可以嵌套
+```markdown
+const tmpl = addrs => `
+  <table>
+  ${addrs.map(addr => `
+    <tr><td>${addr.first}</td></tr>
+    <tr><td>${addr.last}</td></tr>
+  `).join('')}
+  </table>
+onst data = [
+    { first: '<Jane>', last: 'Bond' },
+    { first: 'Lars', last: '<Croft>' },
+];
+
+console.log(tmpl(data));
+// <table>
+//
+//   <tr><td><Jane></td></tr>
+//   <tr><td>Bond</td></tr>
+//
+//   <tr><td>Lars</td></tr>
+//   <tr><td><Croft></td></tr>
+//
+// </table>
+
+```
+引用模板字符串本身,在需要时执行.
+```markdown
+// 写法一
+let str = 'return ' + '`Hello ${name}!`';
+let func = new Function('name', str);
+func('Jack') // "Hello Jack!"
+
+// 写法二
+let str = '(name) => `Hello ${name}!`';
+let func = eval.call(null, str);
+func('Jack') // "Hello Jack!"
+```
+## 实例:实时编译(待研究)
+## 标签模板(待研究)
+## String.raw()
+返回一些斜杠都被转义的字符串,元字符串已经被反斜杠转义的,那么String.raw不会做任何处理.
+## 模板字符串的限制(待研究)
+
+# 正则的拓展
+## ReaExp构造函数
