@@ -554,3 +554,158 @@ func('Jack') // "Hello Jack!"
 
 # 正则的拓展
 ## ReaExp构造函数
+es5中
+```markdown
+var regex = new Regexp('xyz','i');
+//等价于
+var regex = /xyz/i;
+```
+```
+var regex = new RegExp(/xyz/i);
+等价于
+var regex =/xyz/i;
+```
+es6 中 
+```markdown
+new RegExp(/abc/ig,'i').flags 
+ // 'i'
+```
+## 字符串的正则方法
+
+字符串对象共有4个方法,可以使用正则表达式: match(),replace(),search()和split()
+
+## u修饰符
+含义为`Unicode`模式,用来正确处理大于\uFFFF的Unico的字符.
+### 点字符
+```markdown
+var s = '𠮷';
+
+/^.$/.test(s) // false
+/^.$/u.test(s) // true
+```
+### Unicode字符表示法
+```markdown
+ES6新增了使用大括号表示Unicode字符，这种表示法在正则表达式中必须加上u修饰符，才能识别。
+
+/\u{61}/.test('a') // false
+/\u{61}/u.test('a') // true
+/\u{20BB7}/u.test('𠮷') // true
+```
+### 量词
+使用u修饰符后，所有量词都会正确识别码点大于0xFFFF的Unicode字符。
+```markdown
+           /a{2}/.test('aa') // true
+           /a{2}/u.test('aa') // true
+           /𠮷{2}/.test('𠮷𠮷') // false
+           /𠮷{2}/u.test('𠮷𠮷') // true
+ ```
+ ### 预定义模式
+ ```markdown
+/^\S$/.test('𠮷') // false
+/^\S$/u.test('𠮷') // true
+```
+ ### i修饰符
+ ```
+ /[a-z]/i.test('\u212A') // false
+    /[a-z]/iu.test('\u212A') // true
+ ```
+ ## y 修饰符
+ y修饰符的作用与g修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g修饰符只要剩余位置中存在匹配就可，而y修饰符确保匹配必须从剩余的第一个位置开始，这也就是“粘连”的涵义。
+ 
+##  sticky属性 § ⇧
+sticky属性，表示是否设置了y修饰符。
+```markdown
+var r = /hello\d/y;
+r.sticky // true
+```
+## flags属性
+会返回正则表达式的修饰符。
+## RegExp.escape()
+字符串必须转义，才能作为正则模式。
+## s 修饰符：dotAll 模式
+   正则表达式中，点（.）是一个特殊字符，代表任意的单个字符，但是行终止符（line terminator character）除外。
+## 后行断言
+## 后行断言
+
+# 数值的扩展
+## 二进制和八进制表示法
+```markdown
+0b111110111 === 503 // true
+0o767 === 503 // true
+```
+使用number转为十进制
+## Number.isFinite(), Number.isNaN()
+1. 两个新方法只对数值有效，Number.isFinite()对于非数值一律返回false, Number.isNaN()只有对于NaN才返回true，非NaN一律返回false
+```markdown
+isFinite(25) // true
+isFinite("25") // true
+Number.isFinite(25) // true
+Number.isFinite("25") // false
+
+isNaN(NaN) // true
+isNaN("NaN") // true
+Number.isNaN(NaN) // true
+Number.isNaN("NaN") // false
+Number.isNaN(1) // false
+```
+## Number.parseInt(), Number.parseFloat() 
+ES6将全局方法parseInt()和parseFloat()，移植到Number对象上面，行为完全保持不变。
+
+Number.isInteger()
+Number.isInteger()用来判断一个值是否为整数。需要注意的是，在JavaScript内部，整数和浮点数是同样的储存方法，所以3和3.0被视为同一个值。
+```markdown
+Number.isInteger(25) // true
+Number.isInteger(25.0) // true
+Number.isInteger(25.1) // false
+Number.isInteger("15") // false
+Number.isInteger(true) // false
+
+```
+## Number.EPSILON
+   ES6在Number对象上面，新增一个极小的常量Number.EPSILON。
+## 安全整数和Number.isSafeInteger() 
+## Math对象的扩展
+### Math.trunc()
+去除数字的小数部分,返回整数部分.
+非负数先转为数值
+控制和无法截取整数的值,返回NaN
+### Math.sign()
+判断一个数到底是整数,负数,还是零
+```markdown
+它会返回五种值。
+
+参数为正数，返回+1；
+参数为负数，返回-1；
+参数为0，返回0；
+参数为-0，返回-0;
+其他值，返回NaN。
+```
+### Math.cbrt() 
+   Math.cbrt方法用于计算一个数的立方根。
+### Math.clz32()
+   JavaScript的整数使用32位二进制形式表示
+### Math.imul() 
+   回两个数以32位带符号整数形式相乘的结果，返回的也是一个32位的带符号整数。
+### Math.fround()
+    Math.fround方法返回一个数的单精度浮点数形式。   
+### Math.hypot()
+Math.hypot方法返回所有参数的平方和的平方根。   
+## 对数方法 § ⇧
+### Math.expm1()
+Math.expm1(x)返回ex - 1，即Math.exp(x) - 1。
+### Math.log1p()
+Math.log1p(x)方法返回1 + x的自然对数，即Math.log(1 + x)。如果x小于-1，返回NaN。
+### Math.log10()
+Math.log10(x)返回以10为底的x的对数。如果x小于0，则返回NaN。
+## Math.log2()
+Math.log2(x)返回以2为底的x的对数。如果x小于0，则返回NaN。
+## 三角函数方法
+### Math.signbit()
+Math.sign()用来判断一个值的正负，但是如果参数是-0，它会返回-0
+### 指数运算符
+ES2016 新增了一个指数运算符（**）。
+
+# 数组的扩展
+## Array.from
+Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。
+
