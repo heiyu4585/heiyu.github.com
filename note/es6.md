@@ -6,6 +6,7 @@
 * 不允许重复声明
  * 块级作用域
 * do表达式
+
  ```
  let x = do{
     let  t =1;
@@ -16,13 +17,12 @@ x // 3
 ## const 常量
 >声明一个只读常量.本质是变量指向的那个内存地址不得改动,
 >将对象或者 数组 设置为 const时,可以修改对象或者数组的值,但是不能重新给const 定义的变量重新赋值为新的对象或者数组.
+
 ```
 const foo = {};
-
 // 为 foo 添加一个属性，可以成功
 foo.prop = 123;
 foo.prop // 123
-
 // 将 foo 指向另一个对象，就会报错
 foo = {}; // TypeError: "foo" is read-only
 ```
@@ -33,7 +33,6 @@ a.push('Hello'); // 可执行
 a.length = 0;    // 可执行
 a = ['Dave'];    // 报错
 ```
-
 ## 对象冻结的方式
 ```
 const foo = Object.freeze({});
@@ -244,7 +243,9 @@ d // "l"
 e // "o"
 ```
 类似数组的对象都有一个length属性，因此还可以对这个属性解构赋值。
+
 >为什么能这么用, hello不是字符串吗..
+
 ```markdown
 let {length : len} = 'hello';
 len // 5
@@ -432,6 +433,7 @@ const { SourceMapConsumer, SourceNode } = require("source-map");
 # 字符串的扩展
 ## 字符的unicode表示法
 >js允许采用\uxxxxx形式表示一个字符,
+
 有了这种表示法之后，JavaScript 共有6种方法可以表示一个字符。
 ```markdown
 '\z' === 'z'  // true
