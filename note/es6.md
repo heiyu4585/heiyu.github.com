@@ -708,4 +708,53 @@ ES2016 新增了一个指数运算符（**）。
 # 数组的扩展
 ## Array.from
 Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。
+```
+let arrayLike ={
+    '0':'a',
+    '1':'b',
+    '2':'c',
+    length:3
+} //length 不能省
+//es5
+var arr1 =[].slice.call(arrayLike);
+//es6
+let arr2 =Array.from(arrayLike);
+```
+NodeList集合,`arguments`对象.
+```
+let ps = document.querySelectorAll('p');
+Array.form(ps).forEach(function(p){
+    console.log(p);
+});
+//arguments对象
+function foo(){
+    var args = Array.from(arguments);
+    //..
+     }
+    
+```
+部署了Iterator接口的数据结构
+```
+Array.from('hello');
+//[ 'h','e','l','l','o']
 
+let namesSet = new Set (['a','b'])
+Array.from(namesSet) // ['a','b']
+```
+参数为数组,返回一个一模一样的新数组
+拓展运算符,也可以将默写数组结构转为数组
+//arguments对象
+```
+//arguments对象
+function foo(){
+    var args =[...arguments];
+    }
+    //NodeList对象
+    [document.querySelectorAll('div')]
+```
+扩展运算符背后调用的是遍历器接口(Symbol.iterator),Array.from支持类似数组对象,(必须有length)属性,任何有length的对象,都可以通过Array.from方法转为数组,而此时扩展运算父无法转化
+```
+Array.from({length:3})
+//[undefined,undefined,undefined]
+
+```
