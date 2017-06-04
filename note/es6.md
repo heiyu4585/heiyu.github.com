@@ -1346,22 +1346,25 @@ const [...butLast, last] = [1, 2, 3, 4, 5];
 const [first, ...middle, last] = [1, 2, 3, 4, 5];
 // 报错
 ```
-### 函数的返回值(没懂)
+### 函数的返回值
 JavaScript的函数只能返回一个值，如果需要返回多个值，只能返回数组或对象。扩展运算符提供了解决这个问题的一种变通方法。
 ```
 var dateFields = readDateFields(database);
 var d = new Date(...dateFields);
 ```
-上面代码从数据库取出一行数据，通过扩展运算符，直接将其传入构造函数Date。
-
-
-
-
-
+上面代码从数据库取出一行数据，通过扩展运算符，直接将其传入构造函数Date[^no1].
+```
+var dateFields = readDateFields(database);
+var d = new Date(...dateFields);
+```
+## 字符串
+将字符串转为真正的数组
+[...'hello']
+// [ "h", "e", "l", "l", "o" ]
 
 ---
 
-# 不懂的东西
+# 不懂的东西。
 1.for of
 ```
 for (let [index, elem] of ['a', 'b'].entries()) {
@@ -1377,3 +1380,6 @@ for (let [index, elem] of ['a', 'b'].entries()) {
 ```
 (function(...args) {}).length // 0
 ```
+
+[^no1]: 主要解决
+
