@@ -1352,7 +1352,7 @@ JavaScript的函数只能返回一个值，如果需要返回多个值，只能�
 var dateFields = readDateFields(database);
 var d = new Date(...dateFields);
 ```
-上面代码从数据库取出一行数据，通过扩展运算符，直接将其传入构造函数Date[^no1].
+上面代码从数据库取出一行数据，通过扩展运算符，直接将其传入构造函数Date[^没太懂].
 ```
 var dateFields = readDateFields(database);
 var d = new Date(...dateFields);
@@ -1362,10 +1362,514 @@ var d = new Date(...dateFields);
 [...'hello']
 // [ "h", "e", "l", "l", "o" ]
 
+## 实现了Iterator的对象[^没太懂].
+任何Iterator接口的对象,都可以用扩展运算符转为真正的数组
+```
+var nodeList = document.querySelectorAll('div');
+var array = [...nodeList];
+```
+对于那些没有部署Iterator接口的类似数组的对象，扩展运算符就无法将其转为真正的数组。
+```
+let arrayLike = {
+  '0': 'a',
+  '1': 'b',
+  '2': 'c',
+  length: 3
+};
+
+// TypeError: Cannot spread non-iterable object.
+let arr = [...arrayLike];
+```
+上面代码中，arrayLike是一个类似数组的对象，但是没有部署Iterator接口[^没太懂]，扩展运算符就会报错。这时，可以改为使用Array.from方法将arrayLike转为真正的数组。
+
+## Map和Setjiegou ,Generator函数
+只要有Iterator接口的东西,都可以使用扩展运算符
+* Map结构[^没太懂]
+```
+let map = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
+
+let arr = [...map.keys()]; // [1, 2, 3]
+```
+* Generator函数[^没太懂]
+```
+var go = function*(){
+  yield 1;
+  yield 2;
+  yield 3;
+};
+
+[...go()] // [1, 2, 3]
+```
+如果对没有iterator接口的对象，使用扩展运算符，将会报错。
+```
+var obj = {a: 1, b: 2};
+let arr = [...obj]; // TypeError: Cannot spread non-iterable object
+```
+## 严格模式
+规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
+```
+// 报错
+function doSomething(a, b = a) {
+  'use strict';
+  // code
+}
+
+// 报错
+const doSomething = function ({a, b}) {
+  'use strict';
+  // code
+};
+
+// 报错
+const doSomething = (...a) => {
+  'use strict';
+  // code
+};
+
+const obj = {
+  // 报错
+  doSomething({a, b}) {
+    'use strict';
+    // code
+  }
+};
+```
+>这样规定的原因是，函数内部的严格模式，同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。
+
+* 设置全局的严格模式
+* 把函数抱在一个无参数的立即执行函数里面
+## name属性
+ ES6 的name属性会返回实际的函数名。
+```
+var f = function () {};
+
+// ES5
+f.name // ""
+
+// ES6
+f.name // "f"
+```
+将一个具名函数赋值给一个变量，则 ES5 和 ES6 的name属性都返回这个具名函数原本的名字。
+```
+const bar = function baz() {};
+
+// ES5
+bar.name // "baz"
+
+// ES6
+bar.name // "baz"
+```
+Function构造函数返回的函数实例，name属性的值为anonymous。
+```
+(new Function).name // "anonymous"
+```
+bind返回的函数，name属性值会加上bound前缀[^没太懂]。
+```
+function foo() {};
+foo.bind({}).name // "bound foo"
+
+(function(){}).bind({}).name // "bound "
+```
+## 箭头函数
+* 如果箭头函数不需要参数或者需要多个参数,就使用一个圆括号代表参数部分.
+```
+var f = () => 5;
+// 等同于
+var f = function () { return 5 };
+
+var sum = (num1, num2) => num1 + num2;
+// 等同于
+var sum = function(num1, num2) {
+  return num1 + num2;
+};
+```
+* 如果箭头函数直接返回一个对象,必须在对象外面加上括号.
+```
+var getTempItem = id => ({ id: id, name: "Temp" });
+```
+* 箭头函数可以与变量解构结合使用。
+```
+const full = ({ first, last }) => first + ' ' + last;
+
+// 等同于
+function full(person) {
+  return person.first + ' ' + person.last;
+}
+```
+* 箭头函数使得表达更加简洁。
+```
+const isEven = n => n % 2 == 0;
+const square = n => n * n;
+```
+* 简化回调函数。
+```
+// 正常函数写法
+[1,2,3].map(function (x) {
+  return x * x;
+});
+
+// 箭头函数写法
+[1,2,3].map(x => x * x);
+```
+
+```
+// 正常函数写法
+var result = values.sort(function (a, b) {
+  return a - b;
+});
+
+// 箭头函数写法
+var result = values.sort((a, b) => a - b);
+```
+* rest 参数与箭头函数结合的例子。 
+```
+const numbers = (...nums) => nums;
+numbers(1, 2, 3, 4, 5)
+// [1,2,3,4,5]
+
+const headAndTail = (head, ...tail) => [head, tail];
+`   
+headAndTail(1, 2, 3, 4, 5)
+// [1,[2,3,4,5]]
+```
+### 使用注意点
+1. `this`对象,是定义时所在的对象,而不是使用时所在的对象
+2. 不可以当做构造函数,也就是不可以使用new命令.
+3. 不可以使用`arguments`对象,该对象在函数体内不存在,如果要用,可以用`rest`参数代替
+4. 不可以使用`yield`命令,因此箭头函数不能用作Generator函数.
+
+箭头函数转成 ES5 的代码如下
+```
+// ES6
+function foo() {
+  setTimeout(() => {
+    console.log('id:', this.id);
+  }, 100);
+}
+
+// ES5
+function foo() {
+  var _this = this;
+
+  setTimeout(function () {
+    console.log('id:', _this.id);
+  }, 100);
+}
+```
+请问下面的代码之中有几个this？
+```
+function foo() {
+  return () => {
+    return () => {
+      return () => {
+        console.log('id:', this.id);
+      };
+    };
+  };
+}
+
+var f = foo.call({id: 1});
+
+var t1 = f.call({id: 2})()(); // id: 1
+var t2 = f().call({id: 3})(); // id: 1
+var t3 = f()().call({id: 4}); // id: 1
+```
+除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target。
+```
+function foo() {
+  setTimeout(() => {
+    console.log('args:', arguments);
+  }, 100);
+}
+foo(2, 4, 6, 8)
+// args: [2, 4, 6, 8]
+```
+
+另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。
+```
+(function() {
+  return [
+    (() => this.x).bind({ x: 'inner' })()
+  ];
+}).call({ x: 'outer' });
+// ['outer']
+```
+上面代码中，箭头函数没有自己的this，所以bind方法无效，内部的this指向外部的this。
+
+## 箭头函数的嵌套
+箭头函数内部，还可以再使用箭头函数。下面是一个 ES5 语法的多重嵌套函数。
+```
+function insert(value) {
+  return {into: function (array) {
+    return {after: function (afterValue) {
+      array.splice(array.indexOf(afterValue) + 1, 0, value);
+      return array;
+    }};
+  }};
+}
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+
+```
+上面这个函数，可以使用箭头函数改写。
+```
+let insert = (value) => ({into: (array) => ({after: (afterValue) => {
+  array.splice(array.indexOf(afterValue) + 1, 0, value);
+  return array;
+}})});
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+```
+下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。
+```
+const pipeline = (...funcs) =>
+  val => funcs.reduce((a, b) => b(a), val);
+
+const plus1 = a => a + 1;
+const mult2 = a => a * 2;
+const addThenMult = pipeline(plus1, mult2);
+
+addThenMult(5)
+// 12
+```
+如果觉得上面的写法可读性比较差，也可以采用下面的写法。
+```
+const plus1 = a => a + 1;
+const mult2 = a => a * 2;
+
+mult2(plus1(5))
+// 12
+```
+箭头函数还有一个功能，就是可以很方便地改写λ演算。
+```
+// λ演算的写法[^没太懂]
+fix = λf.(λx.f(λv.x(x)(v)))(λx.f(λv.x(x)(v)))
+
+// ES6的写法
+var fix = f => (x => f(v => x(x)(v)))
+               (x => f(v => x(x)(v)));
+```
+
+## 绑定 this(es7)
+## 尾调用优化
+尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。
+函数式编程有一个概念，叫做柯里化（currying），意思是将多参数的函数转换成单参数的形式。这里也可以使用柯里化。
+## 尾递归优化的实现 
+## 尾递归优化的实现 
+# 对象的扩展
+ES6允许直接写入变量和函数,作为对象的属性和方法.
+```
+var foo ='bar';
+var baz={foo};
+baz //{foo:"bar"}
+```
+```
+function f(x,y){
+return {x,y};
+}
+//等同于
+function f(x,y){
+    return {x:x,y:y}
+}
+```
+除了属性简写,方法也可以简写
+```
+var o={
+    method(){
+    
+    }
+}
+//等同于
+var o={
+    medthod:function(){
+        return "Hello";
+    }
+}
+
+```
+```
+var birth = '2000/01/01';
+var Person = {
+  name: '张三',
+  //等同于birth: birth
+  birth,
+  // 等同于hello: function ()...
+  hello() { console.log('我的名字是', this.name); }
+};
+```
+```
+function getPoint() {
+  var x = 1;
+  var y = 10;
+  return {x, y};
+}
+
+getPoint()
+```
+## 属性表达式
+```
+let obj={
+    [prokey]:true,
+    ['a'+'bc']:123
+}
+```
+```
+var lastWord = 'last word';
+
+var a = {
+  'first word': 'hello',
+  [lastWord]: 'world'
+};
+
+a['first word'] // "hello"
+a[lastWord] // "world"
+a['last word'] // "world"
+```
+表达式还可以用于定义方法名
+```
+let obj = {
+  ['h' + 'ello']() {
+    return 'hi';
+  }
+};
+
+obj.hello() // hi
+```
+属性名表达式与简洁表示法,不能同时使用,会报错
+```
+// 报错
+var foo = 'bar';
+var bar = 'abc';
+var baz = { [foo] };
+
+// 正确
+var foo = 'bar';
+var baz = { [foo]: 'abc'};
+```
+注意，属性名表达式如果是一个对象，默认情况下会自动将对象转为字符串[object Object]，这一点要特别小心。
+```
+const keyA = {a: 1};
+const keyB = {b: 2};
+
+const myObject = {
+  [keyA]: 'valueA',
+  [keyB]: 'valueB'
+};
+
+myObject // Object {[object Object]: "valueB"}
+
+```
+## 方法的name属性
+函数的name属性,返回函数名,对象方法也有name属性
+
+```
+const person = {
+  sayName() {
+    console.log('hello!');
+  },
+};
+
+person.sayName.name   // "sayName"
+```
+如果对象的方法使用了取值函数（getter）和存值函数（setter），则name属性不是在该方法上面，而是该方法的属性的描述对象的get和set属性上面，返回值是方法名前加上get和set。
+
+
+```
+const obj = {
+  get foo() {},
+  set foo(x) {}
+};
+
+obj.foo.name
+// TypeError: Cannot read property 'name' of undefined
+
+const descriptor = Object.getOwnPropertyDescriptor(obj, 'foo');
+
+descriptor.get.name // "get foo"
+descriptor.set.name // "set foo"
+```
+有两种特殊情况：bind方法创造的函数，name属性返回bound加上原函数的名字；Function构造函数创造的函数，name属性返回anonymous。
+```
+(new Function()).name // "anonymous"
+
+var doSomething = function() {
+  // ...
+};
+doSomething.bind().name // "bound doSomething"
+```
+如果对象的方法是一个 Symbol 值，那么name属性返回的是这个 Symbol 值的描述。
+```
+const key1 = Symbol('description');
+const key2 = Symbol();
+let obj = {
+  [key1]() {},
+  [key2]() {},
+};
+obj[key1].name // "[description]"
+obj[key2].name // ""
+```
+上面代码中，key1对应的 Symbol 值有描述，key2没有。
+
+## Object.is()
+比较两个值是否严格相等,与严格比较运算符(===)的行为基本一致.
+```
+Object.is('foo', 'foo')
+// true
+Object.is({}, {})
+// false
+```
+不同之处只有两个：一是+0不等于-0，二是NaN等于自身。
+```
++0 === -0 //true
+NaN === NaN // false
+
+Object.is(+0, -0) // false
+Object.is(NaN, NaN) // true
+```
+## Object.assign()
+对象合并,将源对象的所有可枚举属性,复制到目标对象.
+```
+var target = { a: 1 };
+
+var source1 = { b: 2 };
+var source2 = { c: 3 };
+
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+```
+* 如果只有一个参数 ,会直接返回该参数
+* 如果该参数不是对象,则会先转成对象,然后返回
+```
+Object.assign(2) 
+// Number {[[PrimitiveValue]]: 2}
+typeof Object.assign(2) // "object"
+```
+* 由于undefined和null无法转成对象，所以如果它们作为参数，就会报错。
+```
+Object.assign(undefined) // 报错
+Object.assign(null) // 报错
+```
+* 如果非参数
+
+
+
+
+
+
+
+
+
+
+
 ---
 
+
 # 不懂的东西。
-1.for of
+* for of
 ```
 for (let [index, elem] of ['a', 'b'].entries()) {
   console.log(index, elem);
@@ -1373,13 +1877,16 @@ for (let [index, elem] of ['a', 'b'].entries()) {
 // 0 "a"
 // 1 "b"
 ```
-2. 遍历器对象
-3. 遍历器
-4. 数组的方法都有哪些
-5. rest 参数 (用于获取函数的多余参数)
-```
-(function(...args) {}).length // 0
-```
+*  遍历器对象
+*  部署Iterator接口 什么是Iterator接口
+*  遍历器
+* 数组的方法都有哪些
+*  rest 参数 (用于获取函数的多余参数)
+`(function(...args) {}).length // 0`
+* 什么是Map Set 结构
+* 柯里化   
+* 尾调用优化
+* 递归调用
 
-[^no1]: 主要解决
 
+[^没太懂]: 主要解决
