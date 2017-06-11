@@ -1853,16 +1853,182 @@ typeof Object.assign(2) // "object"
 Object.assign(undefined) // 报错
 Object.assign(null) // 报错
 ```
-* 如果非参数
+* 于undefined和null不在首位,就不会报错.
 
+```
+let obj = {a: 1};
+Object.assign(obj, undefined) === obj // true
+Object.assign(obj, null) === obj // true
+```
+* 其他类型的值（即数值、字符串和布尔值）不在首参数，也不会报错。但是，除了字符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。
 
+```
+var v1 = 'abc';
+var v2 = true;
+var v3 = 10;
 
+var obj = Object.assign({}, v1, v2, v3);
+console.log(obj); // { "0": "a", "1": "b", "2": "c" }
+```
+Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+```
+Object.assign({b: 'c'},
+  Object.defineProperty({}, 'invisible', {
+    enumerable: false,
+    value: 'hello'
+  })
+)
+// { b: 'c' }
+```
+属性名为Symbol值的属性，也会被Object.assign拷贝。
+```
+Object.assign({ a: 'b' }, { [Symbol('c')]: 'd' })
+// { a: 'b', Symbol(c): 'd' }
+```
+## 注意点
+* Object.assign方法实行的是浅拷贝，而不是深拷贝。
+```
+var obj1 = {a: {b: 1}};
+var obj2 = Object.assign({}, obj1);
 
+obj1.a.b = 2;
+obj2.a.b // 2
+```
+* 对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。
+```
+var target = { a: { b: 'c', d: 'e' } }
+var source = { a: { b: 'hello' } }
+Object.assign(target, source)
+// { a: { b: 'hello' } }
+```
+* Object.assign可以用来处理数组，但是会把数组视为对象。
+```
+Object.assign([1, 2, 3], [4, 5])
+// [4, 5, 3]
 
+```
+## 常见用途
+* 为对象添加属性
+```
+class Point {
+  constructor(x, y) {
+    Object.assign(this, {x, y});
+  }
+}
+```
+* 为对象添加方法
+```
+Object.assign(SomeClass.prototype, {
+  someMethod(arg1, arg2) {
+    ···
+  },
+  anotherMethod() {
+    ···
+  }
+});
 
+// 等同于下面的写法
+SomeClass.prototype.someMethod = function (arg1, arg2) {
+  ···
+};
+SomeClass.prototype.anotherMethod = function () {
+  ···
+};
+```
+* 克隆对象
+```
+function clone(origin) {
+  return Object.assign({}, origin);
+}
+```
+如果想要保持继承链，可以采用下面的代码。
+```
+function clone(origin) {
+  let originProto = Object.getPrototypeOf(origin);
+  return Object.assign(Object.create(originProto), origin);
+}
+```
+* 合并多个对象
+```
+const merge =
+  (target, ...sources) => Object.assign(target, ...sources);
+如果希望合并后返回一个新对象，可以改写上面函数，对一个空对象合并。
 
+const merge =
+  (...sources) => Object.assign({}, ...sources);
+```
+* 为属性指定默认值
+```
+const DEFAULTS = {
+  logLevel: 0,
+  outputFormat: 'html'
+};
 
+function processContent(options) {
+  options = Object.assign({}, DEFAULTS, options);
+  console.log(options);
+  // ...
+}
+```
+##　属性的可枚举性
+ES6规定，所有Class的原型的方法都是不可枚举的。
+尽量不要用for...in循环，而用Object.keys()代替。
+## 属性的遍历
+1. for...in
+for...in循环遍历对象自身的和继承的可枚举属性（不含 Symbol 属性）。
 
+2. Object.keys(obj)
+Object.keys返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含 Symbol 属性）。
+
+1. Object.getOwnPropertyNames(obj)
+Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含 Symbol 属性，但是包括不可枚举属性）。
+
+1. Object.getOwnPropertySymbols(obj)
+Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有 Symbol 属性。
+
+1. Reflect.ownKeys(obj)
+Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管属性名是 Symbol 或字符串，也不管是否可枚举。
+>以上的5种方法遍历对象的属性，都遵守同样的属性遍历的次序规则。
+首先遍历所有属性名为数值的属性，按照数字排序。
+其次遍历所有属性名为字符串的属性，按照生成时间排序。
+最后遍历所有属性名为 Symbol 值的属性，按照生成时间排序。
+##` __proto__`属性
+## Object.setPrototypeOf()
+作用与 `__proto__`相同,设置一个对象的`prototype`对象,返回参数对象本身.
+```
+let proto = {};
+let obj = { x: 10 };
+Object.setPrototypeOf(obj, proto);
+
+proto.y = 20;
+proto.z = 40;
+
+obj.x // 10
+obj.y // 20
+obj.z // 40
+```
+## Object.getPrototypeOf
+该方法与Object.setPrototypeOf方法配套，用于读取一个对象的原型对象。
+
+`Object.getPrototypeOf(obj);`
+```
+function Rectangle() {
+  // ...
+}
+
+var rec = new Rectangle();
+
+Object.getPrototypeOf(rec) === Rectangle.prototype
+// true
+
+Object.setPrototypeOf(rec, Object.prototype);
+Object.getPrototypeOf(rec) === Rectangle.prototype
+// false
+```
+## Object.keys()，Object.values()，Object.entries()
+
+## 对象的扩展运算符 (es2017)
+## Null 传导运算符 
 
 
 ---
