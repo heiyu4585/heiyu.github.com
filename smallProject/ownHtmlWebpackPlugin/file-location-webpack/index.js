@@ -12,11 +12,11 @@ function MyPlugin(options) {
 }
 
 MyPlugin.prototype.apply = function(compiler) {
-    console.log( this.options)
+    // console.log( this.options)
     var paths = this.options.paths;
     compiler.plugin('compilation', function(compilation, options) {
         compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
-             console.log(htmlPluginData);
+             // console.log(htmlPluginData);
             // console.log(callback);
             for (var i = paths.length - 1; i >= 0; i--) {
                 htmlPluginData.assets.js.unshift(paths[i]);
