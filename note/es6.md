@@ -758,5 +758,1301 @@ function foo(){
 ```
 Array.from({length:3})
 //[undefined,undefined,undefined]
+```
+对于未部署改方法的浏览器,可以用`Array.prototype.slice` 方法代替.
+```
+const toArray = (()=>
+Array.from ? Array.from:obj=>[].slice.call(obj)
+)();
+```
+Array.from还可以接受第二个参数,作用类似于数组的map方法,用来对每个元素进行处理,将处理后的值放入返回的数组.
+```markdown
+Array .from(arrayLike,x=>x*x);
+//等同于
+Array.from(arrayLike).map(x=>x*x);
+Array.from([1,2,3],(x)=>x*x)
+//[1,4,9]
+```
+下面是提取DOM节点的文本内容
+```markdown
+let  spans =document.querySelectorAll('span.name');
+//map()
+let names1 = Array.prototype.map.call(spans,s=>s.textContent);
+
+//Array.from()
+let names2 = Array.from(spans,s=>s.textContent)
+```
+数组中布尔值为`false`的成员转为0
+```markdown
+Array.from([1,,2,,3],(n)=>n||0)
+//[1,0,2,0,3]
+```
+另一个列子是返回各种数据类型
+```
+function typeOf(){
+    return Array.from(argumnets,value=>typeof value)
+}
+typeOf(null,[],NaN)
+//['object','object','number']
+```
+Array.from()
+```markdown
+Array.from({ length: 2 }, () => 'jack')
+// ['jack', 'jack']
+```
+Array.from的第一个参数指定了第二个参数运行的次数。这种特性可以让该方法的用法变得非常灵活。
+
+将字符串转为数组,返回字符串的长度,避免大于\uFFF的Unicode字符,算作两个字符的bug
+
+```markdown
+function countSybols(string){
+    return Array.from(string).length;
+}
+```
+## Array.of()
+将一组值转为数组
+```
+Array.of(3,11,8) //[3,11,8]
+Array.of(3) //[3]
+Array.of(3).length //1
+```
+Array.of基本上可以用来替代Array()或new Array()，并且不存在由于参数不同而导致的重载。它的行为非常统一。
+```
+Array.of() // []
+Array.of(undefined) // [undefined]
+Array.of(1) // [1]
+Array.of(1, 2) // [1, 2]
+```
+Array.of方法可以用下面的代码模拟实现。
+```
+function Arrayof(){
+ return [].slice.call(arguments);
+}
+```
+## 数组实例的copyWithin() (没懂..)
+将指定位置的成员复制到其他位置,覆盖原有成员,返回当前数组.
+
+Array.prototype.copyWithin(target, start = 0, end = this.length)
 
 ```
+// 将3号位复制到0号位
+[1, 2, 3, 4, 5].copyWithin(0, 3, 4)
+// [4, 2, 3, 4, 5]
+
+// -2相当于3号位，-1相当于4号位
+[1, 2, 3, 4, 5].copyWithin(0, -2, -1)
+// [4, 2, 3, 4, 5]
+
+// 将3号位复制到0号位
+[].copyWithin.call({length: 5, 3: 1}, 0, 3)
+// {0: 1, 3: 1, length: 5}
+
+// 将2号位到数组结束，复制到0号位
+var i32a = new Int32Array([1, 2, 3, 4, 5]);
+i32a.copyWithin(0, 2);
+// Int32Array [3, 4, 5, 4, 5]
+
+// 对于没有部署TypedArray的copyWithin方法的平台
+// 需要采用下面的写法
+[].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4);
+// Int32Array [4, 2, 3, 4, 5]
+```
+## 数组实例的find()和findIndex()
+find找到第一个符合条件的数组成员,参数为回调函数,所有参数依次执行回调函数,直到找出第一个返回值为true的成员,然后返回该成员.如果没有符合条件的成员,则返回undefined.
+```
+[1,4,-5,10].find((n)=>n<0)
+//-5
+```
+上面代码中，find方法的回调函数可以接受三个参数，依次为当前的值、当前的位置和原数组。
+```
+[1, 5, 10, 15].find(function(value, index, arr) {
+  return value > 9;
+}) // 10
+```
+数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。
+```
+[1, 5, 10, 15].findIndex(function(value, index, arr) {
+  return value > 9;
+}) // 2
+```
+***这两个方法都可以接受第二个参数，用来绑定回调函数的this对象。***
+
+另外，这两个方法都可以发现NaN，弥补了数组的IndexOf方法的不足。
+```
+[NaN].indexOf(NaN)
+// -1
+
+[NaN].findIndex(y => Object.is(NaN, y))
+// 0
+```
+## 数组实例的fill()
+```
+['a','b','c'].fil(7)
+//[7,7,7]
+new Array(3).fill(7)
+// [7, 7, 7]
+```
+fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置。
+```
+['a', 'b', 'c'].fill(7, 1, 2)
+// ['a', 7, 'c']
+```
+## 数组实例的entries()，keys()和values()
+* key 是对键名的遍历
+* values() 是对键值的遍历
+* entries() 是对键值对的遍历
+```
+for (let index of ['a', 'b'].keys()) {
+  console.log(index);
+}
+// 0
+// 1
+
+for (let elem of ['a', 'b'].values()) {
+  console.log(elem);
+}
+// 'a'
+// 'b'
+
+for (let [index, elem] of ['a', 'b'].entries()) {
+  console.log(index, elem);
+}
+// 0 "a"
+// 1 "b"
+```
+如果不使用for...of循环，可以手动调用遍历器对象的next方法，进行遍历
+```
+let letter = ['a', 'b', 'c'];
+let entries = letter.entries();
+console.log(entries.next().value); // [0, 'a']
+console.log(entries.next().value); // [1, 'b']
+console.log(entries.next().value); // [2, 'c']
+```
+## 数组实例的includes()
+## 数组的空位
+ES6则是明确将空位转为undefined。
+
+#函数的扩展
+## 函数参数的默认值
+```
+function log(x, y) {
+  y = y || 'World';
+  console.log(x, y);
+}
+
+log('Hello') // Hello World
+log('Hello', 'China') // Hello China
+log('Hello', '') // Hello World
+```
+最后一行需要先判断一下是否为`undefined`,会输出''
+```
+if (typeof y === 'undefined') {
+  y = 'World';
+}
+```
+
+```
+function Point(x = 0, y = 0) {
+  this.x = x;
+  this.y = y;
+}
+
+var p = new Point();
+p // { x: 0, y: 0 }
+```
+默认值的好处
+* 阅读代码的人,可以立即意识到哪些参数是可以省略的
+* 如果彻底拿掉参数,也不会导致以前的代码无法运行.
+
+参数变量是默认声明的,不能在用`let`或`const`再次声明.
+
+```
+funciton foo(x =5){
+    let x =1; //error
+    const x =2; //error
+}
+```
+默认值是变量,每次调用都重新计算默认表达式,也就是默认值是`惰性求值`的.
+```
+let x = 99;
+function foo(p = x + 1) {
+  console.log(p);
+}
+
+foo() // 100
+
+x = 100;
+foo() // 101
+```
+## 与解构赋值默认值结合使用
+```
+function foo({x, y = 5}) {
+  console.log(x, y);
+}
+
+foo({}) // undefined, 5
+foo({x: 1}) // 1, 5
+foo({x: 1, y: 2}) // 1, 2
+foo() // TypeError: Cannot read property 'x' of undefined
+//为毛输出是Uncaught TypeError: Cannot match against 'undefined' or 'null'.
+
+```
+
+```
+function fetch(url, { body = '', method = 'GET', headers = {} }) {
+  console.log(method);
+}
+
+fetch('http://example.com', {})
+// "GET"
+
+fetch('http://example.com')
+// 报错
+```
+```
+function fetch(url, { method = 'GET' } = {}) {
+  console.log(method);
+}
+
+fetch('http://example.com')
+// "GET"
+
+```
+
+```
+// 写法一
+function m1({x = 0, y = 0} = {}) {
+  return [x, y];
+}
+
+// 写法二
+function m2({x, y} = { x: 0, y: 0 }) {
+  return [x, y];
+}
+// 函数没有参数的情况
+m1() // [0, 0]
+m2() // [0, 0]
+
+// x和y都有值的情况
+m1({x: 3, y: 8}) // [3, 8]
+m2({x: 3, y: 8}) // [3, 8]
+
+// x有值，y无值的情况
+m1({x: 3}) // [3, 0]
+m2({x: 3}) // [3, undefined]
+
+// x和y都无值的情况
+m1({}) // [0, 0];
+m2({}) // [undefined, undefined]
+
+m1({z: 3}) // [0, 0]
+m2({z: 3}) // [undefined, undefined]
+
+```
+写法一:函数参数的默认值是空对象,但是设置了对象的解构赋值的默认值
+写法二:函数参数的默认值是一个具有属性的对象,但是没有设置对象结构赋值的默认值.
+## 参数默认值的位置
+
+```
+// 例一
+function f(x = 1, y) {
+  return [x, y];
+}
+
+f() // [1, undefined]
+f(2) // [2, undefined])
+f(, 1) // 报错
+f(undefined, 1) // [1, 1]
+
+// 例二
+function f(x, y = 5, z) {
+  return [x, y, z];
+}
+
+f() // [undefined, 5, undefined]
+f(1) // [1, 5, undefined]
+f(1, ,2) // 报错  *//为毛报错*
+f(1, undefined, 2) // [1, 5, 2]
+```
+传入undefined会触发默认值,null不会
+```
+function foo(x = 5, y = 6) {
+  console.log(x, y);
+}
+
+foo(undefined, null)
+// 5 null
+```
+## 函数的length
+设置定了默认值,函数的length,将返回没有指定默认值的参数个数,也就是说,制定了默认值后.length属性将失真.
+```
+(function (a) {}).length // 1
+(function (a = 5) {}).length // 0
+(function (a, b, c = 5) {}).length // 2
+```
+这是因为length属性的含义是，该函数预期传入的参数个数。
+rest 参数也不会计入length属性。
+```
+(function(...args) {}).length // 0
+```
+如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了。
+```
+(function (a = 0, b, c) {}).length // 0
+(function (a, b = 1, c) {}).length // 1
+//什么鬼,没懂..
+```
+## 作用域
+一旦设置参数的默认值,函数进行声明初始化时,参数会形成一个单独的作用域(context),等到初始化结束,这个作用域会消失,
+```
+var x = 1;
+function f(x, y = x) {
+  console.log(y);
+}
+f(2) // 2
+```
+```
+let x = 1;
+function f(y = x) {
+  let x = 2;
+  console.log(y);
+}
+f() // 1
+```
+```
+function f(y = x) {
+  let x = 2;
+  console.log(y);
+}
+
+f() // ReferenceError: x is not defined
+```
+```
+var x = 1;
+function foo(x = x) {
+  // ...
+}
+foo() // ReferenceError: x is not defined
+//上面代码中，参数x = x形成一个单独作用域。实际执行的是let x = x，由于暂时性死区的原因，这行代码会报错”x 未定义“。
+```
+如果参数的默认值是一个函数
+```
+let foo = 'outer';
+function bar(func = x => foo) {
+  let foo = 'inner';
+  console.log(func()); 
+}
+bar(); // outer
+```
+```
+var x = 1;
+function foo(x, y = function() { x = 2; }) { //x = 2 是设置默认值
+  var x = 3;
+  y();
+  console.log(x);
+}
+foo() // 3
+x // 1
+```
+
+```
+var x = 1;
+function foo(x, y = function() { x = 2; }) {
+  x = 3;
+  y();
+  console.log(x);
+}
+foo() // 2
+x // 1
+```
+## 应用
+指定某个函数不得生活,如果省略就抛出一个错误
+```
+function throwIfMissing() {
+  throw new Error('Missing parameter');
+}
+function foo(mustBeProvided = throwIfMissing()) {
+  return mustBeProvided;
+}
+foo()
+// Error: Missing parameter
+```
+另外，可以将参数默认值设为undefined，表明这个参数是可以省略的。
+
+`function foo(optional = undefined) { ··· }`
+
+## rest 参数
+* rest参数搭配的变量是一个数组,该变量将多余的参数放入数组中.
+* rest参数中的变量代表一个数组,所以数组中特有的方法都可以用于这个变量.
+
+```
+function add(...values) {
+  let sum = 0;
+console.log(values)  //[2,5,3]
+  for (var val of values) {
+    sum += val;
+  }
+
+  return sum;
+}
+
+add(2, 5, 3) // 10
+```
+下面是一个 rest 参数代替arguments变量的例子。
+```
+// arguments变量的写法
+function sortNumbers() {
+  return Array.prototype.slice.call(arguments).sort();
+}
+
+// rest参数的写法
+const sortNumbers = (...numbers) => numbers.sort();
+```
+rest参数之后不能再有其他参数(即只是能是最后一个参数),否则会报错
+```
+//报错
+function f(a, ...b, c) {
+  // ...
+}
+```
+函数的length属性，不包括 rest 参数。
+```
+(function(a) {}).length  // 1
+(function(...a) {}).length  // 0
+(function(a, ...b) {}).length  // 1
+```
+## 扩展运算符
+扩展运算符(spread)是三个点(...).它好比rest的逆运算,将一个数组转为用逗号分隔的参数序列.
+```
+console.log(...[1, 2, 3])
+// 1 2 3
+
+console.log(1, ...[2, 3, 4], 5)
+// 1 2 3 4 5
+
+[...document.querySelectorAll('div')]
+// [<div>, <div>, <div>]
+```
+该运算符主要用于函数调用。
+```
+function push(array, ...items) {
+  array.push(...items); //扩展运算符
+}
+
+function add(x, y) {
+  return x + y;
+}
+
+var numbers = [4, 38];
+add(...numbers) // 42 //扩展运算符
+```
+扩展运算符与正常的函数参数可以结合使用，非常灵活。
+```
+function f(v, w, x, y, z) { }
+var args = [0, 1];
+f(-1, ...args, 2, ...[3]);
+```
+## 代替数组的apply方法
+由于扩展运算符可以展开数组，所以不再需要apply方法，将数组转为函数的参数了。
+```
+// ES5的写法
+function f(x, y, z) {
+  // ...
+}
+var args = [0, 1, 2];
+f.apply(null, args);
+
+// ES6的写法
+function f(x, y, z) {
+  // ...
+}
+var args = [0, 1, 2];
+f(...args);
+```
+
+```
+// ES5的写法
+Math.max.apply(null, [14, 3, 77])
+
+// ES6的写法
+Math.max(...[14, 3, 77])
+
+// 等同于
+Math.max(14, 3, 77);
+```
+另一个例子是通过push函数，将一个数组添加到另一个数组的尾部。
+```
+// ES5的写法
+var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+Array.prototype.push.apply(arr1, arr2);
+
+// ES6的写法
+var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+arr1.push(...arr2);
+```
+```
+// ES5
+new (Date.bind.apply(Date, [null, 2015, 1, 1]))
+// ES6
+new Date(...[2015, 1, 1]);
+```
+## 扩展运算符的应用
+1. 合并数组
+```
+// ES5
+[1, 2].concat(more)
+// ES6
+[1, 2, ...more]
+
+var arr1 = ['a', 'b'];
+var arr2 = ['c'];
+var arr3 = ['d', 'e'];
+
+// ES5的合并数组
+arr1.concat(arr2, arr3);
+// [ 'a', 'b', 'c', 'd', 'e' ]
+
+// ES6的合并数组
+[...arr1, ...arr2, ...arr3]
+// [ 'a', 'b', 'c', 'd', 'e' ]
+```
+2. 与解构赋值结合
+3. 扩展运算符可以与解构赋值结合起来，用于生成数组。
+```
+// ES5
+a = list[0], rest = list.slice(1)
+// ES6
+[a, ...rest] = list
+```
+```
+const [first, ...rest] = [1, 2, 3, 4, 5];
+first // 1
+rest  // [2, 3, 4, 5]
+
+const [first, ...rest] = [];
+first // undefined
+rest  // []
+
+const [first, ...rest] = ["foo"];
+first  // "foo"
+rest   // []
+```
+**如果将扩展运算符用于数组赋值，只能放在参数的最后一位，否则会报错。**
+
+```
+const [...butLast, last] = [1, 2, 3, 4, 5];
+// 报错
+const [first, ...middle, last] = [1, 2, 3, 4, 5];
+// 报错
+```
+### 函数的返回值
+JavaScript的函数只能返回一个值，如果需要返回多个值，只能返回数组或对象。扩展运算符提供了解决这个问题的一种变通方法。
+```
+var dateFields = readDateFields(database);
+var d = new Date(...dateFields);
+```
+上面代码从数据库取出一行数据，通过扩展运算符，直接将其传入构造函数Date[^没太懂].
+```
+var dateFields = readDateFields(database);
+var d = new Date(...dateFields);
+```
+## 字符串
+将字符串转为真正的数组
+[...'hello']
+// [ "h", "e", "l", "l", "o" ]
+
+## 实现了Iterator的对象[^没太懂].
+任何Iterator接口的对象,都可以用扩展运算符转为真正的数组
+```
+var nodeList = document.querySelectorAll('div');
+var array = [...nodeList];
+```
+对于那些没有部署Iterator接口的类似数组的对象，扩展运算符就无法将其转为真正的数组。
+```
+let arrayLike = {
+  '0': 'a',
+  '1': 'b',
+  '2': 'c',
+  length: 3
+};
+
+// TypeError: Cannot spread non-iterable object.
+let arr = [...arrayLike];
+```
+上面代码中，arrayLike是一个类似数组的对象，但是没有部署Iterator接口[^没太懂]，扩展运算符就会报错。这时，可以改为使用Array.from方法将arrayLike转为真正的数组。
+
+## Map和Setjiegou ,Generator函数
+只要有Iterator接口的东西,都可以使用扩展运算符
+* Map结构[^没太懂]
+```
+let map = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
+
+let arr = [...map.keys()]; // [1, 2, 3]
+```
+* Generator函数[^没太懂]
+```
+var go = function*(){
+  yield 1;
+  yield 2;
+  yield 3;
+};
+
+[...go()] // [1, 2, 3]
+```
+如果对没有iterator接口的对象，使用扩展运算符，将会报错。
+```
+var obj = {a: 1, b: 2};
+let arr = [...obj]; // TypeError: Cannot spread non-iterable object
+```
+## 严格模式
+规定只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
+```
+// 报错
+function doSomething(a, b = a) {
+  'use strict';
+  // code
+}
+
+// 报错
+const doSomething = function ({a, b}) {
+  'use strict';
+  // code
+};
+
+// 报错
+const doSomething = (...a) => {
+  'use strict';
+  // code
+};
+
+const obj = {
+  // 报错
+  doSomething({a, b}) {
+    'use strict';
+    // code
+  }
+};
+```
+>这样规定的原因是，函数内部的严格模式，同时适用于函数体和函数参数。但是，函数执行的时候，先执行函数参数，然后再执行函数体。这样就有一个不合理的地方，只有从函数体之中，才能知道参数是否应该以严格模式执行，但是参数却应该先于函数体执行。
+
+* 设置全局的严格模式
+* 把函数抱在一个无参数的立即执行函数里面
+## name属性
+ ES6 的name属性会返回实际的函数名。
+```
+var f = function () {};
+
+// ES5
+f.name // ""
+
+// ES6
+f.name // "f"
+```
+将一个具名函数赋值给一个变量，则 ES5 和 ES6 的name属性都返回这个具名函数原本的名字。
+```
+const bar = function baz() {};
+
+// ES5
+bar.name // "baz"
+
+// ES6
+bar.name // "baz"
+```
+Function构造函数返回的函数实例，name属性的值为anonymous。
+```
+(new Function).name // "anonymous"
+```
+bind返回的函数，name属性值会加上bound前缀[^没太懂]。
+```
+function foo() {};
+foo.bind({}).name // "bound foo"
+
+(function(){}).bind({}).name // "bound "
+```
+## 箭头函数
+* 如果箭头函数不需要参数或者需要多个参数,就使用一个圆括号代表参数部分.
+```
+var f = () => 5;
+// 等同于
+var f = function () { return 5 };
+
+var sum = (num1, num2) => num1 + num2;
+// 等同于
+var sum = function(num1, num2) {
+  return num1 + num2;
+};
+```
+* 如果箭头函数直接返回一个对象,必须在对象外面加上括号.
+```
+var getTempItem = id => ({ id: id, name: "Temp" });
+```
+* 箭头函数可以与变量解构结合使用。
+```
+const full = ({ first, last }) => first + ' ' + last;
+
+// 等同于
+function full(person) {
+  return person.first + ' ' + person.last;
+}
+```
+* 箭头函数使得表达更加简洁。
+```
+const isEven = n => n % 2 == 0;
+const square = n => n * n;
+```
+* 简化回调函数。
+```
+// 正常函数写法
+[1,2,3].map(function (x) {
+  return x * x;
+});
+
+// 箭头函数写法
+[1,2,3].map(x => x * x);
+```
+
+```
+// 正常函数写法
+var result = values.sort(function (a, b) {
+  return a - b;
+});
+
+// 箭头函数写法
+var result = values.sort((a, b) => a - b);
+```
+* rest 参数与箭头函数结合的例子。 
+```
+const numbers = (...nums) => nums;
+numbers(1, 2, 3, 4, 5)
+// [1,2,3,4,5]
+
+const headAndTail = (head, ...tail) => [head, tail];
+`   
+headAndTail(1, 2, 3, 4, 5)
+// [1,[2,3,4,5]]
+```
+### 使用注意点
+1. `this`对象,是定义时所在的对象,而不是使用时所在的对象
+2. 不可以当做构造函数,也就是不可以使用new命令.
+3. 不可以使用`arguments`对象,该对象在函数体内不存在,如果要用,可以用`rest`参数代替
+4. 不可以使用`yield`命令,因此箭头函数不能用作Generator函数.
+
+箭头函数转成 ES5 的代码如下
+```
+// ES6
+function foo() {
+  setTimeout(() => {
+    console.log('id:', this.id);
+  }, 100);
+}
+
+// ES5
+function foo() {
+  var _this = this;
+
+  setTimeout(function () {
+    console.log('id:', _this.id);
+  }, 100);
+}
+```
+请问下面的代码之中有几个this？
+```
+function foo() {
+  return () => {
+    return () => {
+      return () => {
+        console.log('id:', this.id);
+      };
+    };
+  };
+}
+
+var f = foo.call({id: 1});
+
+var t1 = f.call({id: 2})()(); // id: 1
+var t2 = f().call({id: 3})(); // id: 1
+var t3 = f()().call({id: 4}); // id: 1
+```
+除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target。
+```
+function foo() {
+  setTimeout(() => {
+    console.log('args:', arguments);
+  }, 100);
+}
+foo(2, 4, 6, 8)
+// args: [2, 4, 6, 8]
+```
+
+另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。
+```
+(function() {
+  return [
+    (() => this.x).bind({ x: 'inner' })()
+  ];
+}).call({ x: 'outer' });
+// ['outer']
+```
+上面代码中，箭头函数没有自己的this，所以bind方法无效，内部的this指向外部的this。
+
+## 箭头函数的嵌套
+箭头函数内部，还可以再使用箭头函数。下面是一个 ES5 语法的多重嵌套函数。
+```
+function insert(value) {
+  return {into: function (array) {
+    return {after: function (afterValue) {
+      array.splice(array.indexOf(afterValue) + 1, 0, value);
+      return array;
+    }};
+  }};
+}
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+
+```
+上面这个函数，可以使用箭头函数改写。
+```
+let insert = (value) => ({into: (array) => ({after: (afterValue) => {
+  array.splice(array.indexOf(afterValue) + 1, 0, value);
+  return array;
+}})});
+
+insert(2).into([1, 3]).after(1); //[1, 2, 3]
+```
+下面是一个部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入。
+```
+const pipeline = (...funcs) =>
+  val => funcs.reduce((a, b) => b(a), val);
+
+const plus1 = a => a + 1;
+const mult2 = a => a * 2;
+const addThenMult = pipeline(plus1, mult2);
+
+addThenMult(5)
+// 12
+```
+如果觉得上面的写法可读性比较差，也可以采用下面的写法。
+```
+const plus1 = a => a + 1;
+const mult2 = a => a * 2;
+
+mult2(plus1(5))
+// 12
+```
+箭头函数还有一个功能，就是可以很方便地改写λ演算。
+```
+// λ演算的写法[^没太懂]
+fix = λf.(λx.f(λv.x(x)(v)))(λx.f(λv.x(x)(v)))
+
+// ES6的写法
+var fix = f => (x => f(v => x(x)(v)))
+               (x => f(v => x(x)(v)));
+```
+
+## 绑定 this(es7)
+## 尾调用优化
+尾调用（Tail Call）是函数式编程的一个重要概念，本身非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。
+函数式编程有一个概念，叫做柯里化（currying），意思是将多参数的函数转换成单参数的形式。这里也可以使用柯里化。
+## 尾递归优化的实现 
+## 尾递归优化的实现 
+# 对象的扩展
+ES6允许直接写入变量和函数,作为对象的属性和方法.
+```
+var foo ='bar';
+var baz={foo};
+baz //{foo:"bar"}
+```
+```
+function f(x,y){
+return {x,y};
+}
+//等同于
+function f(x,y){
+    return {x:x,y:y}
+}
+```
+除了属性简写,方法也可以简写
+```
+var o={
+    method(){
+    
+    }
+}
+//等同于
+var o={
+    medthod:function(){
+        return "Hello";
+    }
+}
+
+```
+```
+var birth = '2000/01/01';
+var Person = {
+  name: '张三',
+  //等同于birth: birth
+  birth,
+  // 等同于hello: function ()...
+  hello() { console.log('我的名字是', this.name); }
+};
+```
+```
+function getPoint() {
+  var x = 1;
+  var y = 10;
+  return {x, y};
+}
+
+getPoint()
+```
+## 属性表达式
+```
+let obj={
+    [prokey]:true,
+    ['a'+'bc']:123
+}
+```
+```
+var lastWord = 'last word';
+
+var a = {
+  'first word': 'hello',
+  [lastWord]: 'world'
+};
+
+a['first word'] // "hello"
+a[lastWord] // "world"
+a['last word'] // "world"
+```
+表达式还可以用于定义方法名
+```
+let obj = {
+  ['h' + 'ello']() {
+    return 'hi';
+  }
+};
+
+obj.hello() // hi
+```
+属性名表达式与简洁表示法,不能同时使用,会报错
+```
+// 报错
+var foo = 'bar';
+var bar = 'abc';
+var baz = { [foo] };
+
+// 正确
+var foo = 'bar';
+var baz = { [foo]: 'abc'};
+```
+注意，属性名表达式如果是一个对象，默认情况下会自动将对象转为字符串[object Object]，这一点要特别小心。
+```
+const keyA = {a: 1};
+const keyB = {b: 2};
+
+const myObject = {
+  [keyA]: 'valueA',
+  [keyB]: 'valueB'
+};
+
+myObject // Object {[object Object]: "valueB"}
+
+```
+## 方法的name属性
+函数的name属性,返回函数名,对象方法也有name属性
+
+```
+const person = {
+  sayName() {
+    console.log('hello!');
+  },
+};
+
+person.sayName.name   // "sayName"
+```
+如果对象的方法使用了取值函数（getter）和存值函数（setter），则name属性不是在该方法上面，而是该方法的属性的描述对象的get和set属性上面，返回值是方法名前加上get和set。
+
+
+```
+const obj = {
+  get foo() {},
+  set foo(x) {}
+};
+
+obj.foo.name
+// TypeError: Cannot read property 'name' of undefined
+
+const descriptor = Object.getOwnPropertyDescriptor(obj, 'foo');
+
+descriptor.get.name // "get foo"
+descriptor.set.name // "set foo"
+```
+有两种特殊情况：bind方法创造的函数，name属性返回bound加上原函数的名字；Function构造函数创造的函数，name属性返回anonymous。
+```
+(new Function()).name // "anonymous"
+
+var doSomething = function() {
+  // ...
+};
+doSomething.bind().name // "bound doSomething"
+```
+如果对象的方法是一个 Symbol 值，那么name属性返回的是这个 Symbol 值的描述。
+```
+const key1 = Symbol('description');
+const key2 = Symbol();
+let obj = {
+  [key1]() {},
+  [key2]() {},
+};
+obj[key1].name // "[description]"
+obj[key2].name // ""
+```
+上面代码中，key1对应的 Symbol 值有描述，key2没有。
+
+## Object.is()
+比较两个值是否严格相等,与严格比较运算符(===)的行为基本一致.
+```
+Object.is('foo', 'foo')
+// true
+Object.is({}, {})
+// false
+```
+不同之处只有两个：一是+0不等于-0，二是NaN等于自身。
+```
++0 === -0 //true
+NaN === NaN // false
+
+Object.is(+0, -0) // false
+Object.is(NaN, NaN) // true
+```
+## Object.assign()
+对象合并,将源对象的所有可枚举属性,复制到目标对象.
+```
+var target = { a: 1 };
+
+var source1 = { b: 2 };
+var source2 = { c: 3 };
+
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+```
+* 如果只有一个参数 ,会直接返回该参数
+* 如果该参数不是对象,则会先转成对象,然后返回
+```
+Object.assign(2) 
+// Number {[[PrimitiveValue]]: 2}
+typeof Object.assign(2) // "object"
+```
+* 由于undefined和null无法转成对象，所以如果它们作为参数，就会报错。
+```
+Object.assign(undefined) // 报错
+Object.assign(null) // 报错
+```
+* 于undefined和null不在首位,就不会报错.
+
+```
+let obj = {a: 1};
+Object.assign(obj, undefined) === obj // true
+Object.assign(obj, null) === obj // true
+```
+* 其他类型的值（即数值、字符串和布尔值）不在首参数，也不会报错。但是，除了字符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。
+
+```
+var v1 = 'abc';
+var v2 = true;
+var v3 = 10;
+
+var obj = Object.assign({}, v1, v2, v3);
+console.log(obj); // { "0": "a", "1": "b", "2": "c" }
+```
+Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+```
+Object.assign({b: 'c'},
+  Object.defineProperty({}, 'invisible', {
+    enumerable: false,
+    value: 'hello'
+  })
+)
+// { b: 'c' }
+```
+属性名为Symbol值的属性，也会被Object.assign拷贝。
+```
+Object.assign({ a: 'b' }, { [Symbol('c')]: 'd' })
+// { a: 'b', Symbol(c): 'd' }
+```
+## 注意点
+* Object.assign方法实行的是浅拷贝，而不是深拷贝。
+```
+var obj1 = {a: {b: 1}};
+var obj2 = Object.assign({}, obj1);
+
+obj1.a.b = 2;
+obj2.a.b // 2
+```
+* 对于这种嵌套的对象，一旦遇到同名属性，Object.assign的处理方法是替换，而不是添加。
+```
+var target = { a: { b: 'c', d: 'e' } }
+var source = { a: { b: 'hello' } }
+Object.assign(target, source)
+// { a: { b: 'hello' } }
+```
+* Object.assign可以用来处理数组，但是会把数组视为对象。
+```
+Object.assign([1, 2, 3], [4, 5])
+// [4, 5, 3]
+
+```
+## 常见用途
+* 为对象添加属性
+```
+class Point {
+  constructor(x, y) {
+    Object.assign(this, {x, y});
+  }
+}
+```
+* 为对象添加方法
+```
+Object.assign(SomeClass.prototype, {
+  someMethod(arg1, arg2) {
+    ···
+  },
+  anotherMethod() {
+    ···
+  }
+});
+
+// 等同于下面的写法
+SomeClass.prototype.someMethod = function (arg1, arg2) {
+  ···
+};
+SomeClass.prototype.anotherMethod = function () {
+  ···
+};
+```
+* 克隆对象
+```
+function clone(origin) {
+  return Object.assign({}, origin);
+}
+```
+如果想要保持继承链，可以采用下面的代码。
+```
+function clone(origin) {
+  let originProto = Object.getPrototypeOf(origin);
+  return Object.assign(Object.create(originProto), origin);
+}
+```
+* 合并多个对象
+```
+const merge =
+  (target, ...sources) => Object.assign(target, ...sources);
+如果希望合并后返回一个新对象，可以改写上面函数，对一个空对象合并。
+
+const merge =
+  (...sources) => Object.assign({}, ...sources);
+```
+* 为属性指定默认值
+```
+const DEFAULTS = {
+  logLevel: 0,
+  outputFormat: 'html'
+};
+
+function processContent(options) {
+  options = Object.assign({}, DEFAULTS, options);
+  console.log(options);
+  // ...
+}
+```
+##　属性的可枚举性
+ES6规定，所有Class的原型的方法都是不可枚举的。
+尽量不要用for...in循环，而用Object.keys()代替。
+## 属性的遍历
+1. for...in
+for...in循环遍历对象自身的和继承的可枚举属性（不含 Symbol 属性）。
+
+2. Object.keys(obj)
+Object.keys返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含 Symbol 属性）。
+
+1. Object.getOwnPropertyNames(obj)
+Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含 Symbol 属性，但是包括不可枚举属性）。
+
+1. Object.getOwnPropertySymbols(obj)
+Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有 Symbol 属性。
+
+1. Reflect.ownKeys(obj)
+Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管属性名是 Symbol 或字符串，也不管是否可枚举。
+>以上的5种方法遍历对象的属性，都遵守同样的属性遍历的次序规则。
+首先遍历所有属性名为数值的属性，按照数字排序。
+其次遍历所有属性名为字符串的属性，按照生成时间排序。
+最后遍历所有属性名为 Symbol 值的属性，按照生成时间排序。
+##` __proto__`属性
+## Object.setPrototypeOf()
+作用与 `__proto__`相同,设置一个对象的`prototype`对象,返回参数对象本身.
+```
+let proto = {};
+let obj = { x: 10 };
+Object.setPrototypeOf(obj, proto);
+
+proto.y = 20;
+proto.z = 40;
+
+obj.x // 10
+obj.y // 20
+obj.z // 40
+```
+## Object.getPrototypeOf
+该方法与Object.setPrototypeOf方法配套，用于读取一个对象的原型对象。
+
+`Object.getPrototypeOf(obj);`
+```
+function Rectangle() {
+  // ...
+}
+
+var rec = new Rectangle();
+
+Object.getPrototypeOf(rec) === Rectangle.prototype
+// true
+
+Object.setPrototypeOf(rec, Object.prototype);
+Object.getPrototypeOf(rec) === Rectangle.prototype
+// false
+```
+## Object.keys()，Object.values()，Object.entries()
+
+## 对象的扩展运算符 (es2017)
+## Null 传导运算符 
+
+
+---
+
+
+# 不懂的东西。
+* for of
+```
+for (let [index, elem] of ['a', 'b'].entries()) {
+  console.log(index, elem);
+}
+// 0 "a"
+// 1 "b"
+```
+*  遍历器对象
+*  部署Iterator接口 什么是Iterator接口
+*  遍历器
+* 数组的方法都有哪些
+*  rest 参数 (用于获取函数的多余参数)
+`(function(...args) {}).length // 0`
+* 什么是Map Set 结构
+* 柯里化   
+* 尾调用优化
+* 递归调用
+
+
+[^没太懂]: 主要解决
