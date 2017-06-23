@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="description" content=""/>
+    <meta http-equiv="keywords" content="">
+    <style>
+        /* 禁用iPhone中Safari的字号自动调整 */
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        /* 去除iPhone中默认的input样式 */
+        input[type="submit"],
+        input[type="reset"],
+        input[type="button"],
+        input{-webkit-appearance:none; resize: none;}
+
+        /* 取消链接高亮  */
+        body,div,ul,li,ol,h1,h2,h3,h4,h5,h6,input,textarea,select,p,dl,dt,dd,a,img,button,form,table,th,tr,td,tbody,article,
+        aside, details,figcaption,figure,footer,header,hgroup, menu,nav,section{ -webkit-tap-highlight-color:rgba(0, 0, 0, 0); }
+        /* 设置HTML5元素为块 */
+        article, aside, details,figcaption,figure,footer,header,hgroup, menu,nav,section {
+            display: block;
+        }
+        u{
+            text-decoration: none;
+        }
+        /* 图片自适应 */
+        img {
+            max-width: 100%;
+            height: auto;
+            width:auto\9; /* ie8 */
+            -ms-interpolation-mode:bicubic;/*为了照顾ie图片缩放失真*/
+            display: block;
+            border: 0;
+        }
+        /* 初始化 */
+        body,div,ul,li,ol,h1,h2,h3,h4,h5,h6,input,textarea,select,p,dl,dt,dd,a,img,button,form,table,th,tr,td,tbody,article,
+        aside, details,figcaption,figure,footer,header,hgroup, menu,nav,section{margin:0; padding:0; border:none;}
+        body{font-family:Microsoft YaHei,Tahoma,Arial,sans-serif;font-size: 100%;}
+        address,em,i{font-style:normal;}/*斜体扶正*/
+        strong{font-weight: normal;}
+        a{text-decoration:none; color:#333; font-family:Microsoft YaHei,Tahoma,Arial,sans-serif;}
+        a:hover{text-decoration:none;}
+        ul,ol{list-style:none;}
+        h1, h2, h3, h4, h5, h6{ font-size:100%; font-family:Microsoft YaHei;font-weight: normal;}
+        img{border: none;}
+
+        /*统一所有input的某些样式*/
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+        button[disabled],
+        html input[disabled] {
+            cursor: default;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+        input {
+            line-height: normal;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            height: auto;
+        }
+        input[type="search"] {
+            -webkit-appearance: textfield;
+            box-sizing: content-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+        textarea{
+            resize:none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        /*公共样式的设定*/
+        .fontYh{
+            font-family:Microsoft YaHei;
+        }
+        .bgW{
+            background-color: #fff;
+        }
+        /*.clear{
+            display:block;
+            font-size:0;
+            line-height:0;
+            clear:both;
+        }*/
+        .clear:after{
+            content:".";
+            display:block;
+            height:0;
+            clear:both;
+            visibility:hidden;
+        }
+        .clear{
+            zoom:1;
+        }
+        /*常用字号设置*/
+        .font14{
+            font-size:14px;
+        }
+        .font16{
+            font-size:16px;
+        }
+        .font18{
+            font-size:18px;
+        }
+        .fontN{
+            font-weight:normal;
+        }
+        .fontB{
+            font-weight:bold;
+        }
+        .hide{
+            display: none;
+        }
+        .bgF{
+            background: #f0f5f8;
+        }
+        /*兼容移动端字号自适应*/
+        /* 新版css **/
+
+        @media (max-width: 300px) {
+            body {
+                font-size: 40%;
+            }
+        }
+        @media (min-width: 300px) and (max-width: 350px) {
+            body {
+                font-size: 50%;
+            }
+        }
+
+        @media (min-width: 350px) and (max-width: 400px) {
+            body {
+                font-size: 58%;
+            }
+
+        }
+
+        @media (min-width: 400px) and (max-width: 450px) {
+            body {
+                font-size: 64%;
+            }
+
+        }
+
+        @media (min-width: 450px) and (max-width: 500px) {
+            body {
+                font-size: 72%;
+            }
+
+        }
+
+        @media (min-width: 500px) and (max-width: 550px) {
+            body {
+                font-size: 80%;
+            }
+
+        }
+
+        @media (min-width: 550px) and (max-width: 600px) {
+            body {
+                font-size: 88%;
+            }
+
+        }
+
+        @media (min-width: 600px) and (max-width: 650px) {
+            body {
+                font-size: 96%;
+            }
+
+        }
+
+        @media (min-width: 650px) and (max-width: 700px) {
+            body {
+                font-size: 104%;
+            }
+
+        }
+
+        @media (min-width: 700px) and (max-width: 750px) {
+            body {
+                font-size: 112%;
+            }
+
+        }
+
+        /**
+         * 公用的样式：比如nav,footer,popup;
+         */
+
+        @charset"utf-8";
+
+        /*全局通用的底部下载悬浮窗*/
+
+        .downloadBot {
+            padding: 0 5.87% 0 5.3%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, .75);
+            z-index: 5;
+        }
+
+        .closeIcon {
+            display: block;
+            width: 3rem;
+            height: 3rem;
+            background: url(//m.medplus.net/image/popup/closeIcon.png) no-repeat;
+            background-size: 22px 21px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .closeIcon img {
+            width: 44px;
+        }
+
+        .downloadBot .dlLogo {
+            float: left;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: url(//m.medplus.net/image/popup/dlLogo.jpg) no-repeat;
+            background-size: 40px 40px;
+            margin: 0.625rem 0.625rem 0.625rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .downloadBot .dlLogo img {
+            width: 80px;
+        }
+
+        .dlWord {
+            width: 51.3%;
+            margin: 0.625rem 0 0;
+            float: left;
+            color: #fff;
+            line-height: 1.375rem;
+        }
+
+        .dlWord h3 {
+            font-size: 0.9375rem;
+        }
+
+        .dlWord p {
+            font-size: 0.6875rem;
+            line-height: 1;
+        }
+
+        .downloadBot .dlNowBtn {
+            margin-top: 0.9375rem;
+            float: left;
+        }
+
+        .downloadBot .dlNowBtn a {
+            color: #fff;
+            width: 5.625rem;
+            line-height: 1.875rem;
+            background: #02b875;
+            font-size: 0.875rem;
+            text-align: center;
+            border-radius: 3px;
+            display: block;
+        }
+
+
+        /*全局通用的底部下载悬浮窗*/
+
+
+        /*中间弹层APP下载提示*/
+
+        .downloadMiddle {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .60);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+        }
+
+        .dlM {
+            width: 80%;
+            background-color: #fff;
+            position: absolute;
+            border-radius: 10px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 3;
+            -ms-transform:translate(-50%,-50%); 	/* IE 9 */
+            -moz-transform:translate(-50%,-50%); 	/* Firefox */
+            -webkit-transform:translate(-50%,-50%); /* Safari 和 Chrome */
+            -o-transform:translate(-50%,-50%);
+            max-width: 300px;
+        }
+
+        .dlMclose {
+            width: 1.6875rem;
+            height: 2.5625rem;
+            background: url(//m.medplus.net/image/popup/dlMclose.png) no-repeat;
+            background-size: 27px auto;
+            position: absolute;
+            top: -2.5627rem;
+            right: 0;
+        }
+
+        .dlMlogo {
+            width: 3.91rem;
+            height: 2.25rem;
+            background: url(//m.medplus.net/image/popup/dlMlogo.png) no-repeat;
+            background-size: 62.5px 36px;
+            margin: 3.22rem auto 1.8125rem;
+        }
+
+        .dlMword {
+            text-align: center;
+            line-height: 1.75rem;
+            color: #333;
+        }
+
+        .dlMword h4 {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .dlMword p {
+            font-size: 1.0625rem;
+        }
+
+        .dlM .dlNowBtn {
+            width: 83.3%;
+            margin: 3.25rem auto 3.125rem;
+            line-height: 2.75rem;
+            font-size: 1.125rem;
+            text-align: center;
+        }
+
+        .dlM .dlNowBtn a {
+            width: 100%;
+            display: inline-block;
+            margin: 0 auto;
+            background: #02b875;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+
+        /*中间弹层APP下载提示*/
+
+
+        /**
+         * 公用的底部返回，点赞，分享按钮样式
+         * 有产品终端页（返回按钮）
+         * 订阅页面（返回和分享按钮）
+         * 活动页面（返回）
+         */
+
+        .floatBtns {
+            width: 90.4%;
+            height: auto;
+            position: fixed;
+            bottom: 1.09375rem;
+            left: 4.8%;
+            z-index: 3;
+        }
+
+        .floatBtns a {
+            float: left;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #1bbf83;
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .20);
+        }
+
+        .floatBtns .backBtn {
+            background-image: url(//m.medplus.net/image/live/backBtn.png);
+            background-size: 21px 16.5px;
+        }
+
+        .floatBtns .likeBtn {
+            background-image: url(//m.medplus.net/image/live/likeBtn.png);
+            background-size: 20px 16px;
+            margin-left: 59%;
+        }
+
+        .floatBtns .shareBtn {
+            background-image: url(//m.medplus.net/image/live/shareBtn.png);
+            background-size: 18px 16px;
+            float: right;
+        }
+
+
+        /*banner轮播样式通用*/
+
+        #banner {
+            position: relative;
+        }
+
+        .bannerBox {
+            position: relative;
+            height: 100%;
+            margin: 0 auto;
+            overflow: hidden
+        }
+
+        .bannerShow {
+            position: absolute;
+            width: 100%;
+            min-height: 160px;
+            height: 100%;
+            left: 0
+        }
+
+        .bannerShow li {
+            position: relative;
+            float: left;
+            height: 100%;
+        }
+
+        .bannerShow li a {
+            display: block;
+        //width: 100%;
+            text-align: center;
+            height: 100%;
+        }
+
+        .bannerShow li a img {
+        //width:100%;
+            height: 100%;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .bannerTab {
+            z-index: 2;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+        }
+
+        .bannerTab ol li {
+            width: 0.3125rem;
+            height: 0.3125rem;
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.625rem;
+        }
+
+        .bannerTab ol li.active {
+            width: 0.9375rem;
+            height: 0.3125rem;
+            border-radius: 25px;
+        }
+        /*2016/9/2 列表页 点赞样式*/
+        .mianMidCollection{
+            float: right;
+            width:auto;
+            height:0.9375rem ;
+            padding: 0.875rem 0 1rem;
+        }
+        .mianMidCollection li{
+            float: right;
+        }
+        .mianMidCollection li:nth-child(2){
+            margin-right: 0.9375rem;
+            position: relative;
+        }
+        .mianMidCollection li:nth-child(2) span{
+            display: none;
+            position: absolute;
+            top:-1rem;
+            left: 0.8rem;
+            color: #0ab375;
+            font-size: 0.8125rem;
+        }
+        .mianMidCollection .collectionImg{
+            float: left;
+        }
+        .mianMidCollection .collectionImg img {
+            width: 1.16rem;
+            height:0.9375rem;
+        }
+        .mianMidCollection .collectionIm img,.mianMidCollection .collHover img{
+            float: left;
+            width: 1.12rem;
+            height: 1.12rem;
+            margin-top: -0.1rem;
+            margin-right: 0.3rem;
+        }
+
+        .mianMidCollection .number{
+            font-size: 0.875rem;
+            color: #aaacbc;
+            line-height: 1rem;
+            margin-left:0.3rem ;
+            float: left;
+            /*text-align: center;*/
+        }
+
+        /*2016/9/2 文章终端页 点赞样式*/
+        .docClick{
+            width: 100%;
+            padding-bottom: 2.19rem;
+        }
+        .docClick .docMain{
+            width: 3.9375rem;
+            height: 3.9375rem;
+            border: 1px solid #b8bcc6;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .docClick .docMain .docMainMid{
+            margin-top: 0.8rem;
+        }
+        .docClick .docMain .docMainMid p{
+            text-align: center;
+            font-size: 0.78rem;
+            color: #777777;
+            margin-top: 0.3rem;
+        }
+        .docClick .docMain .docHover p{
+            color: #18b77d;
+        }
+        .docClick .docMain .docMainMid img{
+            width: 1.12rem;
+            height: 1.12rem;
+            margin: 0 auto;
+        }
+        /*2016/9/2 列表页 点赞样式*/
+        .li_likeP{
+            position: relative;
+            margin-right: 0.5rem;
+        }
+        .li_likeP img{
+            height:1.2rem;
+            margin-top:-4px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .li_likeP .number{
+            font-size: 0.875rem;
+            color: #777777;
+            line-height: 0.875rem;
+            margin-left: 0.2rem;
+        }
+        .li_likeP .li_span{
+            position: absolute;
+            left: 0.3rem;
+            top:-0.8rem;
+            color: #0ab375;
+        }
+        /*品牌终端页导航图大小设置*/
+        .detials_product .productBox .swiper-container,.subscribeTop .swiper-container{
+            height: 160px;
+        }
+        .detials_product .productBox .swiper-slide,.subscribeTop .swiper-slide{
+            height:100%;
+            text-align:center;
+        }
+        .detials_product .productBox .swiper-slide img,.subscribeTop .swiper-slide img{
+            display: inline-block;
+            vertical-align: top;
+            height: 100%;
+
+        }
+        .detials_product .productBox .swiper-pagination ,.subscribeTop .swiper-pagination{
+            position: absolute;
+            left: 0;
+            text-align: center;
+            bottom:10px;
+
+        }
+        .detials_product .productBox .swiper-pagination-bullet,.subscribeTop .swiper-pagination-bullet{
+            display: inline-block;
+            width: 0.3125rem;
+            height:0.3125rem;
+            border-radius: 25px;
+            background: #fff;
+            /*box-shadow: 0px 1px 2px #555 inset;*/
+            margin: 0 3px;
+            cursor: pointer;
+        }
+        .detials_product .productBox .swiper-pagination-bullet-active, .subscribeTop .swiper-pagination-bullet-active{
+            background: #fff;
+            width: 0.9375rem;
+        }
+
+        /*2016/05/16 add 视频宽度自适应情况*/
+
+        @media all and (orientation: landscape) {
+            #video_wrap #video {
+                width: 100% !important;
+            }
+            #video_wrap #video video {
+                width: 100% !important;
+            }
+            .dlM {
+                width: 80%;
+                background-color: #fff;
+                position: absolute;
+                border-radius: 10px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                z-index: 3;
+                -ms-transform:translate(-50%,-50%); 	/* IE 9 */
+                -moz-transform:translate(-50%,-50%); 	/* Firefox */
+                -webkit-transform:translate(-50%,-50%); /* Safari 和 Chrome */
+                -o-transform:translate(-50%,-50%);
+                max-width: 300px;
+            }
+            .dlMlogo{
+                margin: 1.22rem auto 1rem;
+
+            }
+            .dlMword{
+                line-height: 1.5;
+            }
+            .dlMword h4{
+                font-size: 0.825rem;
+            }
+            .dlMword p{
+                font-size: 0.7625rem
+            }
+            .dlM .dlNowBtn{
+                margin: 0 auto 1.125rem;
+                font-size: 0.725rem;
+                line-height: 2;
+            }
+        }
+
+        @media all and (orientation: portrait) {
+            #video_wrap #video {
+                width: 100% !important;
+            }
+            #video_wrap #video video {
+                width: 100% !important;
+            }
+        }
+
+
+        /*app唤醒 微信 样式*/
+        .app_download_wx {
+            width: 100%;
+            height: 100%;
+            background: #efeff4;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 101;
+        }
+        .app_download_wx img {
+            width: 100%;
+            height:100%
+        }
+        /*文章分享样式*/
+        .docShar{
+            width: 100%;
+        }
+        .docShar .docSharTop{
+            width: 47%;
+            border-bottom: 1px solid #dbdbdb;
+            margin: 0 auto;
+            position: relative;
+        }
+        .docShar .docSharTop p{
+            position: absolute;
+            font-size:0.875rem;
+            color: #aaaaaa;
+            line-height: 0.875rem;
+            background-color: #ffffff;
+            width: 3rem;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            -ms-transform:translate(-50%,-50%); 	/* IE 9 */
+            -moz-transform:translate(-50%,-50%); 	/* Firefox */
+            -webkit-transform:translate(-50%,-50%); /* Safari 和 Chrome */
+            -o-transform:translate(-50%,-50%);
+            z-index: 2;
+        }
+        .docShar .docSharBot{
+            margin-top: 2rem;
+        }
+        /*分享图片为4张的时候的样式*/
+        .docShar .docSharBot li{
+            width: 25%;
+            text-align: center;
+            float: left;
+            padding-bottom: 1.25rem;
+        }
+        .docSharBot li img{
+            width: 2.53rem;
+            margin: 0 auto;
+        }
+        .docSharBot li p{
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+        .docSharBot li p a{
+            color: #777777;
+        }
+        /*分享图片为4张的时候的样式*/
+        .docShar .docSharBot .webShare{
+            width: 50%;
+        }
+
+        /*iframe针对唤醒app时*/
+        iframe.appBindIframe{
+            border: 0;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            text-shadow: none;
+            text-decoration: none;
+            height:0;
+            width:0;
+        }
+
+
+
+
+        /**
+         * 视频首页的样式
+         */
+
+        @charset"utf-8";
+        .detials_video {
+            width: 100%;
+            height: auto;
+
+        }
+
+
+        /*视频插件样式占位*/
+
+        .detials_video .videoBox {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #e4e9ec;
+            background: #fff;
+            margin-bottom: 0.4375rem;
+        }
+
+        .detials_video .videoDown {
+            width: 90.4%;
+            margin: 0 auto;
+        }
+
+        .videoDown .introP {
+            position: relative;
+        }
+
+
+        /*追加点击按钮0407*/
+
+        .dropDown {
+            width: 1.1rem;
+            height: 0.6rem;
+            position: absolute;
+            right: 0.5rem;
+            bottom: 0.5rem;
+        }
+
+        .detials_video .vDtitle {
+            padding: 1.97rem 0 0.5rem;
+        }
+
+
+        /*通用的样式*/
+
+        .vDtitle h3 {
+            width: 71.98%;
+            float: left;
+            font-size: 1.25rem;
+            line-height: 1.875rem;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .vDtitle .vDbtn {
+            width: 23.6%;
+            float: right;
+        }
+
+        .vDinfor .vDinforUser {
+            float: left;
+        }
+
+        .vDinforUser>div {
+            line-height: 2.1875rem;
+            color: #777;
+        }
+
+        .vDuseimg {
+            width: 2.1875rem;
+            height: 2.1875rem;
+            float: left;
+            margin-right: 0.59rem;
+        }
+
+        .vDuseimg img {
+            width: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .vDuseName {
+            /*width: 50%;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;*/
+            float: left;
+            line-height: 2.1875rem;
+            color: #777;
+        }
+
+        .vDspot {
+            display: inline-block;
+            padding: 0 0.4rem;
+            width: 0.1875rem;
+            height: 0.1875rem;
+            background: url(//m.medplus.net/image/details/product/droSpot.jpg) no-repeat center;
+            background-size: 3px 3px;
+            vertical-align: middle;
+        }
+
+        .vDView {
+            /*width: 27%;*/
+            float: right;
+            line-height: 2.1875rem;
+            color: #777;
+        }
+
+        .vDView ul li {
+            float: right;
+            /*margin-right: 0.2rem;*/
+        }
+
+        .vDView ul .viewIcon {
+            width: 1.22rem;
+            height: 0.75rem;
+            background: url(//m.medplus.net/image/details/video/view.png) no-repeat;
+            background-size: 18px 12px;
+            vertical-align: middle;
+            margin: 0.75rem 0.1rem 0 0;
+        }
+
+        .introduce {
+            padding: 2.09rem 0 0;
+            font-size: 1.0625rem;
+            line-height: 1.9375rem;
+            font-weight: normal;
+            color: #444;
+            word-break: break-all;
+        }
+
+        .keyword {
+            padding: 1.09rem 0 1.5625rem;
+        }
+
+
+        /*0421xiugai*/
+
+        .keyword ul {
+            /*height: 5.5rem;*/
+            overflow: hidden;
+        }
+
+        .keyword ul li {
+            float: left;
+            line-height: 2.1875rem;
+            background: #f3f3f3;
+            border: 1px solid #ebebeb;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.875rem;
+            /*0421修改*/
+            margin: 0 0.625rem 0.625rem 0;
+        }
+
+        .keyword ul li a {
+            color: #333;
+            display: block;
+            padding: 0 0.875rem;
+            min-width: 1.75rem;
+        }
+
+
+        /*用到的border-top*/
+
+        .borN {
+            border-top: 1px solid #e4e9ec;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+
+        /**
+        * 相关产品
+        * 是通用的样式
+        */
+
+        .relatedPro {
+            margin-bottom: 0.4375rem;
+        }
+
+        .relatedPro .relProTop {
+            height: auto;
+            padding: 0 4.8%;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .relProTop h3 {
+            font-size: 0.9375rem;
+            line-height: 3.125rem;
+            color: #333;
+            float: left;
+        }
+
+        .proAll {
+            width: auto;
+            float: right;
+            padding-top: 1.125rem;
+        }
+
+        .proAll a {
+            display: block;
+            overflow: hidden;
+        }
+
+        .proAll div {
+            float: left;
+            font-size: 0.8125rem;
+            line-height: 0.8125rem;
+            color: #abb0bc;
+        }
+
+        .proAll div.arrowR {
+            height: 0.875rem;
+            padding-left: 0.91rem;
+            background: url(//m.medplus.net/image/details/video/arrowR.png) no-repeat;
+            background-size: 14px 14px;
+            margin-left: 0.34rem;
+        }
+
+        .rollBox {
+            width: 100%;
+            height: auto;
+            padding: 1.53125rem 0 1.03125rem;
+            overflow: hidden;
+        }
+
+        .rollBox ul {
+            width: 1000%;
+            height: auto;
+            overflow: hidden;
+            display: -webkit-flex;
+        }
+
+        .rollBox ul li {
+            width: 2.07%;
+            margin: 0 0.3125rem 0 1.125rem;
+            float: left;
+            height: auto;
+            text-align: center;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: end;
+            -webkit-justify-content: flex-end;
+            justify-content: flex-end;
+            align-items: end;
+            box-sizing: border-box;
+        }
+        .rollBox .video_series_list .rollBoxLi {
+            background: #f0f5f8;
+            border-radius: 10px;
+            float: left;
+            margin-right: -10px;
+            font-size: 0.8125rem;
+            text-align: left;
+            width: 3.6%;
+        }
+        .rollBox .video_series_list .rollBoxLi a{
+            color: #333333;
+            height: 3.8rem;
+            display: inline-block;
+            overflow: hidden;
+            margin: 8px;
+            word-wrap: break-word;
+            font-family: "microsoft yahei";
+        }
+
+        .rollBox ul li a {
+            display: block;
+            width: 100%;
+        }
+
+        .rollBox ul li .proImg {
+            width: 3.75rem;
+            height: 3.75rem;
+            margin: 0 auto 0.344rem;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .rollBox ul li .proImg img {
+            width: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            height: 60px;
+        }
+
+        .rollBox ul li p {
+            font-size: 0.8125rem;
+            line-height: 1.25rem;
+            color: #333;
+            text-align: center;
+            /*只显示两行*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .rollBox ul li p.fontC {
+            text-align: center;
+        }
+
+
+        /*相关产品*/
+
+
+        /*相关推荐--是通用的样式*/
+
+        .recomList {
+            padding-left: 4.67%;
+        }
+
+        .recomList ul li {
+            padding: 1.28125rem 0;
+            border-bottom: 1px solid #ededed;
+        }
+
+        .recomList ul li a {
+            display: block;
+            overflow: hidden;
+            color: #333;
+        }
+
+        .recomList ul li .reoDoc {
+            float: left;
+            width: 2.875rem;
+            height: 1.1875rem;
+            background: url(//m.medplus.net/image/details/video/recdoc.png) no-repeat center;
+            background-size: 46px 100%;
+            vertical-align: middle;
+        }
+
+        .recomList ul li .reoVideo {
+            width: 2.875rem;
+            height: 1.1875rem;
+            float: left;
+            background: url(//m.medplus.net/image/details/video/recVideo.png) no-repeat;
+            background-size: 41px 100%;
+            /*vertical-align: middle;*/
+        }
+
+        .reoLitem div.reoP {
+            display: inline-block;
+            width: auto;
+            margin: 0 auto;
+            font-size: 0.625rem;
+        }
+
+        .recomList ul li a p {
+            float: left;
+            padding-left: 0.75rem;
+            font-size: 1rem;
+            max-width: 80%;
+            /*只显示一行*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+
+
+        /*相关推荐*/
+
+
+        /*评论*/
+
+        .proAll .sortIcon {
+            background: url(//m.medplus.net/image/details/video/sort.png) no-repeat;
+            background-size: 16px 12.5px;
+            width: 1rem;
+            margin-right: 0.34rem;
+        }
+
+        .commentBox {
+            margin: 0 auto;
+        }
+
+        .commentBox .user_talkLi {
+            padding: 1.5625rem 0 1.083rem;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .commentBox .user_talkLi .vIcon {
+            width: 0.6875rem;
+            height: 0.75rem;
+            background: url(//m.medplus.net/image/details/video/vIcon.png) no-repeat;
+            background-size: 11px 12px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        .commentBox .user_talkLi .vDinfor {
+            width: 90.4%;
+            margin: 0 auto;
+        }
+        .commentBox .user_talkLi .vDinfor .talkVidMore>div{
+            position: relative;
+            width: 11rem;
+        }
+        .user_talkLi .vDinfor .talkVidMore img:nth-child(1){
+            width: 100%;
+        }
+        .commentBox .user_talkLi .vDuseimg {
+            position: relative;
+        }
+
+        .commentBox .user_talkLi .comUser {
+            font-size: 0.875rem;
+            padding-left: 0.25rem;
+            color: #333;
+        }
+
+        .commentBox .user_talkLi .comTime {
+            width: auto;
+            float: right;
+            color: #aaacbc;
+            font-size: 0.75rem;
+        }
+
+        .comBdown {
+            padding: 0.5rem 0;
+        }
+        .talkImg img{
+            width: 9.375rem;
+            height: 12.5rem;
+        }
+        .talkImgMore{
+            width: 94%;
+        }
+        .talkImgMore li{
+            margin: 5px 5px 0 0;
+            width: 5.3rem;
+            float: left;
+        }
+        .talkImgMore li img{
+            width: 5.3125rem;
+            height: 5.3125rem;
+        }
+        .talkImgMore .talkMorLi{
+            position: relative;
+        }
+        .talkImgMore .talkMorLi p {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 3;
+            -ms-transform:translate(-50%,-50%); 	/* IE 9 */
+            -moz-transform:translate(-50%,-50%); 	/* Firefox */
+            -webkit-transform:translate(-50%,-50%); /* Safari 和 Chrome */
+            -o-transform:translate(-50%,-50%);
+            width: 4rem;
+            color: #ffffff;
+            font-size: 0.75rem;
+        }
+        .talkImgMore .talkMorLi p i,.talkImgMore .talkMorLi p i{
+            float: right;
+            background:url("//m.medplus.net/image/details/video/jiantou.png");
+            width: 0.375rem;
+            height: 0.6875rem;
+            background-size: cover;
+            margin-top: 0.2rem;
+        }
+        .talkImgMore .talkMorLi .layer,.talkVidMore dd .layer{
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2;
+            top:0;
+            left: 0;
+            width: 100%;
+            height:100%;
+        }
+        .vDinforMid{
+            font-size: 0.9375rem;
+            line-height: 1rem;
+            color: #aaaaaa;
+            word-break: break-all;
+        }
+        .vDinforMid .vDinforMidP,.vDinforMid dl.talkVidMore{
+            background: url("//m.medplus.net/image/details/video/vDinBg.png") repeat-y;
+            padding-left: 10px;
+        }
+        .vDinforMid .vDinforMidP a{
+            font-size: 0.875rem;
+            color: #0bb375;
+            margin-left: 0.625rem;
+        }
+        .comBdown .comP {
+            font-size: 0.9375rem;
+            line-height: 1.5625rem;
+            color: #333333;
+            word-break: break-all;
+        }
+        .comBdown .comP a{
+            font-size: 0.875rem;
+            color: #0bb375;
+            margin-left: 0.625rem;
+        }
+        .talkImg{
+            width: 9.375rem;
+        }
+        .talkYin{
+            font-size: 0.875rem;
+            color:#777777;
+            line-height: 0.875rem;
+            margin-top: 0.9375rem;
+        }
+        .talkYin span{
+            color: #289c73;
+            margin-left: 0.3125rem;
+        }
+        .comClick li:nth-child(3) {
+            float: right;
+            width: 1rem;
+            height: 0.96875rem;
+            margin-top: 0.9375rem;
+        }
+        .comClick li:nth-child(2){
+            float: right;
+            height: 0.96875rem;
+            width: 1px;
+            border-right: 1px solid #e3e3e3;
+            margin: 0.9375rem 0 0 0.625rem;
+        }
+        .comClick li:nth-child(1){
+            float: right;
+            margin: 0.7rem 0 0 0.625rem;
+        }
+        .comClick li:nth-child(1) span{
+            float: left;
+            background: url("//m.medplus.net/image/details/video/xiaoshou.png") no-repeat;
+            height: 1.2rem;
+            width: 1.2rem;
+            background-size: 100%;
+        }
+        .comClick li:nth-child(1) p{
+            float: left;
+            margin:0.1rem 0 0 0.4rem;
+            font-size: 0.75rem;
+            color:#aaacbc;
+        }
+        .talkVidMore .talkVidTit{
+            width: 10.9rem;
+            position: relative;
+        }
+        .talkVidMore .talkVidTitNum{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .talkVidMore .talkVidTitNum span{
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 3.4rem;
+            height: 1rem;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .talkVidMore .talkVidTitNum i{
+            position: absolute;
+            font-size: 0.75rem;
+            color: #b7b4ae;
+            bottom: 0.04rem;
+            right: 0.24rem;
+            z-index: 3;
+        }
+        .talkVidMore dd{
+            width: 10.9rem;
+            position: relative;
+        }
+        .talkVidMore dd img{
+            width: 5.3125rem;
+            height: 5.3125rem;
+        }
+        .talkVidMore .talkVidTit .talkPlay,.talkVidMore .talkPlay{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 2;
+            -ms-transform:translate(-50%,-50%); 	/* IE 9 */
+            -moz-transform:translate(-50%,-50%); 	/* Firefox */
+            -webkit-transform:translate(-50%,-50%); /* Safari 和 Chrome */
+            -o-transform:translate(-50%,-50%);
+            width: 2.6rem;
+        }
+        .talkVidMore .talkPlay{
+            width: 2.6rem;
+            height: 2.6rem;
+        }
+        .talkVidMore dd{
+            margin: 5px 5px 0 0;
+            width: 5.3rem;
+            float: left;
+            position: relative;
+        }
+        .talkVidMore dd p{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .talkVidMore dd p span{
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 1.4rem;
+            height: 1rem;
+        }
+        .talkVidMore dd p i{
+            font-size: 0.75rem;
+            color: #b7b4ae;
+            position:absolute;
+            bottom: 0.04rem;
+            right: 0.24rem;
+            z-index: 3;
+        }
+        .commentBox ul li:nth-last-child(1) {
+            border-bottom: 0;
+        }
+
+        .borBno {
+            border-bottom: 0;
+        }
+        /*评论样式动画-begin*/
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0; /*初始状态 透明度为0*/
+            }
+            50% {
+                opacity: 1; /*中间状态 透明度为0*/
+            }
+            100% {
+                opacity: 0; /*结尾状态 透明度为1*/
+            }
+        }
+        #EV-likeP_show  .li_span
+        {-webkit-animation-name: fadeIn; /*动画名称*/
+            -webkit-animation-duration: 1.5s; /*动画持续时间*/
+            -webkit-animation-iteration-count: 1; /*动画次数*/
+            -webkit-animation-delay: 0s; /*延迟时间*/
+        }
+        #EV-likeP_show span{
+            background: url("//m.medplus.net/image/details/index/clickHover.png") no-repeat;
+            float: left;
+            height: 1.2rem;
+            width: 1.2rem;
+            background-size: 100%;
+        }
+        /*评论样式动画-end*/
+
+
+        /*加载中动画的样式*/
+
+        .detials_video .dropload-down {
+            height: 50px;
+        }
+
+        .detials_video .dropload-up,
+        .dropload-down {
+            position: relative;
+            height: 50px;
+            overflow: hidden;
+            font-size: 12px;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        .detials_video .dropload-load .loading {
+            display: inline-block;
+            height: 15px;
+            width: 15px;
+            border-radius: 100%;
+            margin: 6px;
+            border: 2px solid #666;
+            border-bottom-color: transparent;
+            vertical-align: middle;
+            -webkit-animation: rotate 0.75s linear infinite;
+            animation: rotate 0.75s linear infinite;
+        }
+
+        .detials_video .dropload-refresh,
+        .dropload-update,
+        .dropload-load,
+        .dropload-noData {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        @-webkit-keyframes rotate {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        /**
+         * 基本和视频终端页的结构一致，只有第一部分不同
+         * 要在引用detials_video.css的基础智商引用doc.css
+         */
+
+        @charset"utf-8";
+        .detials_doc .docCon {
+            padding:2.1875rem 4.8% 0;
+            margin-bottom: 0.4375rem;
+            border-bottom: 1px solid #e9e9e9;
+        }
+        /*用于app端模板201*/
+        .detials_doc .appDocCon {
+            border-bottom:none;
+        }
+
+        .detials_doc .docCon .vDuseimg {
+            position: relative;
+        }
+
+        .detials_doc .docCon .vIcon {
+            width: 0.6875rem;
+            height: 0.75rem;
+            background: url(//m.medplus.net/image/details/video/vIcon.png) no-repeat;
+            background-size: 11px 12px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        .detials_doc .docCon .docTitle {
+            font-size: 1.25rem;
+            color: #333;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /*.detials_doc .docPart {*/
+        /*padding-top: 3rem;*/
+        /*}*/
+        .vDinforTop{
+            margin-bottom: 1.3rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+
+        /*0413*/
+
+        .detials_doc .docPart .docInt {
+            font-size: 1.0625rem;
+            line-height: 1.82;
+            /*overflow: hidden;*/
+            word-break: break-all;
+        }
+        .detials_doc .docPart .docInt pre{
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break:break-all;
+        }
+        .detials_doc .docPart .docInt img{
+            margin-bottom: 0.6rem;
+        }
+        .docInt p {
+            padding-bottom: 1rem
+        }
+
+
+        /*pdf样式增加0422*/
+
+        .docPart .docPdf .abs {
+            padding-bottom: 1rem;
+        }
+
+        .docPart .docPdf .abs p {
+            padding-bottom: 0 !important;
+        }
+
+        .docPart .docPdf .abstract {
+            float: left;
+            color: #02b875;
+        }
+
+        .docPart .docPdfImg {
+            padding: 0.78125rem 0 1.3125rem;
+            position: relative;
+        }
+
+        .docPart .pdfBigImg {
+            width: 100%;
+            height: 10rem;
+            position: relative;
+            text-align: center;
+        }
+        .docPart .pdfBigImg img{
+            max-height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+        }
+        .docPart .docPdf .pdfBtn {
+            width: 10.5rem;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -5.25rem;
+            transform:translateY(-50%);
+            -webkit-transform:translateY(-50%);
+        }
+
+        .docPdfImgMask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+
+        /*0413*/
+
+        .detials_doc .docPart .introduce {
+            margin-bottom: 1.25rem;
+            padding: 0;
+        }
+
+        .detials_doc .docPart .introduce a {
+            color: #11b579;
+            text-decoration: underline;
+        }
+
+
+        /*图文混排模式*/
+
+        .docPart .docPimg p {
+            width: 100%;
+            height: auto;
+        }
+
+        .docPart .docPimg h4 {
+            font-size: 0.8125rem;
+            line-height: 1.4375rem;
+            color: #777;
+            padding: 0.906rem 0 0.656rem;
+            text-align: center;
+        }
+
+        .oneword {
+            font-size: 1.0625rem;
+            line-height: 3.41rem;
+            color: #444;
+        }
+
+        .docPart .docPimg h4 a {
+            color: #11b579;
+            text-decoration: underline;
+        }
+
+        .docClickBtn {
+            width: 10rem;
+            line-height: 2.12rem;
+            font-size: 0.9375rem;
+            text-align: center;
+            background: #0ab375;
+            border-radius: 3px;
+            margin: 1.375rem auto 1.09375rem;
+        }
+
+        .docClickBtn a {
+            color: #fff;
+            display: block;
+            width: 100%;
+        }
+
+
+        /*编辑*/
+
+        .detials_doc .docEditor {
+            color: #aaaaaa;
+            font-size: 0.8rem;
+            line-height: 2.375rem;
+        }
+        .detials_doc .docEditor span{
+            margin-left: 0.8rem;
+        }
+        .detials_doc .docEditor span a{
+            color: #aaaaaa;
+        }
+        .detials_doc.docPart .keyword {
+            padding-bottom: 2.1875rem;
+        }
+
+
+        /*增加药械求助样式*/
+        .vDinfor .vDinforTop p{
+            float: left;
+            font-size: 0.9rem;
+            padding: 0 0.4rem;
+            border: 1px solid #ededed;
+            margin-top: 0.4rem;
+            color: #777777;
+            border-radius: 3px;
+            margin-right: 0.4rem;
+        }
+        /*增加药械需求样式*/
+
+        /*增加论坛查看大图功能*/
+    </style>
+    <!--<link rel="stylesheet" type="text/css" href="../demo/css/demo.css">-->
+    <!--<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>-->
+    <!--load方法3版本不支持img-->
+    <script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.4.1/js/swiper.min.js"></script>
+    <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
+</head>
+<body>
+<input type="hidden" value=1456367908716 id="refId"/>
+
+<div class="detials_doc fontYh bgF">
+    <div class="docCon bgW">
+        <h2 class="docTitle">早期托马斯架固定股骨干骨折 术后并发症更少</h2>
+
+        <div class="vDinfor">
+            <div class="vDinforTop clear">
+                <!-- 头像要判断是不是有-->
+                <div class="vDinforUser clear">
+                    <div>
+                        <div class="vDuseName">作者：超人也想当好医生</div>
+                        <span class="vDspot">&nbsp;</span> 2016-04-11
+                    </div>
+                </div>
+                <div class="vDView clear">
+                    <ul>
+                        <li>121人浏览</li>
+                        <li class="viewIcon">&nbsp;</li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="docPart">
+                <div class="docInt">
+                    <p> 1875 年，Owen Thomas 医生发明了托马斯架治疗股骨干骨折。在第一次世界大战期间，托马斯架的应用大大降低了股骨骨折的死亡率。Colonel Sir Henry Gray
+                        发现，1917 年股骨骨折死亡率从 80% 降到 15.6%。</p>
+
+                    <p>托马斯架的应用除了可降低死亡率外，还可减少骨折部位出血、缓解疼痛和维持骨折复位后长度，有助于早期手术治疗和降低肺部并发症。</p>
+
+                    <p> 然而，目前仍缺少相关临床研究证据支持托马斯架的上述优势。因此，来自南非的 Sven Hoppe
+                        等学者等进行了一项回顾性研究，比较早期和晚期应用托马斯架固定股骨干骨折的疗效，早期使用托马斯架可有效减少患者输血和降低并发症发生。文章近期发表在 Injury 上。</p>
+
+                    <p> 研究纳入 2012 年 1 月 1 日至 12 月 31 日间，在该院治疗的 106 例成年股骨干骨折（AO/OTA 32）患者，74 名男性患者，32 名女性患者。</p>
+
+                    <p>早期使用托马斯架定义为受伤现场、入院前和拍摄 X 线平片前，而晚期使用则是指住院拍摄 X
+                        线平片后。所有的托马斯架均为圆形。记录术中和术后随访相关数据，包括输血、肺部并发症、手术时间、住院时间以及镇痛需求。肺部并发症是指肺炎、支气管哮喘和血氧饱和度下降。</p>
+                    <img src=" https://img99.allinmd.cn/ad/2017/02/22/3034_1487746759862.jpg" class="notShow"/>
+
+                    <p> 研究结果显示，早期固定组有 57 例（54%），而晚期固定组有 49
+                        例（46%）。早期固定组术中和术后需要输血的几率要明显低于晚期固定组，而且后者的肺部并发症发生率要明显高于前者。两组患者间的其他记录数据并无显著差异。</p>
+                   <p>
+                       <img src="https://img99.allinmd.cn/ad/2017/02/22/3033_1487726958834.jpg"/>
+                       <img src="https://img99.allinmd.cn/ad/2017/02/22/3033_1487726958834.jpg" />
+                   </p>
+                    <p> 因此，对于非多发伤患者，作者建议应早期先使用托马斯架固定单纯的股骨干骨折，术中和术后需要输血少，而且肺部并发症发生率更低。</p>
+                    <img src="https://img99.allinmd.cn/ad/2017/02/22/3033_1487726958834.jpg"/>
+                    <div class="x_detail_btm">
+                        <p>
+                            <br>
+                        </p>
+                    </div>
+                </div>
+                <!-- 点击查看全部文章 -->
+                <div class="docClickBtn ev-appDownloadPopUp"><a href="javascript:;">查看全部文章</a></div>
+                <div class="docEditor">编辑：医栈</div>
+                <div class="keyword clear">
+                    <ul>
+                        <li><a href="javascript:;">创伤骨科</a></li>
+                        <li><a href="javascript:;">骨科基础</a></li>
+                        <li><a href="javascript:;">大腿</a></li>
+                        <li><a href="javascript:;">创伤骨科</a></li>
+
+                        <div class="clear">&nbsp;</div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relatedPro borN bgW">
+        <div class="relProTop clear">
+            <h3>相关产品<span>(30)</span></h3>
+
+            <div class="proAll">
+                <a href="javascript:;">
+                    <div>全部</div>
+                    <div class="arrowR">&nbsp;</div>
+                </a>
+            </div>
+        </div>
+        <div class=" swiper-container productSwiper">
+            <ul class="swiper-wrapper ">
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/40/CqsU_VcgYPWAT1LoAADHmI2MX4Y192_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/40/CqsU_VcgXz6ARfXlAAFsF9XTd8Q461_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgX0SAe_twAACi26MTwAw404_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/40/CqsU_VcgX22Af0rDAAEebnua-PI090_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgX6iAOsHDAAFRN361o-w874_c_t_180_180.png">
+
+
+                    </a>
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgW66AVXcjAAC2pqJWq1o723_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgW8GAeiICAACfnnv9EoI121_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgW9SALuOPAACT7yk7Iy8013_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXSuAR19iAAB0-CS9l8Q132_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <a href="javascript:;">
+                        <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXTWARP32AACgUmXjpQI494_c_t_180_180.png">
+                        <p>LOQTEQ</p>
+                    </a>
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXXiAOPq9AADGkH18PjQ945_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXYWAV_-HAABzZv4OY1A103_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXZGAO5CfAACSdNCKuqU816_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgXZaARfsQAACQ5e7TwbY857_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/40/CqxUP1cgYpGAYd5mAADeY8wm4Gc825_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgX_eAAKUvAACqybz2-EU737_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgWMWATvb5AABWhDyh-bc437_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgWL6AUqIMAACDanGXAQM258_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgWLiAA8gBAABxEpIe66s126_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgWLKATRGcAACbUK1EzPg340_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgWKuAY9WNAACMgEB5-aU317_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgWzuAJlfKAAD32Kr6Psw500_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgW0GAcyHuAACKTYdHkCI724_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <img src="//img05.medplus.net/public1/M00/00/3E/CqxUP1cgW0mAWNcBAADdo3Mu6VM135_c_t_180_180.png">
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXtuAFBi9AACiPY3gX-s031_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/41/CqsU_VcgYhuAJiSLAADHFDEUNdU155_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/40/CqxUP1cgYiCAbHtHAABUUmFxml4954_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgW2GAQ4WqAADDVlxpwnU620_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqsU_VcgXPaASh9MAAC_t0EYcbI333_c_t_180_180.png">
+
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+
+                    <img src="//img05.medplus.net/public1/M00/00/3F/CqxUP1cgXQCAfTBgAAD4R7x6aus510_c_t_180_180.png">
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="relatedPro borN bgW">
+        <div class="relProTop clear">
+            <h3>相关推荐</h3>
+        </div>
+        <div class="recomList">
+            <ul>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <a href="javascript:;">
+                        <div class="reoDoc">&nbsp;</div>
+                        <p>脊柱结核的影像学解析</p>
+                    </a>
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <a href="javascript:;">
+                        <div class="reoVideo">&nbsp;</div>
+                        <p>恶性骨肿瘤的综合治疗</p>
+                    </a>
+                </li>
+                <li class="swiper-slide ev-appDownloadPopUp">
+                    <a href="javascript:;">
+                        <div class="reoDoc">&nbsp;</div>
+                        <p>气管推移训练有助于颈椎前路手术成功</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--评论-->
+    <div class="relatedPro borN bgW borBno">
+        <div class="relProTop clear">
+            <h3>评论<span id="commNum">&nbsp;</span></h3>
+
+            <div class="proAll">
+                <a href="javascript:;">
+                    <div class="sortIcon">&nbsp;</div>
+                    <div>最新评论</div>
+                </a>
+            </div>
+        </div>
+        <div class="commentBox">
+            <ul id="user_talk">
+                <li class="user_talkLi">
+                    <div class="vDinfor">
+                        <div class="vDinforTop clear">
+                            <div class="vDinforUser clear">
+                                <div class="vDuseimg"><img src="https://m.medplus.net/image/details/video/user.png">
+
+                                    <div class="vIcon">&nbsp;</div>
+                                </div>
+                                <div class="vDuseName comUser">张张张</div>
+                            </div>
+                            <div class="vDView clear"><span class="comTime">56秒前</span></div>
+                        </div>
+                        <div class="vDinforMid">
+                            <!--当超过42字出现...-->
+                            <p class="vDinforMidP">王野：从移动设够提完供您您流程...<a href="">展开</a></p>
+                        </div>
+                        <div class="comBdown">
+                            <p class="comP">从移动设备2来完成数字化光室，们能成从移动设够提完供适合您的工作流程从移动设备2来完成数字化光室，们能成从移动设够提完供适合...<a href="">展开</a>
+                            </p>
+
+                        </div>
+                        <!--1张图-->
+                        <ul class="talkImg">
+                            <li>
+                                <img src="//m.medplus.net/image/details/video/pinglun01.jpg" alt=""/>
+                            </li>
+                        </ul>
+                        <!--多张图  多余6张样式-->
+                        <ul class="talkImgMore clear">
+                            <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                            <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                            <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                            <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                            <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                            <li class="talkMorLi">
+                                <img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/>
+
+                                <div class="layer"></div>
+                                <p>还有<span>12</span>张<i></i></p>
+                            </li>
+                        </ul>
+                        <!--评论视频和图片-->
+                        <!--<dl class="talkVidMore clear">-->
+                        <!--<dt>-->
+                        <!--<img src="//m.medplus.net/image/details/video/videoping.jpg" alt=""/>-->
+                        <!--<img class="talkPlay" src="//m.medplus.net/image/details/video/player.png" alt=""/>-->
+                        <!--</dt>-->
+                        <!--<dd><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></dd>-->
+                        <!--<dd><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></dd>-->
+                        <!--</dl>-->
+                        <div class="talkVidMore">
+                            <p class="talkVidTit">
+                                <img src="//m.medplus.net/image/details/video/videoping.jpg" alt=""/>
+                                <img class="talkPlay" src="//m.medplus.net/image/details/video/player.png" alt=""/>
+                            </p>
+                            <ul class="talkImgMore clear">
+                                <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                                <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                                <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                                <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                                <li><img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/></li>
+                                <li class="talkMorLi">
+                                    <img src="//m.medplus.net/image/details/video/pinglun02.jpg" alt=""/>
+
+                                    <div class="layer"></div>
+                                    <p>还有<span>12</span>张<i></i></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--引用原文-->
+                        <div class="talkYin">引用文章<span>《治疗疾病疾病第三方的非的方...》</span></div>
+                        <!--评论点赞-->
+                        <ul class="comClick clear">
+                            <li class="clear"><a href="javascript:;"><span></span>
+
+                                <p>75</p></a></li>
+                            <li></li>
+                            <li>
+                                <a href="javascript:;"><img
+                                        src="https://m.medplus.net/image/details/video/comClickicon.png"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="user_talkLi">
+                    <div class="vDinfor">
+                        <div class="vDinforTop clear">
+                            <div class="vDinforUser clear">
+                                <div class="vDuseimg"><img
+                                        src="//img05.medplus.net/public1/M00/00/B8/oYYBAFfWQMCACgqRAADBArbeQq0207_c.jpg">
+
+                                    <div class="vIcon">&nbsp;</div>
+                                </div>
+                                <div class="vDuseName comUser">呃呃这</div>
+                            </div>
+                            <div class="vDView clear"><span class="comTime">10-09</span></div>
+                        </div>
+                        <div class="vDinforMid "><p class="vDinforMidP"><span>白锐：同你</span></p>
+                            <dl class="talkVidMore clear ">
+                                <dd>
+                                    <img src="http://img05.medplus.net/public1/M00/01/0B/ooYBAFftxVyAesbgAAYt_PbQ6pM712_c_d_sp.jpg"
+                                         alt="">
+                                    <p>
+                                        <span></span>
+                                        <i>9P</i>
+                                    </p>
+                                </dd>
+                                <dd>
+                                    <img src="http://vpro01.medplus.net/1475200268_1475200268_315_210.jpg?1475200597"
+                                         alt="" class="ev-appDownloadPopUp">
+                                    <img class="talkPlay ev-appDownloadPopUp"
+                                         src="//m.medplus.net/image/details/video/player.png" alt="">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="comBdown">
+                            <p class="comP"><span></span></p>
+                        </div>
+                        <div class="talkVidMore">
+                            <div class="talkVidTit">
+                                <img src="http://vpro01.medplus.net/1475200268_1475200268_315_210.jpg?1475200597" alt=""
+                                     class="ev-appDownloadPopUp">
+                                <img class="talkPlay ev-appDownloadPopUp"
+                                     src="//m.medplus.net/image/details/video/player.png" alt="">
+                                <p class="talkVidTitNum">
+                                    <span></span>
+                                    <i>00:00:01</i>
+                                </p>
+                            </div>
+                            <ul class="comClick clear">
+                                <li class="clear li_likeP">
+                                    <a href="javascript:;">
+                                        <span></span>
+                                        <p></p><i class="li_span" style="display: none;">+1</i>
+                                    </a>
+                                </li>
+                                <li></li>
+                                <li><a class="ev-appDownloadPopUp" href="javascript:;">
+                                    <img src="https://m.medplus.net/image/details/video/comClickicon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    bigPicShow.init({
+        /**
+         * 指定多个class|| ID
+         * */
+        domIdList:[".docInt,.productSwiper,.talkImgMore,talkVidMore"],
+        topSwiperOptions:{
+            loop: true, // 开启循环模式,必须设置loopedSlides
+            loopedSlides: 5, //looped slides should be the same
+            autoplay : 5000,//自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换。
+            preventClicks:false,//当swiper在触摸时阻止默认事件（preventDefault），用于防止触摸时触发链接跳转。
+            pagination : '.swiper-pagination', //分页器
+            /**
+             * ‘bullets’  圆点（默认）
+             ‘fraction’  分式
+             ‘progress’  进度条
+             ‘custom’ 自定义
+             * */
+            paginationType : 'fraction',
+            prevButton:'.swiper-button-prev',
+            nextButton:'.swiper-button-next',//前进按钮的css选择器或HTML元素。
+            /**
+             *  回调函数，初始化后执行。
+             */
+            onInit:function(){
+                console.log("sipwer初始化完成!,回调函数，初始化后执行。")
+            },
+            /**
+             * 回调函数，当你轻触(tap)Swiper后执行。在移动端，click会有 200~300 ms延迟，所以请用tap代替click作为点击事件。
+             * */
+            onTap:function(swiper,event){
+                console.log(swiper.activeIndex); //swiper当前的活动块的索引
+                console.log(swiper.realIndex);//swiper当前的活动块的真实索引,排除loop模式下添加的滑块DOM
+                console.log(swiper.clickedIndex);//返回最后点击Slide的索引。(click)
+                swiper.stopAutoplay();    //停止自动切换
+                swiper.startAutoplay();    //开始自动切换
+            },
+            onSlideChangeStart:function(swiper){ //滑块释放时如果触发slider切换则执行
+                console.log(swiper.activeIndex);
+                console.log(swiper.realIndex);
+            }
+        },
+        bottomSwiperOptions:{
+            loop: true, // 开启循环模式,必须设置loopedSlides
+            loopedSlides: 5, //looped slides should be the same
+        },
+        /**
+         * 关闭按钮回调函数
+        * */
+        closeCallBack:function(){
+            console.log(1111);
+        },
+//        swiperToggle:".detials_doc",
+    });
+
+
+/*
+* 分诊dom结构
+* */
+//$(function(){
+//    DomBigPictureShow()
+//});
+
+/**
+ * 备注
+ * */
+
+    var mySwiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: 5000,//可选选项，自动滑动,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplayDisableOnInteraction: false, //用户操作后,继续自动轮播
+        slidesPerView: 3,
+        spaceBetween: 5,
+    });
+</script>
+</body>
+</html>
