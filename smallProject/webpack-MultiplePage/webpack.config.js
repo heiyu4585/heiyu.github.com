@@ -10,6 +10,9 @@ var autoprefixer = require('autoprefixer');
 var glob = require('glob');
 var entries = getEntryJs('build/**/*.js', 'build/');
 var chunks = Object.keys(entries);
+let  CopyWebpackPlugin= require('copy-webpack-plugin') ;
+var AssetsPlugin = require('assets-webpack-plugin');
+
 /****************  ** */
 var config= {
     devtool: 'source-map',//配置生成Source Maps，选择合适的选项
@@ -100,6 +103,23 @@ var config= {
             "window.$": "jquery"
         }),
         new ExtractTextPlugin("css/bundle/[name].css"),
+        new CopyWebpackPlugin(
+            [ {
+            from: 'build/123.html', to: 'to/directory'
+             }],
+            {
+                transform:function(content, path) {
+                    console.log(content);
+                    console.log(path);
+                    return content;
+                }
+            }),
+        new AssetsPlugin({
+            filename: 'js/bundle/webpack.assets.js',
+            processOutput: function (assets) {
+                return 'window.WEBPACK_ASSETS = ' + JSON.stringify(assets);
+            }
+        })
     ],
     externals:{
         'bigPicShow':'window.bigPicShow',

@@ -20,7 +20,7 @@
 //"use strict";
     var
         // A central reference to the root jQuery(document)
-        rootjQuery,
+        rootjQuery, //根节点
 
         // The deferred used on DOM ready
         readyList,
@@ -62,17 +62,17 @@
             // The jQuery object is actually just the init constructor 'enhanced'
             return new jQuery.fn.init( selector, context, rootjQuery );
         },
-
+        /*匹配数字*/
         // Used for matching numbers
         core_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
-
+        /*空格分隔*/
         // Used for splitting on whitespace
         core_rnotwhite = /\S+/g,
-
+        /**/
         // A simple way to check for HTML strings
         // Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
         // Strict HTML recognition (#11290: must start with <)
-        rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+        rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,/*快速匹配正则*/
 
         // Match a standalone tag
         rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
@@ -100,27 +100,32 @@
         constructor: jQuery,
         init: function( selector, context, rootjQuery ) {
             var match, elem;
-
+            /*处理不正确的选择元素*/
             // HANDLE: $(""), $(null), $(undefined), $(false)
             if ( !selector ) {
                 return this;
             }
-
+            /*处理HTML字符串*/
             // Handle HTML strings
             if ( typeof selector === "string" ) {
-                if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+                if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {/*找<标签>  $('<li>) $('<li>1</li>)*/
                     // Assume that strings that start and end with <> are HTML and skip the regex check
                     match = [ null, selector, null ];
-
-                } else {
+                    /** match = [null,'<li>',null]
+                      * match = [null,'<li>1</li>',null]
+                     * */
+                } else { /*  $('#div1') $('.box1') $('div')  $('#div1 div.box') $('<li> hello') 这个应该是if里?*/
                     match = rquickExpr.exec( selector );
+                    /** match= null; //$('.box1') $('div')  $('#div1 div.box')
+                      * match = ['#div1',null,'div1'] //$('#div1')
+                     * match=['<li>hello','<li>',null]   $('<li> hello')
+                     * */
                 }
-
                 // Match html or make sure no context is specified for #id
-                if ( match && (match[1] || !context) ) {
+                if ( match && (match[1] || !context) ) {/*创建标签或者#id    $('<li>*/
 
                     // HANDLE: $(html) -> $(array)
-                    if ( match[1] ) {
+                    if ( match[1] ) {  /*  $('<li>*/
                         context = context instanceof jQuery ? context[0] : context;
 
                         // scripts is true for back-compat
@@ -172,7 +177,7 @@
                 } else {
                     return this.constructor( context ).find( selector );
                 }
-
+                /*//对dom元素进行处理*/
                 // HANDLE: $(DOMElement)
             } else if ( selector.nodeType ) {
                 this.context = this[0] = selector;
@@ -195,7 +200,7 @@
 
         // Start with an empty selector
         selector: "",
-
+        /*this 的length*/
         // The default length of a jQuery object is 0
         length: 0,
 
@@ -472,7 +477,7 @@
         // data: string of html
         // context (optional): If specified, the fragment will be created in this context, defaults to document
         // keepScripts (optional): If true, will include scripts passed in the html string
-        parseHTML: function( data, context, keepScripts ) {
+        parseHTML: function( data, context, keepScripts ) { /*<li>1</li><li>2</li>  => ['li','li']*/
             if ( !data || typeof data !== "string" ) {
                 return null;
             }
@@ -632,7 +637,7 @@
         inArray: function( elem, arr, i ) {
             return arr == null ? -1 : core_indexOf.call( arr, elem, i );
         },
-
+        /*合并*/
         merge: function( first, second ) {
             var l = second.length,
                 i = first.length,
