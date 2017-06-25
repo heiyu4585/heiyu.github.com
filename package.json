@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "echo I run before the build script",
+    "build": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

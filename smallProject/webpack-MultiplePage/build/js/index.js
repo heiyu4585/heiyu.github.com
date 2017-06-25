@@ -10,11 +10,11 @@
 var oP = document.createElement('p');
 oP.className = 'text';
 oP.innerHTML = '这是由js生成的一句话。';
-document.querySelector('.g-bd').appendChild(oP);
+document.querySelector('#container').appendChild(oP);
 require("../scss/index.scss");
 //增加事件
 $('.btn').click(function() {
-    require(['../components/dialog/index.js'], function(dialog) {
-        dialog();
-    });
+    // require(['../components/dialog/index.js'], function(dialog) {
+    //     dialog();
+    // });
 });
