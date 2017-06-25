@@ -1,0 +1,193 @@
+@charset "utf-8";
+/**
+ * @name:病例单
+ * @desc:
+ * @example:
+ * @depend:
+ * @date: 2017/03/05
+ * @author: qiangkailiang
+ */
+/**
+点击查看大图css
+*/
+
+html, body {
+  position: relative;
+  height: 99.99%;
+}
+
+#EV-swiper {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.60);
+  left: 0;
+  z-index: 6;
+  position: fixed;
+}
+
+#EV-swiper .background-hidden {
+  position: absolute;
+  top: 65px;
+  bottom: 65px;
+  left: 250px;
+  right: 250px;
+  background: #000;
+  padding: 65px 135px;
+
+}
+
+#EV-swiper .swiper-container {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#EV-swiper .swiper-slide {
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  border: 1px solid grey;
+  box-sizing: border-box;
+}
+
+#EV-swiper .swiper-slide img {
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select:none;
+  -khtml-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+#EV-swiper .gallery-top {
+  // padding:65px 135px;
+  //height: 80%;
+  //width: 90%;
+}
+
+#EV-swiper .gallery-top .swiper-slide img {
+  /*max-heigth:100%;*/
+  /*width: 80%;*/
+}
+
+#EV-swiper .gallery-thumbs {
+  height: 100px;
+  box-sizing: border-box;
+  padding: 18px 0;
+  top: auto;
+  bottom: 65px;
+  background: rgba(63, 63, 63, .9);
+  left: 250px;
+  right: 250px;
+  width: auto;
+  position: absolute;
+  @include animate-fadeOut(1s, 2s, linear, forwards, 1);
+  &.show{
+    @include animate-fadeIn(0.1s, 0s, linear, forwards, 1);
+  }
+  .swiper-wrapper-center{
+    justify-content: center;
+
+  }
+}
+
+
+
+
+#EV-swiper .gallery-thumbs:hover {
+
+  @include animate-fadeIn(0.1s, 0s, linear, forwards, 1);
+
+}
+
+#EV-swiper .gallery-thumbs .swiper-slide {
+  width: 64px;
+  height: 64px;
+  opacity: 0.4;
+}
+
+#EV-swiper .gallery-thumbs .swiper-slide img {
+  height: 100%;
+  width: 100%;
+}
+
+#EV-swiper .gallery-thumbs .swiper-slide {
+  display: inline-block;
+  border: 1px solid #fff;
+}
+
+
+#EV-swiper .gallery-thumbs .swiper-slide-active {
+  opacity: 1;
+  border: 3px solid #00D6C6;
+}
+
+#EV-swiper .closeBtn {
+  position: absolute;
+  right: 214px;
+  top: 65px;
+  background: url("/image/img00/employee/popup_close_activate.png") no-repeat;
+  width: 16px;
+  height: 16px;
+  background-size: 100%;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.background-hidden .swiper-left-gray {
+  background: url("/image/img00/employee/photo_arrow_left_big.png") no-repeat;
+  width: 50px;
+  height: 50px;
+  left: 40px;
+}
+
+.background-hidden .swiper-right-gray {
+  background: url("/image/img00/employee/photo_arrow_right_big.png") no-repeat;
+  width: 50px;
+  height: 50px;
+  right: 40px;
+}
+
+.background-hidden .magnify-button {
+  background: url("/image/img00/employee/photo_zoom in.png") 50% 50% no-repeat;
+  background-color: rgba(255, 255, 255, .3);
+  border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: 72px;
+  right: 27px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &.on {
+    background: url("/image/img00/employee/photo_zoom out.png") 50% 50% no-repeat;
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+}
+
+.background-hidden .rotate-button {
+  background: url("/image/img00/employee/photo_rotate.png") 50% 50% no-repeat;
+  background-color: rgba(255, 255, 255, .3);
+  border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: 31px;
+  right: 27px;
+  box-sizing: border-box;
+  cursor: pointer;
+}

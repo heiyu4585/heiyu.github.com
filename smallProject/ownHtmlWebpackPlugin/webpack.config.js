@@ -11,16 +11,34 @@ var glob = require('glob');
 var entries = getEntryJs('build/js/scene/**/*.js', 'build/js/');
 var jsChunks = Object.keys(entries);
 var autoprefixer = require('autoprefixer');
-let MyPlugin = require('MyPlugin');
-let headScriptPaths ={
-    head:["./configuration/config.js","/third-party/js/flexible.js"]
+let fileLocation = require('file-location-webpack');
+let scriptPaths ={
+    /**
+     * 在全站的html内head部加入对应的js文件
+    * */
+    head:["https://cdn.bootcss.com/jquery/1.8.1/jquery.js","//paas.allinmd.cn/modules/sps/sps.js","/third-party/js/flexible.js"],
+    body:{
+        before: ["//paas.allinmd.cn/modules/app_awaken/linkedme.minNew.js"],//加入整站的业务js文件前引入
+        after:[]//加入整站的业务js文件后引入
+    },
+    noNeed:[
+        "privacy",
+        "service",
+        "passport_help",
+        "replayPage",
+        "livePage",
+        "conference",
+        "chatPage",
+        "chatAppointment"
+    ],
+
 };
 var config = {
     devtool: 'source-map',//配置生成Source Maps，选择合适的选项
     //入口文件
     entry:entries ,
     output: {
-   path: __dirname+"/medplus_h5",//打包后的文件存放的地方
+        path: __dirname+"/medplus_h5",//打包后的文件存放的地方
         publicPath: '/',				//模板、样式、脚本、图片等资源对应的server上的路径
         filename: "js/[name].[hash].js" ,//打包后输出文件的文件名
     },
@@ -39,16 +57,16 @@ var config = {
         }
     },
     devServer: {
-        contentBase: "./CCCCCC_h5/",//本地服务器所加载的页面所在的目录
+        contentBase: "./medplus_h5/",//本地服务器所加载的页面所在的目录
         colors: true,//终端中输出结果为彩色
         historyApiFallback: true,//不跳转
         inline: true,//实时刷新,
          port: '80', //设置端口号
-          host : '10.1.8.41',
+         host : '10.1.8.41',
         // hot: true,
         proxy: {
             '/mcall': {
-                target: 'https://m.baidu.net',
+                target: 'https://m.medplus.net',
                 changeOrigin: true,
             }
         }
@@ -98,8 +116,8 @@ var config = {
             name: "vendors",
             minChunks: 3
         }),
-        new MyPlugin({
-            paths: ["./configuration/config.js","/third-party/js/flexible.js","http://cdn2.jianshu.io/assets/babel-polyfill-fab041d7680df0d997e3.js"]
+        new fileLocation({
+            paths: scriptPaths.head.concat(scriptPaths.body.before).concat(scriptPaths.body.after)
         }),
         // new webpack.ProvidePlugin({      //当模块使用这些变量的时候,wepback会自动加载。（区别于window挂载）
         //     $: "jquery",
@@ -156,21 +174,24 @@ let htmlEentries = getEntryHtml('build/template/**/*.html', 'build\\template\\')
 
 for(var x  in htmlEentries){
     let filename;
-    if(x == 'index' || x =='active'){
+    if(x == 'index' || x =='active'){   //如果是 `index`和 `active`则放入根路径,否则放入pages目录下
         filename=  htmlEentries[x] + '.html';
     }else{
         filename='pages/' + htmlEentries[x] + '.html';
     }
-/**
- * 判断是否包含对应js入口,如果不存在则不引用js*/
-    let chunks=jsChunks.indexOf(x)!= -1 ? ['vendors', x]:['', x];
+    /**
+     * 判断是否包含对应js入口,如果不存在则不引用js*/
+     let chunks=jsChunks.indexOf(x)!= -1 ? ['vendors', x]:[];
+    console.log(x);
+    console.log( x.indexOf(scriptPaths.noNeed) );
+    console.log( x.indexOf(scriptPaths.noNeed)!= -1 );
     var conf = {
         favicon:'medplus_h5/favicon.ico',
         filename: filename, //生成的html存放路径，相对于path
         template:  'build/template/'+htmlEentries[x] + '.html', //html模板路径
         inject: {
-            head:["./configuration/config.js","/third-party/js/flexible.js"],
-            body:  ["http://cdn2.jianshu.io/assets/babel-polyfill-fab041d7680df0d997e3.js",'vendors', x]
+            head: (x.indexOf(scriptPaths.noNeed)!= -1) ?[]:scriptPaths.head,
+            body:( x.indexOf(scriptPaths.noNeed)!= -1) ?[]:scriptPaths.body.before.concat(chunks).concat(scriptPaths.body.after)
         },
         hash: false, //为静态资源生成hash值
         chunks: chunks,//需要引入的chunk，不配置就会引入所有页面的资源
