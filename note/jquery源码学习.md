@@ -51,7 +51,7 @@ $([])  $({})
 
 
 ```
-看完第九集
+看完第九集半
 http://jquery.miaov.com/
 ```
 
@@ -82,7 +82,46 @@ jQuery().css();
                 return false;
             }
 ```
+```markdown
+  function aa(){
+    }
+  //  aa.prototype.constructor = aa; //js语言会自动创建
+  //  aa.prototype.constructor = Array; //可以修改
 
+    aa.prototype.name='hello';
+    aa.prototype.age=30;
+    let a1 = new aa();
+    console.log(a1.constructor); //function aa(){}
+
+    aa.prototype={
+        name:'hello',
+        age:30
+    };
+    let a2 = new aa();
+    console.log(a2.constructor); //function Object() { [native code] }
+
+    aa.prototype={
+        constructor:aa, //添加这句修正为function aa(){}
+        name:'hello',
+        age:30
+    };
+    let a3 = new aa();
+    console.log(a3.constructor); //function Object() { [native code] }
+
+/* 如何实现的*/
+   $("li").css({'background':"red"});
+    var aLi=  document.getElementsByTagName('li'); //aLi 对象没法
+    for(var i =0;i<aLi.length;i++){
+        aLi[i].style.background ='red';
+    }
+
+    this={
+        0:'<li>',
+        1:"<li>",
+        length:2
+    }
+    
+```
 
 
 
