@@ -1,3 +1,10 @@
 body {
   font-family: "Microsoft YaHei,Tahoma,Arial,sans-serif";
 }
+#container{
+  height:200px;
+  width:200px;
+  background: url("http://localhost:8080/image/android.png");
+  border-radius: 5px;
+  display: flex;
+}
