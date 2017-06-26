@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>动态数据绑定(三)</title>
+</head>
+<body>
+<!-- 页面中原本的 html 模板片段 -->
+<div id="app">
+ <p>姓名：{{user.name}}</p>
+ <p>年龄：{{user.age}}</p>
+</div>
+<script>
+    /***********   5-BEGIN   *****************/
+
+    // 观察者构造函数
+    function Vue(options,parents,parentsKey) {
+        this.data = options.data;
+        this.walk(options.data);
+        this.handlers = {};
+        this.parents = parents;
+        this.parentsKey = parentsKey;
+    }
+
+    let p = Vue.prototype;
+
+    // 此函数用于深层次遍历对象的各个属性
+    // 采用的是递归的思路
+    // 因为我们要为对象的每一个属性绑定getter和setter
+    p.walk = function (obj) {
+        let val;
+        for (let key in obj) {
+            // 这里为什么要用hasOwnProperty进行过滤呢？
+            // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
+            // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
+            if (obj.hasOwnProperty(key)) {
+                val = obj[key];
+
+                // 这里进行判断，如果还没有遍历到最底层，继续new Vue
+                if (typeof val === 'object') {
+                    new Vue(val,this,key);
+                }
+
+                this.convert(key, val);
+            }
+        }
+    };
+    p.$watch= function(eventType,handler){
+        if(!(eventType in this.handlers)){
+            this.handlers[eventType] =[];
+        }
+        this.handlers[eventType].push(handler);
+    };
+
+    p.$emit = function(eventType){
+        var self = this;
+        var handlerArgs = Array.prototype.slice.call(arguments,1);
+        console.log(handlerArgs)
+        if(self.handlers[eventType]){
+            for(var i = 0; i < self.handlers[eventType].length; i++) {
+                self.handlers[eventType][i].apply(self,handlerArgs);
+            }
+        }
+        if(self.parents && self.parents.handlers){
+            for(var i = 0; i < self.parents.handlers[self.parentsKey].length; i++) {
+                self.parents.handlers[eventType][i].apply(self.parents,handlerArgs);
+            }
+        }
+        return self;
+    };
+    p.convert = function (key, val) {
+        var _this =this;
+        Object.defineProperty(this.data, key, {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                console.log('你访问了' + key);
+                return val
+            },
+            set: function (newVal) {
+                // 这里进行判断，如果还没有遍历到最底层，继续new Vue
+                if (typeof newVal === 'object') {
+                    new Vue(newVal,_this,key);
+                }else{
+                    if(_this.handlers[key]){
+                        _this.$emit(key,newVal);
+                    }
+                    if(_this.parents && _this.parents.handlers){
+                        _this.parents.$emit(_this.parentsKey,newVal,key);
+                    }
+                }
+                if (newVal === val) return;
+                val = newVal
+            }
+        })
+    };
+    let fragment, currentNodeList = [];
+    p._compile = function () {
+        fragment = document.createDocumentFragment();
+
+        // 用一个栈来存储遍历过程中当前的父节点
+        currentNodeList.push(fragment);
+
+        this._compileNode(this.$template);
+
+        this.$el.parentNode.replaceChild(fragment, this.$el);
+        this.$el = document.querySelector(this.$options.el);
+    };
+
+    p._compileElement = function (node) {
+        let newNode = document.createElement(node.tagName);
+
+        // 处理节点属性
+        if (node.hasAttributes()) {
+            let attrs = node.attributes;
+            Array.from(attrs).forEach((attr) => {
+                newNode.setAttribute(attr.name, attr.value);
+            });
+        }
+        let currentNode = currentNodeList[currentNodeList.length - 1].appendChild(newNode);
+
+        if (node.hasChildNodes()) {
+            currentNodeList.push(currentNode);
+            Array.from(node.childNodes).forEach(this._compileNode, this);
+        }
+
+        currentNodeList.pop();
+    };
+    p._compileText = function (node) {
+        let nodeValue = node.nodeValue;
+
+        if (nodeValue === '') return;
+
+        let patt = /{{\w+}}/g;
+        let ret = nodeValue.match(patt);
+
+        if (!ret) return;
+
+        ret.forEach((value) => {
+            let property = value.replace(/[{}]/g, '');
+            nodeValue = nodeValue.replace(value, this.$data[property]);
+        }, this);
+
+        currentNodeList[currentNodeList.length - 1].appendChild(document.createTextNode(nodeValue));
+    };
+
+    p._compileNode = function (node) {
+        switch (node.nodeType) {
+            // text
+            case 1:
+                this._compileElement(node);
+                break;
+            // node
+            case 3 :
+                this._compileText(node);
+                break;
+            default:
+                return;
+        }
+    };
+    /***********   3 - END *****************/
+    let app = new Vue({
+        el: '#app',
+        data: {
+            user: {
+                name: 'youngwind',
+                age: 25
+            },
+        }
+    });
+    app.data.user.name = 'sdfasdf';
+    app.data.user.age = 11;
+</script>
+</body>
+</html>
