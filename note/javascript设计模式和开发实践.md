@@ -13,3 +13,80 @@
 由于无需进行类型检查,我们可以尝试调用任何对象的任意方法,而无需考虑它原来是否被设计为拥有该方法.
 
 `鸭子类型` 拥有鸭子的singing方法就可以被当做鸭子.
+
+## 多态
+
+>同一操作作用于不同的对象上,可以产生不同的解释和不同的执行结果.
+```markdown
+    var makeSound = function(animal){
+        if(animal instanceof Duck ){
+            console.log("sdf")
+        }else if(animal instanceof Chicken){
+            console.log("gege")
+        }
+    }
+
+    var Duck= function(){};
+    var Chicken= function(){};
+   console.log( makeSound(new Duck()));
+   console.log( makeSound(new Chicken()));
+
+```
+
+### 对象的多态
+```markdown
+
+    var makeSound = function(animal){
+        animal.sound()
+    };
+    var Duck= function(){};
+    Duck.prototype.sound = function(){
+        console.log("嘎嘎嘎");
+    };
+
+    var Chicken= function(){};
+    Chicken.prototype.sound = function(){
+        console.log("咯咯咯")
+    };
+    console.log( makeSound(new Duck()));
+    console.log( makeSound(new Chicken()));
+    var Dog= function(){};
+    Dog.prototype.sound = function(){
+            console.log("往往")
+    };
+    console.log( makeSound(new Dog()));
+    
+```
+
+### 类型检查和多态
+### 多态在面向对象程序设计中的作用
+```markdown
+    //
+    var  renderMap = function(map){
+        if(map.show instanceof Function){
+            map.show();
+        }
+    }
+    var googleMap ={
+        show:function(){
+            console.log('googleMap')
+        }
+    }
+
+    var baiduMap ={
+        show:function(){
+            console.log('baiduMap')
+        }
+    };
+    renderMap(googleMap);
+    renderMap(baiduMap);
+    var sosoMap ={
+        show:function(){
+            console.log('baiduMap')
+        }
+    };
+    renderMap(sosoMap);
+```
+
+### 设计模式和多态
+## 封装
