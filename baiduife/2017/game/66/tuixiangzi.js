@@ -186,7 +186,7 @@ var pushBox = {
         var dataMap = objDeepCopy(this.dataMap);
         $(".restart").on("click",function(){
             this.dataMap = dataMap;
-            this.init();
+            this.init(this.progressNum);
         }.bind(this));
 
         $(".pre_step").on("click",function(){
