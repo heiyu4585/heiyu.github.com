@@ -90,3 +90,48 @@
 
 ### 设计模式和多态
 ## 封装
+
+```markdown
+var myObeject=(function(){
+    var _name="seve";
+    return {
+        getName:function(){
+            return _name;
+        }
+    }
+})();
+console.log(myObeject.getName()); //seve
+console.log(myObeject._name);//undeind
+```
+
+
+### 克隆的原型模式
+```markdown
+    var Plane = function(){
+        this.blood =100;
+        this.attacklevel =1;
+        this.defenseleve =1;
+    };
+    var plane = new Plane();
+    plane.blood =500;
+    plane.attacklevel =10;
+    plane.defenseleve = 7;
+
+    var clonePlane = Object.create(plane);
+    console.log(clonePlane); // ____proto__
+    Object.create = Object.create|| function(obj){
+            var F = function(){};
+            F.prototype = obj;
+            return new F();
+        }
+```
+
+```markdown
+    var obj1 = new Object();
+    var obj2 = {};
+    console.log(Object.getPrototypeOf(obj1) === Object.prototype);
+    console.log(Object.getPrototypeOf(obj2) === Object.prototype);
+```
+
+## this,call,apply
+
