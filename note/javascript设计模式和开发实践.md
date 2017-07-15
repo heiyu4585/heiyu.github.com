@@ -1,3 +1,5 @@
+
+
 [TOC]
 # 面向对象的javascript
 ## 动态类型的语言和鸭子类型
@@ -132,6 +134,515 @@ console.log(myObeject._name);//undeind
     console.log(Object.getPrototypeOf(obj1) === Object.prototype);
     console.log(Object.getPrototypeOf(obj2) === Object.prototype);
 ```
+### 原型链继承的未来
+```markdown
+var obj = {name:'sven'};
+var A = function(){};
+A.prototype=obj;
+var B = function(){};
+B.prototype = new A();
+var b = new B();
+
+console.log(b.name);
+
+
+class Animal{
+    constructor(name){
+        this.name = name;
+    }
+    getName(){
+        return this.name
+    }
+
+}
+
+class Dog extends Animal{
+    constructor(name){
+        super(name)
+    }
+    speak(){
+        return "woof";
+    }
+}
+
+var dog = new Dog("scamp");
+console.log(dog.getName()+' says '+dog.speak())
+
+```
+
 
 ## this,call,apply
+###this的指向
 
+```
+    var  MyClass = function() {
+        this.name = 'sven';
+    }
+    var obj = new MyClass();
+    alert(obj.name)
+/***************显式返回一个对象,则返回该对象,不是之前的this**********************/
+    var  MyClass = function() {
+        this.name = 'sven';
+        return {
+            name:'anne'
+        }
+    }
+    var obj = new MyClass();
+    alert(obj.name);
+    /*******************不是显示的话,则会指向this******************/
+    var  MyClass = function() {
+        this.name = 'sven';
+        return 'anne';
+    }
+    var obj = new MyClass();
+ ```
+ ### Function.prototype.call 或 Function.prototype.apply 调用
+ ```markdown
+    var  obj1 = {
+        name :'sven',
+       getName:function(){
+           return this.name;
+       }
+    }
+    var obj2 ={
+        name:'anne'
+    }
+    console.log(obj1.getName());
+    console.log(obj1.getName.call(obj2));
+
+    /****call 改变作用域****/
+
+    var obj1 = function() {
+        console.log(this.name)
+    }
+    var obj2 ={
+        name:'anne'
+    }
+    obj1.call(obj2);
+    //    console.log(obj1.call(obj2));
+```
+### 丢失的this
+```markdown
+   document.getElementById = (function(func){
+       return function(){
+           return func.apply(document,arguments);
+       }
+   })(document.getElementById);
+   var getId =  document.getElementById;
+  console.log( getId('div1'));
+```
+## call 和 apply
+### 区别
+apply接受两个参数,第一参数指定了函数体内的this对象的指向,第二个参数为一个
+```markdown
+
+var func = function(a,b,c,d){
+    console.log(a,b,c);
+};
+
+func.apply(null,[1,2,4,,5,6,7,3]);  //1 2 4
+
+var func = function(a,b){
+    console.log(a);
+    console.log(b);
+};
+func.call(null,[1,2,4,4,5,6,7,3]); //[1, 2, 4, 4, 5, 6, 7, 3]
+    // b   undefined
+
+    //传入null表示当前宿主对象
+    
+```
+### 调用其他对象的方法
+```
+/*调用其他对象的方法*/
+    Math.max.apply(null,[1,23,4,5,6,6,])
+```
+### 用途
+#### 改变this指向
+
+```markdown
+    var obj1 ={
+        name:"sven"
+    }
+    var obj2={
+        name:'anne'
+    };
+    window.name='window'
+    var getName = function(){
+        console.log(this.name)
+    }
+    getName();
+    getName.call(obj1);
+    getName.call(obj2);
+```
+
+#### function.prototype.bind
+
+
+```markdown
+
+ Function.prototype.bind = function (context) {
+        var  self = this;
+        return function(){
+            return self.apply(context,arguments)
+        }
+    }
+    var obj={
+        name:'seven',
+        getName:function(){
+            console.log(this)
+        }
+    };
+
+    var func = function(){
+        console.log(this.name)
+    }.bind(obj);
+    func();
+
+```
+
+```markdown
+//有问题还需理解
+Function.prototype.bind = function (context) {
+        var  self = this;
+        var aa =context;
+        context =[].shift.call(arguments); //用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+     console.log(context === aa);
+        args = [].slice.call(arguments);  //我们将提取从位置 6 开始的所有字符：
+        return function(){
+            return self.apply(context,[].concat.call(args,[].slice.call(arguments)));
+        }
+    }
+    var obj={
+        name:'seven',
+        getName:function(){
+            console.log(this)
+        }
+    };
+
+    var func = function(a,b,c,d){
+        console.log(this.name);
+        console.log([a,b,c,d])
+    }.bind(obj,1,2);
+    func(3,4);
+    func(5,6);
+
+```
+#### 借用其他对象的方法
+1. 可以实现类似继承的效果
+
+```markdown
+    var A = function(name){
+        this.name = name;
+    }
+
+    var B = function(){
+        A.apply(this,arguments)
+    }
+
+    B.prototype.getName=function(){
+        return this.name
+    }
+    var b = new B('sven');
+    console.log(b.getName());
+
+```
+2.
+```markdown
+    (function(){
+        Array.prototype.push.call(arguments,3);
+        console.log(arguments)
+    })(1,34,4)
+
+    var a ={};
+    Array.prototype.push.call(a,'first');
+    
+    console.log(a.length); //会顺便修改length的值
+    console.log(a)  //{0: "first", length: 1}
+```
+#闭包和高阶函数
+
+##闭包
+### 变量的作用域
+### 变量的生命周期
+```markdown
+    var func = function(){
+        var a =1 ;
+       return function(){
+           a++;
+           console.log(a);
+       }
+    };
+//    func()();//  2 
+//    func()();//  2 
+//    func()();//  2 
+//    func()();//  2 
+//    func()();//  2 
+//    func()(); //  2 
+
+    var f = func();
+    f(); //2
+    f(); //3
+    f(); //4
+    f(); //5
+    f();//6
+    f();  // 7
+```
+
+
+```markdown
+for(var i= 0;i< 5;i++){
+  document.getElementsByTagName('div')[i].onclick = function(){
+      debugger;
+      console.log(i)
+  }
+}
+for(var i= 0;i< 5;i++){
+    (function(i){
+        document.getElementsByTagName('div')[i].onclick = function(){
+            console.log(i)
+        }
+    })(i)
+}
+```
+
+### 更多的作用
+1.封装变量
+```markdown
+   var mult = function(){
+        var a= 1;
+        for(var i=0,l=arguments.length;i<l;i++){
+            a = a* arguments[i]
+        }
+        return a;
+    }
+   console.log( mult(1,4,5,6))
+    /****增加缓存***/
+    var cache ={};
+    var mult = function(){
+        var args = Array.prototype.join.call(arguments,',');
+        if(cache[args]){
+            return  cache[args]
+        }
+        var a= 1;
+        console.log('sadf');
+        for(var i=0,l=arguments.length;i<l;i++){
+            a = a* arguments[i]
+        }
+        return  cache[args]= a;
+    }
+    console.log( mult(1,4,5,6));
+    console.log( mult(1,4,5,6));
+    /**封装cache对象在函数内容***/
+
+var mult = (function(){
+    var cache ={};
+    return function(){
+        var args = Array.prototype.join.call(arguments,',');
+        if(cache[args]){
+            return  cache[args]
+        }
+        var a= 1;
+        console.log('sadf');
+        for(var i=0,l=arguments.length;i<l;i++){
+            a = a* arguments[i]
+        }
+        return  cache[args]= a;
+    }
+})();
+console.log( mult(1,4,5,6));
+console.log( mult(1,4,5,6));
+/**小功能方法提取***/
+var mult = (function(){
+    var cache ={};
+    var calculate = function(){
+        var a= 1;
+        for(var i=0,l=arguments.length;i<l;i++){
+            a = a* arguments[i]
+        }
+        return a;
+    }
+    return function(){
+        var args = Array.prototype.join.call(arguments,',');
+        if(cache[args]) {
+            return cache[args]
+        }
+        console.log('sadf');
+//        return cache[args] =calculate(arguments) //要对象上面的calculate(arguments)
+        return cache[args] = calculate.apply(null,arguments);
+    }
+})();
+console.log( mult(1,4,5,6));
+console.log( mult(1,4,5,6));
+
+```
+2.延续局部变量的寿命 ??? 干嘛用的
+
+### 闭包和面向对象设计
+### 用闭包实现命令模式
+```markdown
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<button id="execute">点击执行命令</button>
+<button id="undo">点击执行命令</button>
+<script>
+    var Tv = {
+        open: function () {
+            console.log('打开电视机')
+        },
+        close: function () {
+            console.log('关上电视机')
+        }
+    };
+
+    var openTvCommand = function (recever) {
+        this.recever = recever;
+    }
+    openTvCommand.prototype.execute = function () {
+        this.recever.open();
+    }
+    openTvCommand.prototype.undo = function () {
+        this.recever.close();
+    }
+
+    var setCommand = function (command) {
+        document.getElementById('execute').onclick = function () {
+            command.execute();
+        };
+        document.getElementById('undo').onclick = function () {
+            command.undo();
+        }
+    };
+
+    setCommand(new openTvCommand(Tv))
+
+
+    /****闭包模式***/
+    var Tv = {
+        open: function () {
+            console.log('打开电视机')
+        },
+        close: function () {
+            console.log('关上电视机')
+        }
+    };
+    var createCommand = function (receiver) {
+
+        var execute = function () {
+            return receiver.open();
+        };
+        var undo = function () {
+            return receiver.close();
+        };
+        return {
+            execute: execute,
+            undo: undo
+        }
+    };
+
+    var setCommand = function (command) {
+        document.getElementById('execute').onclick = function () {
+            command.execute();
+        };
+        document.getElementById('undo').onclick = function () {
+            command.undo();
+        }
+    };
+
+    setCommand(createCommand(Tv))
+
+</script>
+</body>
+</html>
+```
+
+### 闭包和内存管理
+设置为null
+
+## 高阶函数
+    高阶函数是指至少满足下列条件之一的函数
+    1.函数可以作为参数被传递
+    2.函数可以作为返回值输出
+### 函数作为参数传递
+1. 回调函数
+2. Array.prototype.sort
+[1,9,4,6].sort(function(a,b){
+    return a-b;
+})
+### 函数作为返回值输出
+1. 判断数据的类型
+
+```markdown
+    var Type={};
+    for(var i=0,type;type=['String','Array','Number'][i++];){
+        (
+            function(type){
+                Type['is'+type] = function(obj){
+                    return Object.prototype.toString.call(obj) == '[object '+type+']'
+                }
+            }
+        )(type)
+    }
+  console.log(  Type.isArray([]));
+  console.log(  Type.isString("str"))
+```
+### getSingle
+```markdown
+  var getSingle = function(fn){
+        var ret;
+        return function(){
+            console.log(this);
+            return ret || (ret = fn.apply(this,arguments));
+        }
+    };
+    
+    var getScript = getSingle(function(){
+        return document.createElement('script');
+    });
+    
+    var script1 = getScript();
+    var script2 = getScript();
+    console.log(script1 == script2);
+```
+
+### 高阶函数实现AOP
+javascript中实现AOP,都是指一个函数"动态织入"到另一个函数之中.
+
+```markdown
+   Function.prototype.before = function(beforefn){
+        var  _self = this;
+        return function(){
+            beforefn.apply(this,arguments);
+            return _self.apply(this,arguments)
+        }
+    };
+
+    Function.prototype.after = function(afterfn){
+        var  _self = this;
+        return function(){
+            var ret = _self.apply(this,arguments);
+            afterfn.apply(this,arguments);
+            return ret;
+        }
+    };
+
+    var func = function () {
+        console.log(2)
+    };
+    func = func.before(function(){
+        console.log(1)
+    }).after(function(){
+        console.log(3)
+    });
+
+    func();
+
+```
