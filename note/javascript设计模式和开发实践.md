@@ -646,3 +646,105 @@ javascript中实现AOP,都是指一个函数"动态织入"到另一个函数之�
     func();
 
 ```
+#### 其他应用
+1. curring
+```markdown
+var monthlyCost =0;
+  var cost = function(money){
+      monthlyCost+=money;
+  };
+  cost(100);
+  cost(200);
+  cost(300);
+  console.log(monthlyCost)
+
+    var cost =(function(){
+        var args =[];
+        return function(){
+            if(arguments.length === 0 ){
+                var money = 0;
+                for(var i =0,l=args.length;i<l;i++){
+                    money+=args[i]
+                }
+                return money;
+            }else{
+                [].push.apply(args,arguments)
+            }
+        }
+    })();
+  cost(100);
+  cost(200);
+  cost(400);
+    console.log(cost());
+    /****封装通用***/
+    var currying= function(fn){
+        var args=[];
+        return function(){
+            if (arguments.length ===0){
+                return fn.apply(this,args)
+            }else{
+                [].push.apply(args,arguments);
+                return arguments.callee;
+            }
+        }
+    }
+
+    
+    var cost = (function(){
+        var money = 0;
+        return function(){
+            for(var i =0,l=arguments.length;i<l;i++){
+                money+=arguments[i];
+            }
+            return money;
+        }
+})()
+    var cost = currying(cost);
+    cost(100);
+    cost(1200);
+    cost(300);
+    console.log(cost())
+```
+#### uncrrying
+```markdown
+ Function.prototype.uncurrying = function(){
+      var self = this;
+      return function(){
+          var obj = Array.prototype.shift.call(arguments);
+          return self.apply(obj,arguments);
+      }
+  }
+  var push = Array.prototype.push.uncurrying();
+
+  (function () {
+      push(arguments,4);
+      console.log(arguments);
+  })(1,2,4,6)
+
+    
+    for(var i=0,fn,ary=['push','shift','forEach'];fn=ary[i++];){
+      Array[fn] = Array.prototype[fn].uncurrying()
+    };
+  
+    var obj={
+        length:3,
+        '0':1,
+        '1':2,
+        '2':3
+    }
+    
+    Array.push(obj,4); //向对象中添加一个元素
+    console.log(obj.length); //输出:4
+    
+    var first = Array.shift(obj);
+    console.log(first);
+    console.log(obj);
+    
+    Array.forEach(obj,function(i,n){
+        console.log(n) //分别输出0,1,2
+    })
+    
+    
+```
+
+
