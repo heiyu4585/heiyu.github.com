@@ -746,5 +746,238 @@ var monthlyCost =0;
     
     
 ```
+#### 另一种实现方式
+
+```markdown
+Function.prototype.uncurrying = function(){
+    var self = this;
+    return function(){
+        return Function.prototype.call.apply(self,arguments)
+    }
+}
+```
+
+#### 函数节流
 
 
+```markdown
+var throttle = function(fn,interval){
+     var _self = fn,
+         timer,
+         firstTime=true;
+     return function(){
+         var _me = this,
+             args= arguments;
+         if(firstTime){
+             _self.apply(_me,args);
+            return firstTime = false;
+         }
+         if(timer){
+             return false;
+         }
+         timer = setInterval(function () {
+             clearInterval(timer);
+             timer=null;
+             _self.apply(_me,args)
+         },interval||1000)
+     }
+};
+
+window.onresize = throttle(function () {
+    console.log(1)
+},500)
+```
+#### 分时函数
+```markdown
+
+var  timerChunk = function(ary,fn,count){
+    var obj,
+        t;
+    var len = ary.length;
+    var start = function(){
+        for(var i =0;i<Math.min(count|| 1,ary.length);i++){
+            var obj=ary.shift();
+            fn(obj);
+        }
+    };
+    return function(){
+        t = setInterval(function(){
+            if(ary.length ===0){
+                return clearInterval(t);
+            }
+            start();
+        },1000)
+    }
+};
+
+var  ary=[];
+for(var i=1;i<1000;i++){
+    ary.push(i);
+}
+var renderFriendList = timerChunk(ary,function(n){
+    var div = document.createElement('div');
+    div.innerHTML = n;
+    document.body.appendChild(div);
+
+},8);
+
+renderFriendList(ary);
+```
+### 惰性加载 
+判断后方法重写,只判断一次
+```markdown
+var addEvent = function(elem,type,handler){
+    if(window.addEventListener){
+        addEvent = function(elem,type,handler){
+            elem.addEventListener(type,handler,false)
+        }
+    }else if( window.attachEvent){
+        addEvent = function(elem,type,handler){
+            elem.attachEvent('on'+type,handler)
+        }
+    }
+    addEvent(elem,type,handle)
+}
+
+```
+# 设计模式
+#单例模式
+## 实现单例模式
+```markdown
+var Singleton = function(name){
+    this.name = name;
+}
+Singleton.prototype.getName = function(){
+    console.log(this.name)
+}
+
+Singleton.getInstance = (
+    function(){
+        var instance = null;
+        return function(name){
+            if(!instance){
+                instance = new Singleton(name)
+            }
+            return instance
+        }
+    }
+)()
+
+    var a  = Singleton.getInstance('sven1')
+    var b  = Singleton.getInstance('sven2')
+    console.log(b===a);
+    console.log(a.name)
+```
+## 透明的单例模式
+## 用代理实现单例模式
+
+```markdown
+var CreateDiv = function(html){
+    this.html = html;
+    this.init();
+}
+
+CreateDiv.prototype.init = function(){
+    var div = document.createElement('div');
+    div.innerHTML = this.html;
+    document.body.appendChild(div);
+}
+
+var ProxySingletonCreateDiv =(function () {
+    var instance;
+    return function (html) {
+        if(!instance){
+            instance = new CreateDiv(html)
+        }
+        return instance
+    }
+})();
+
+var a = new ProxySingletonCreateDiv('sevn1');
+var b = new ProxySingletonCreateDiv('sevn2');
+console.log(a===b)
+
+```
+
+## js 中的单例模式
+
+####   使用命名空间
+```markdown
+    var namespace1 = {
+        a: function () {
+            console.log(1)
+        },
+        b: function () {
+            console.log(2)
+        }
+    }
+
+    
+
+```
+####    使用闭包封装私有变量
+```markdown
+    /*使用闭包封装私有变量*/
+    var user = (function () {
+        var _name= 'sven',
+            _age=29;
+        return {
+            getUserInfo:function(){
+                return _name+'-'+_age;
+            }
+        }
+    })()
+    
+```
+### 惰性单例
+```markdown
+var createLoginLayer = (function(){
+    var div;
+    return function(){
+        if(!div){
+            var div = document.createElement('div');
+            div.innerHTML = "我是登陆窗";
+            document.body.appendChild(div);
+        }
+        return div;
+    }
+})()
+
+    document.getElementById('undo').onclick = function(){
+        var loginLayer = createLoginLayer();
+        loginLayer.style.display ='block';
+    }
+
+```
+### 通用的惰性单例
+
+```markdown
+var getSingle = function(fn){
+    var result;
+    return function(){
+        return result|| (result = fn.apply(this,arguments))
+    }
+}
+var createLoginLayer = function(){
+    var div = document.createElement('div');
+    div.innerHTML = "我是登陆窗";
+    document.body.appendChild(div);
+    return div;
+};
+
+var createSingleLoginLayer = getSingle(createLoginLayer);
+document.getElementById('undo').onclick = function(){
+    var loginLayer = createSingleLoginLayer();
+    loginLayer.style.display ='block';
+}
+var createSingleIframe = getSingle(function(){
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    return iframe;
+});
+
+document.getElementById('execute').onclick = function(){
+    var loginLayer = createSingleIframe();
+    loginLayer.src='http://www.baidu.com'
+}
+```
