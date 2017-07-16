@@ -981,3 +981,30 @@ document.getElementById('execute').onclick = function(){
     loginLayer.src='http://www.baidu.com'
 }
 ```
+
+#### click事件只绑定一次(有问题)
+
+```markdown
+  var getSingle = function(fn){
+        var result;
+        console.log(result);
+
+        return function(){
+            return result|| (result = fn.apply(this,arguments))
+        }
+    }
+var bindEvent = getSingle(function () {
+    document.getElementById('execute').addEventListener("click",function () {
+        console.log(1)
+    })
+});
+    var render = function () {
+        console.log("开始渲染");
+        bindEvent();
+    };
+
+render();
+render();
+render();
+render();
+```
