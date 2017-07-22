@@ -1008,3 +1008,139 @@ render();
 render();
 render();
 ```
+# 策略模式
+定义一系列的算法,把他们一个个封装起来,并且是他们可以相互替换
+```
+    var calculateBonus = function(performanceLevel,salary){
+        if(performanceLevel ==='s'){
+            return salary*4;
+        }
+        if(performanceLevel ==='A'){
+            return salary*3;
+        }
+        if(performanceLevel ==='b'){
+            return salary*2;
+        }
+    }
+    console.log(calculateBonus('b',2000))
+    console.log(calculateBonus('s',4400))
+
+```
+改为策略模式之后(基于对其他面向对象的语言的模仿)
+
+```markdown
+var S= function(){};
+S.prototype.celve = function(salary){
+     return salary*4
+};
+
+var A= function(){};
+A.prototype.celve = function(salary){
+    return salary*3
+};
+var B= function(){};
+B.prototype.celve = function(salary){
+    return salary*2
+};
+
+
+var Bone = function(){
+};
+
+
+Bone.prototype.setyuanshi = function(money){
+ this.yuanshi = money; 
+};
+
+Bone.prototype.setCelve = function(ce) {
+    return ce.celve(this.yuanshi)
+};
+
+var bone = new Bone();
+bone.setyuanshi(2000);
+console.log(bone.setCelve(new S()));
+bone.setyuanshi(1000);
+console.log(bone.setCelve(new B()))
+```
+javascript策略模式
+```markdown
+var stragtegie={
+    "s":function(yuanshi){
+        return yuanshi*4
+    },
+    "a":function(yuanshi){
+        return yuanshi*3
+    },
+    "b":function(yuanshi){
+        return yuanshi*2
+    },
+}
+
+var  cal = function (leve,yuanshi) {
+    return stragtegie[leve](yuanshi);
+}
+
+console.log(cal('s',20000))
+```
+## 多态在策略模式中的体现
+```markdown
+   var tween={
+        strongEaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t*t*t+b;
+        },
+        strongEaseOut:function(t,b,c,d){
+            return  c*((t=t/d-1)*t*t*t*t+1)+b;
+        },
+        sineaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t+b
+        },
+        sineaseOut:function(t,b,c,d){
+            return c*((t=t/d-1)*t*t+1)+b;
+        }
+    }
+
+var Animate = function(dom){
+    this.dom= dom;
+    this.startTime=0;
+    this.startPos=0;
+    this.endPos=0;
+    this.propertyName = null;
+    this.easing= null;
+    this.duration = null;
+}
+
+Animate.prototype.start =  function(propertyName,endPos,duration,easing){
+    this.startTime = +new Date;
+    this.startPos = this.dom.getBoundingClientRect()[propertyName]; //dom节点的初始位置
+    this.propertyName = propertyName;
+    this.endPos = endPos;
+    this.duration = duration; //动画持续时间
+    this.easing = tween[easing];
+    var self= this;
+    var timeId = setInterval(function(){
+        if(self.step()=== false){
+            clearInterval(timeId);
+        }
+    },19)
+}
+Animate.prototype.step = function(){
+    var t = +new Date();
+    if(t>= this.startTime+this.duration){
+        this.update(this.endPos);
+        return false;
+    }
+    var pos = this.easing(t-this.startTime,this.startPos,
+        this.endPos-this.startPos,this.duration);
+    this.update(pos);
+}
+
+Animate.prototype.update = function (pos){
+    this.dom.style[this.propertyName] = pos+"px";
+    }
+var div = document.getElementById('div');
+var animate = new Animate(div);
+    animate.start('left',500,5000,'strongEaseIn');
+//    animate.start('top',500,5000,'strongEaseOut');
+
+ ```
+__
