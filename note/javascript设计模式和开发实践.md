@@ -1143,4 +1143,369 @@ var animate = new Animate(div);
 //    animate.start('top',500,5000,'strongEaseOut');
 
  ```
-__
+## 更多以的"算法"
+### 表单验证
+```markdown
+<form action="#" id="registerForm" method="post">
+    清输入名字: <input type="text" name="userName" value="1">
+    清输入密码: <input type="password" name="password">
+    清输入手机号: <input type="text" name="phoneNumber">
+    <button>提交</button>
+</form>
+<script>
+    var strategies={
+        isNonEmpty:function (value,errMsg) {
+            if(value ===''){
+                return errMsg
+            }
+        },
+        minLength:function (value,length,errorMsg) {
+            if(value.length< length){
+                return errorMsg
+            }
+        },
+        isMobile:function (value,errorMsg) {
+            if(1){
+                return errorMsg;
+            }
+        }
+    }
+
+    var validataFunc = function () {
+        debugger;
+        var validataor = new Validator();
+
+        validataor.add(registerForm.userName,'isNonEmpty','用户名不为空');
+        validataor.add(registerForm.password,'minLength:6','密码不小于6位');
+        var errorMsg = validataor.start();
+
+        return errorMsg;
+    }
+    registerForm.onsubmit = function () {
+      var errorMsg = validataFunc();
+      if(errorMsg){
+          console.log(errorMsg);
+      }
+        return false;
+    };
+
+    var Validator = function(){
+        this.cache = [];
+    };
+    Validator.prototype.add=function (dom,rule,errorMsg) {
+        var ary= rule.split(':');
+        this.cache.push(function(){
+            var strategy = ary.shift();
+            ary.unshift(dom.value);
+            ary.push(errorMsg);
+            return strategies[strategy].apply(dom,ary)
+        })
+    };
+
+    Validator.prototype.start = function(){
+        for(var i =0,validatorFunc;validatorFunc = this.cache[i++];){
+            var msg= validatorFunc();
+            if(msg){
+                return msg;
+            }
+        }
+    }
+
+
+</script>
+```
+
+
+### 给某个文本输入框添加多种校验规则
+(未执行成功待调试)
+```
+<form action="#" id="registerForm" method="post">
+    清输入名字: <input type="text" name="userName" value="1">
+    清输入密码: <input type="password" name="password">
+    清输入手机号: <input type="text" name="phoneNumber">
+    <button>提交</button>
+</form>
+<script>
+    var strategies={
+        isNonEmpty:function (value,errMsg) {
+            if(value ===''){
+                return errMsg
+            }
+        },
+        minLength:function (value,length,errorMsg) {
+            if(value.length< length){
+                return errorMsg
+            }
+        },
+        isMobile:function (value,errorMsg) {
+            if(1){
+                return errorMsg;
+            }
+        }
+    }
+
+    var validataFunc = function () {
+        var validataor = new Validator();
+
+        validataor.add(
+            registerForm.userName,
+            [
+                {strategy:'isNonEmpty',errorMsg:'用户名不为空'},
+                {strategy:'minLength',errorMsg:'用户名于6位'}
+            ]
+        );
+        validataor.add(registerForm.password, {strategy:'minLength',errorMsg:'用户名于6位'});
+        var errorMsg = validataor.start();
+
+        return errorMsg;
+    }
+    registerForm.onsubmit = function () {
+      var errorMsg = validataFunc();
+      if(errorMsg){
+          console.log(errorMsg);
+      }
+        return false;
+    };
+
+    var Validator = function(){
+        this.cache = [];
+    };
+    Validator.prototype.add=function (dom,rules) {
+      var self= this;
+        for(var  i= 0,rule;rule=rules[i++];){
+            (function(rule){
+                var  strategyAry= rule.strategy.split(':');
+                var errorMsg = rule.errorMsg;
+
+                self.cache.push(function(){
+                    var strategy = strategyAry.shift();
+                    strategyAry.unshift(dom.value);
+                    strategyAry.push(errorMsg);
+                    return strategies[strategy].apply(dom,strategyAry)
+                })
+            }(rule))
+        }
+    };
+
+    Validator.prototype.start = function(){
+        for(var i =0,validatorFunc;validatorFunc = this.cache[i++];){
+            var msg= validatorFunc();
+            if(msg){
+                return msg;
+            }
+        }
+    }
+
+
+</script>
+```
+
+#代理模式
+```markdown
+  /*
+    * 未引入代理
+    * */
+    var Flower = function () {
+    }
+    var xiaoming ={
+        sendFlower:function (target) {
+            var flower = new Flower();
+            target.receiveFlower(flower)
+        }
+    };
+    var A = {
+        receiveFlower:function (flower) {
+            console.log("收到花"+flower)
+        }
+    }
+    xiaoming.sendFlower(A);
+```
+
+```markdown
+  /*引入代理B*/
+
+    var Flower = function () {
+    }
+    var xiaoming ={
+        sendFlower:function (target) {
+            var flower = new Flower();
+            target.receiveFlower(flower)
+        }
+    };
+    var A = {
+        receiveFlower:function (flower) {
+            console.log("收到花"+flower)
+        }
+    }
+    var B ={
+        receiveFlower:function (flower) {
+            A.receiveFlower(flower)
+        }
+
+    }
+    xiaoming.sendFlower(B);
+```
+中间操作的代理
+
+```markdown
+   /*引入代理B*/
+
+    var Flower = function () {
+    }
+    var xiaoming ={
+        sendFlower:function (target) {
+           // var flower = new Flower();
+            target.receiveFlower(flower)
+        }
+    };
+    var A = {
+        receiveFlower:function (flower) {
+            console.log("收到花"+flower)
+        },
+        listenGoodMood:function(fn){
+            console.log('2秒收心情好');
+            setTimeout(function(){
+                fn();
+            },2000)
+        }
+
+    }
+    var B ={
+        receiveFlower:function (flower) {
+           A.listenGoodMood(function () {
+              var flower = new Flower();//需要的时候在创建
+               A.receiveFlower(flower);
+           })
+        }
+
+    }
+    xiaoming.sendFlower(B);
+
+```
+## 虚拟代理实现图片预加载
+```markdown
+ var myImage = (function () {
+     var imgNode = document.createElement('img');
+     document.body.appendChild(imgNode);
+     return {
+         setSrc:function(src){
+             imgNode.src=src;
+         }
+     }
+ })();
+ myImage.setSrc('http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/00/06/ChMkJ1lx0jCIQILlACmOfsJ8kPUAAe81gF7ZvMAKY6W042.jpg')
+
+```
+增加代理对象
+```markdown
+ var myImage = (function () {
+     var imgNode = document.createElement('img');
+     document.body.appendChild(imgNode);
+     return {
+         setSrc:function(src){
+             imgNode.src=src;
+         }
+     }
+ })();
+ var proxyImage =(function () {
+     var img= new Image;
+     img.onload= function(){
+         myImage.setSrc(this.src);
+     }
+     return {
+         setSrc:function(src){
+             myImage.setSrc('http://img3.imgtn.bdimg.com/it/u=2059706835,1478314746&fm=28&gp=0.jpg');
+             img.src=src;
+         }
+     }
+ })();
+ proxyImage.setSrc('http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/00/06/ChMkJ1lx0jCIQILlACmOfsJ8kPUAAe81gF7ZvMAKY6W042.jpg')
+
+```
+没有代理对象的普通图片懒加载
+```markdown
+ var myImage = (function () {
+     var imgNode = document.createElement('img');
+     document.body.appendChild(imgNode);
+     var img= new Image;
+
+     img.onload= function(){
+         imgNode.src = img.src
+     }
+     return {
+         setSrc:function(src){
+             imgNode.src=('http://img3.imgtn.bdimg.com/it/u=2059706835,1478314746&fm=28&gp=0.jpg');
+             img.src=src;
+         }
+     }
+ })();
+ myImage.setSrc('http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/00/06/ChMkJ1lx0jCIQILlACmOfsJ8kPUAAe81gF7ZvMAKY6W042.jpg')
+```
+#代理和接口的一致性
+
+```markdown
+var myImage = (function(){
+    var imgNode = document.createElement('img');
+    document.body.appendChild(imgNode);
+    return function (src) {
+        imgNode.src=src
+    }
+})();
+
+var proxyImage =(function () {
+    var img= new Image;
+    img.onload= function(){
+        myImage.setSrc(this.src);
+    }
+    return function(src){
+            myImage('http://img3.imgtn.bdimg.com/it/u=2059706835,1478314746&fm=28&gp=0.jpg');
+            img.src=src;
+        }
+})();
+proxyImage.setSrc('http://desk.fd.zol-img.com.cn/t_s960x600c5/g5/M00/00/06/ChMkJ1lx0jCIQILlACmOfsJ8kPUAAe81gF7ZvMAKY6W042.jpg')
+
+```
+虚拟代理合并http请求
+```markdown
+<body>
+<input type="checkbox" id="1" >1</input>
+<input type="checkbox" id="2" >2</input>
+<input type="checkbox" id="3" >3</input>
+<input type="checkbox" id="4" >4</input>
+<input type="checkbox" id="5" >5</input>
+<input type="checkbox" id="6" >6</input>
+<script>
+var synchronousFile = function (id) {
+    console.log('开始同步id 为'+id)
+}
+var proxySynchronousFile = (function(){
+    var cache = [],
+        timer;
+    return function(id){
+        cache.push(id);
+        if(timer){
+            return;
+        }
+        timer = setTimeout(function () {
+            synchronousFile(cache.join(','));
+            clearTimeout(timer);
+            timer = null;
+            cache.length =0;
+        },4000);
+    }
+})();
+
+var checkbox = document.getElementsByTagName('input');
+for(var i =0,c;c=checkbox[i++];){
+    c.onclick=function () {
+        if(this.checked== true){
+            proxySynchronousFile(this.id)
+        }
+    }
+}
+
+</script>
+</body>
+```
+
+
