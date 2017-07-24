@@ -1502,10 +1502,214 @@ for(var i =0,c;c=checkbox[i++];){
             proxySynchronousFile(this.id)
         }
     }
-}
+} 
 
 </script>
 </body>
 ```
+##虚拟代理在惰性加载中的应用
+```markdown
+//点击F2加载js,执行指定缓存方法
+ var cache=[];
+    var miniConsole = {
+        log:function(){
+            var args = arguments;
+            console.log(args);
+            cache.push(function(){
+                return miniConsole.log.apply(miniConsole,args)
+            })
+        }
+    };
+    miniConsole.log(1);
+
+    var handler = function(ev){
+        if(ev.keyCode === 113){
+            var script = document.createElement('script');
+            script.onload = function(){
+                for(var i = 0,fn;fn=cache[i++];){
+                    fn();
+                }
+            }
+            script.src='minConsole.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
+    };
+
+    document.body.addEventListener('keydown',handler,false);
+    miniConsole={
+        log:function(){
+            console.log(Array.prototype.join.call(arguments))
+        }
+    }
+```
+改为标准的虚拟代理对象
+```markdown
+var miniConsole= (function () {
+        var cache=[];
+        var handler = function(ev){
+            if(ev.keyCode === 113){
+                var script = document.createElement('script');
+                script.onload = function(){
+                    for(var i = 0,fn;fn=cache[i++];){
+                        fn();
+                    }
+                }
+                script.src='minConsole.js';
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }
+        };
+        document.body.addEventListener('keydown',handler,false);
+        return  {
+            log:function(){
+                var args = arguments;
+                cache.push(function(){
+                    return miniConsole.log.apply(miniConsole,args)
+                })
+            }
+        };
+    })();
+
+    miniConsole.log(1111);
+    miniConsole.log(23);
+    miniConsole.log(2312312);
+    miniConsole={
+        log:function(){
+            console.log(Array.prototype.join.call(arguments))
+        }
+    }
+```
+## 缓存代理
+```markdown
+var mult = function () {
+    console.log('开始计算');
+    var a=1;
+    for(var i =0,l=arguments.length;i<l;i++){
+        a= a*arguments[i];
+    }
+    return a;
+}
+    var  proxyMult = (function () {
+            var cache = {};
+            return function () {
+                var args = Array.prototype.join.call(arguments,',');
+                if(args in cache){
+                    return cache[args];
+                }
+                return cache[args] = mult.apply(this,arguments) ;
+            }
+        }
+    )();
+
+console.log(proxyMult(2,3));
+console.log(proxyMult(2,3));
+```
+
+## 使用高阶函数动态创建代理
+
+```markdown
+   var mult = function () {
+        console.log('开始乘法');
+        var a=1;
+        for(var i =0,l=arguments.length;i<l;i++){
+            a= a*arguments[i];
+        }
+        return a;
+    }
+
+    var plus = function () {
+        console.log('开始加法');
+        var a=0;
+        for(var i =0,l=arguments.length;i<l;i++){
+            a= a+arguments[i];
+        }
+        return a;
+    };
+
+    var poroxyFactory = function (fn) {
+        var cache={};
+        return  function(){
+            var args = Array.prototype.join.call(arguments,',');
+            if(args in cache){
+                return cache[args]
+            }
+            return cache[args]=fn.apply(this,arguments);
+        }
+    };
+    var multPoroxyFactory  = poroxyFactory(mult);
+    console.log(    multPoroxyFactory(1,23,5));
+    console.log(    multPoroxyFactory(1,23,5));
+    var plusPoroxyFactory  = poroxyFactory(plus);
+    console.log(    plusPoroxyFactory(1,23,5));
+    console.log(    plusPoroxyFactory(1,23,5));
+```
+# 迭代器模式
+## 实现自己的迭代器
+```markdown
+ var each =  function (ary,callback) {
+     for(var i =0,l=ary.length;i<l;i++){
+         callback.call(ary[i],i,ary[i]);
+     }
+ };
+ each([1,23,4],function(i,e){
+     console.log([i,e])
+ })
+```
+## 内部迭代器
+```markdown
+    var each =  function (ary,callback) {
+        for(var i =0,l=ary.length;i<l;i++){
+            callback.call(ary[i],i,ary[i]);
+        }
+    };
+
+var compare =  function (ary1,ary2) {
+    if(ary1.length !== ary2.length){
+        throw new Error("buxiangdeng")
+    }
+    each(ary1,function(i,e){
+        if(e !== ary2[i]){
+            throw  new Error('buxiagndeng')
+        }
+    })
+
+
+}
+    compare([1,2,3],[3,5,6])
+```
+
+##外部迭代器
+```markdown
+var Iterator = function (obj) {
+    var current = 0;
+    var  next = function () {
+        current+=1;
+    }
+    var isDone = function () {
+        return current>= obj.length;
+    }
+    var getCurrItem = function () {
+        return obj[current]
+    }
+    return {
+        next:next,
+        isDone:isDone,
+        getCurrItem:getCurrItem
+    }
+}
+
+var compare = function(iterator1,iterator2){
+    while(!iterator1.isDone() && !iterator2.isDone()){
+        if(iterator1.getCurrItem() !== iterator2.getCurrItem()){
+            throw new Error('不相等')
+        }
+    }
+    console.log('相等')
+}
+
+var iterator1 = Iterator([1,23,4]);
+var iterator2 = Iterator([4,23,4]);
+compare(iterator1,iterator2)
+```
+
 
 
