@@ -83,7 +83,7 @@ chromeLauncher.launch({
             Network.enable(),
             DOM.enable(),
         ])            .then(() => {
-            Page.navigate({ url: 'https://www.baidu.com/' })
+            Page.navigate({ url: 'https://www.medplus.net/' })
             return new Promise((resolve, _) => {
                 Page.loadEventFired(() => { resolve() })
             })
@@ -101,9 +101,10 @@ chromeLauncher.launch({
                     }
                 });
             })
-            .then(() => {
-                chrome.close();
-                launcher.kill();
-            });
+        /*注意上面是否加载完成在关闭*/
+            // .then(() => {
+            //     chrome.close();
+            //     launcher.kill();
+            // });
     })
     .catch(console.error);
