@@ -37,9 +37,21 @@ chromeLauncher.launch({
         ]).then(() => {
             Network.setUserAgentOverride({userAgent});
             Emulation.setDeviceMetricsOverride(deviceMetrics); // 配置浏览器尺寸
-            Emulation.setVisibleSize(screenshotMetrics) // 配置截图尺寸
+            Emulation.setVisibleSize(screenshotMetrics); // 配置截图尺寸
+            Page.navigate({ url: 'https://m.medplus.net' });
         })
-            /*执行js*/
+            /*延迟3秒*/
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    Page.loadEventFired(() => {
+                        setTimeout(function () {
+                            resolve()
+                        }, 3000)
+                    })
+                })
+            })
+
+            // /*执行js*/
             .then(() => {
                 const code = [
                     // 'var input = document.querySelector(\'.s_ipt\')',
@@ -49,14 +61,10 @@ chromeLauncher.launch({
                 ].join(';');
                 return Runtime.evaluate({ expression: code })
             })
-            /*操作DOM*/
+
+            // /*操作DOM*/
             .then(() => {
-                Page.navigate({url: 'https://m.medplus.net'});
-                return new Promise((resolve, _) => {
-                    Page.loadEventFired(() => {
-                        resolve(DOM.getDocument())
-                    })
-                })
+               return DOM.getDocument()
             })
             .then(res => res.root.nodeId)
             .then(nodeId => DOM.querySelector({selector: '.header', nodeId}))
@@ -72,17 +80,19 @@ chromeLauncher.launch({
                 })
             )
              /*照相功能*/ /*两个then如何合写在一起*/
+            // .then(() => {
+            //     return new Promise((resolve, reject) => {
+            //         Page.loadEventFired(() => {
+            //             setTimeout(function () {
+            //                 resolve(
+            //                     Page.captureScreenshot({format: 'png', fromSurface: true})
+            //                 )
+            //             }, 1)
+            //         })
+            //     })
+            // })
             .then(() => {
-                Page.navigate({url: 'https://m.medplus.net'});
-                return new Promise((resolve, reject) => {
-                    Page.loadEventFired(() => {
-                        setTimeout(function () {
-                            resolve(
-                                Page.captureScreenshot({format: 'png', fromSurface: true})
-                            )
-                        }, 1)
-                    })
-                })
+                return Page.captureScreenshot({format: 'png', fromSurface: true})
             })
             .then((image) => {
                 console.log(image)
