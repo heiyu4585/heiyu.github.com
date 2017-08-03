@@ -1710,6 +1710,7 @@ var iterator1 = Iterator([1,23,4]);
 var iterator2 = Iterator([4,23,4]);
 compare(iterator1,iterator2)
 ```
+## 迭代类数组对象和字面量对象
 
 
 
