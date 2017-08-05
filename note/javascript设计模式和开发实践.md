@@ -1785,3 +1785,394 @@ var  reverseEach = function(arr,callback){
     
 ```
 
+#发布-订阅模式
+##自定义事件
+```markdown
+//自定义事件
+ var shoulouchu = {};
+shoulouchu.clientList =[];
+shoulouchu.listen = function (fn) {
+            this.clientList.push(fn)
+}
+
+shoulouchu.trigger = function () {
+    for(var i=0,fn;fn=this.clientList[i++];){
+        fn.apply(this,arguments)
+    }
+}
+
+shoulouchu.listen(  function (pr,sq) {
+    console.log("jiage+"+pr);
+    console.log("mianji"+sq);
+})
+shoulouchu.trigger(200090,88);
+shoulouchu.trigger(123123123,66);
+```
+
+```markdown
+var shoulouchu = {};
+shoulouchu.clientList ={};
+shoulouchu.listen = function (key,fn) {
+    if(!this.clientList[key]){
+        this.clientList[key]=[];
+    }
+    this.clientList[key].push(fn)
+}
+
+shoulouchu.trigger = function () {
+    var key = Array.prototype.shift.call(arguments),
+        fns= this.clientList[key];
+    if(!fns || fns.length ===0){
+        return false;
+    }
+    for(var i=0,fn;fn=fns[i++];){
+        fn.apply(this,arguments)
+    }
+}
+
+shoulouchu.listen( "sq88", function (price) {
+   console.log("xiaomingdingyue"+price)
+})
+shoulouchu.listen( "sq110", function (price) {
+    console.log("xiaohong"+price)
+})
+
+shoulouchu.trigger("sq88",288);
+shoulouchu.trigger('sq110',110);
+
+
+```
+##发布-订阅模式的通用实现
+```markdown
+
+    var event ={
+        clientList:[],
+        listen:function(key,fn){
+            if(!this.clientList[key]){
+                this.clientList[key]=[];
+            }
+            this.clientList[key].push(fn);
+        },
+        trigger:function(){
+            var key=Array.prototype.shift.call(arguments),
+                fns=this.clientList[key];
+
+            if(!fns || fns.length ===0){
+                return false;
+            }
+            for(var i=0,fn;fn=fns[i++];){
+                fn.apply(this,arguments);
+            }
+        }
+    }
+
+
+    var installEvent = function (obj) {
+        for(var i in event){
+            obj[i]=event[i];
+        }
+    }
+
+    var salesOffices= {};
+    installEvent(salesOffices);
+    salesOffices.listen('sq88',function(price){
+        console.log("xiaming jiage"+price)
+    })
+    salesOffices.listen('sq110',function(price){
+        console.log("xiaohong jiage"+price)
+    })
+
+
+    salesOffices.trigger("sq88",288);
+    salesOffices.trigger('sq110',110);
+
+```
+
+## 取消订阅的事件
+```markdown
+ var event ={
+        clientList:[],
+        listen:function(key,fn){
+            if(!this.clientList[key]){
+                this.clientList[key]=[];
+            }
+            this.clientList[key].push(fn);
+        },
+        trigger:function(){
+            var key=Array.prototype.shift.call(arguments),
+                fns=this.clientList[key];
+
+            if(!fns || fns.length ===0){
+                return false;
+            }
+            for(var i=0,fn;fn=fns[i++];){
+                fn.apply(this,arguments);
+            }
+        },
+        remove:function (key, fn) {
+            var fns= this.clientList[key];
+            if(!fns){
+                return false;
+            }
+
+            if(!fn){
+                fns && (  fns.length=0);
+            }else{
+                for (var l= fns.length-1;l>=0;l--){
+                    var _fn = fns[l];
+                    if(_fn === fn){
+                        fns.splice(l,1);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    var installEvent = function (obj) {
+        for(var i in event){
+            obj[i]=event[i];
+        }
+    }
+
+    var salesOffices= {};
+    installEvent(salesOffices);
+    salesOffices.listen('sq88',fn1 = function(price){
+        console.log("xiaming jiage"+price)
+    })
+    salesOffices.listen('sq110',fn2 = function(price){
+        console.log("xiaohong jiage"+price)
+    })
+
+    salesOffices.remove("sq88",fn1);
+    salesOffices.trigger("sq88",288);
+    salesOffices.trigger('sq110',110);                                                     
+```
+
+## 真实的列子-网站登录
+```markdown
+
+    var event ={
+        clientList:[],
+        listen:function(key,fn){
+            if(!this.clientList[key]){
+                this.clientList[key]=[];
+            }
+            this.clientList[key].push(fn);
+        },
+        trigger:function(){
+            var key=Array.prototype.shift.call(arguments),
+                fns=this.clientList[key];
+
+            if(!fns || fns.length ===0){
+                return false;
+            }
+            for(var i=0,fn;fn=fns[i++];){
+                fn.apply(this,arguments);
+            }
+        },
+        remove:function (key, fn) {
+            var fns= this.clientList[key];
+            if(!fns){
+                return false;
+            }
+
+            if(!fn){
+                fns && (  fns.length=0);
+            }else{
+                for (var l= fns.length-1;l>=0;l--){
+                    var _fn = fns[l];
+                    if(_fn === fn){
+                        fns.splice(l,1);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    var installEvent = function (obj) {
+        for(var i in event){
+            obj[i]=event[i];
+        }
+    }
+
+    var login ={};
+    installEvent(login);
+
+    var head = (function(){
+        login.listen("loginSucc",function(data){
+            head.setAvatar(data)
+        })
+        return {
+            setAvatar:function (data) {
+                console.log("head")
+                console.log(data)
+            }
+        }
+    })();
+    var nav = (function(){
+        login.listen("loginSucc",function(data){
+            nav.setAvatar(data)
+        })
+        return {
+            setAvatar:function (data) {
+                console.log("nav")
+                console.log(data)
+            }
+        }
+    })();
+
+
+        setTimeout(function(){
+            login.trigger("loginSucc","则是数据")
+        },2000)
+    //新增模块
+    var mess = (function(){
+        login.listen("loginSucc",function(data){
+            mess.setAvatar(data)
+        })
+        return {
+            setAvatar:function (data) {
+                console.log("mess")
+                console.log(data)
+            }
+        }
+    })();
+```
+##全局的发布-订阅模式
+```markdown
+var Event = (function(){
+    var clientList ={},
+        listen,
+        trigger,
+        remove;
+    listen = function (key, fn) {
+        if(!clientList[key]){
+            clientList[key]=[];
+        }
+        clientList[key].push(fn);
+    }
+
+    trigger = function () {
+        var key = Array.prototype.shift.call(arguments),
+            fns = clientList[key];
+        if(!fns || fns.legnth === 0){
+            return false;
+        }
+
+        for(var i=0,fn;fn= fns[i++];){
+            fn.apply(this,arguments)
+        }
+    };
+    remove  = function(key,fn){
+        var fns = clientList[key];
+        if(!fns){
+            return false;
+        }
+        if(!fn){
+            fns && (fns.length =0)
+        }else{
+            for(var l= fns.length-1;l>=0;l--){
+                var _fn = fns[l];
+                if(_fn === fn){
+                    fns.splice(l,1)
+                }
+            }
+        }
+
+
+    };
+    return {
+        listen:listen,
+        trigger:trigger,
+        remove:remove
+    }
+
+})()
+
+    Event.listen('sq88',function (price) {
+        console.log('xiaom jiage'+price)
+    })
+
+Event.trigger('sq88',2343434)
+```
+
+##模块之间的通讯
+```markdown
+ var Event = (function () {
+        var clientList = [], //事件缓存列表
+            listen,   // 监听方法
+            trigger,  //发布事件
+            remove;  //取消绑定
+
+        listen = function (key, fn) {
+            if (!clientList[key]) {
+                clientList[key] = [];
+            }
+
+            clientList[key].push(fn)
+
+        };
+        trigger = function () {
+            /*绑定事件*/
+            var key = Array.prototype.shift.apply(arguments),
+                fns = clientList[key];
+
+            if (!fns) {
+                fns && (clientList[key].length = 0);
+            }
+            if (!fns || fns.length == 0) {
+                return false;
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+
+        }
+        remove = function (key, fn) {
+            var fns = clientList[key];
+            if (!fns) {
+                return false;
+            }
+            if (!fn) {
+                fns && (fns.length = 0)
+            } else {
+                for (var i = 0; i < fns.length; i++) {
+                    if (fn === fns[i]) {
+                        fns.splice(i, 1)
+                    }
+                }
+            }
+
+        }
+        return {
+            listen: listen,
+            trigger: trigger,
+            remove: remove
+        }
+
+    })();
+
+
+    Event.listen('tp88', f1 = function (price) {
+        console.log("asdf+" + price)
+    });
+    Event.remove('tp88', f1);
+    Event.trigger('tp88', 898989);
+
+    var a = (function () {
+        var num=0;
+        document.querySelector("#a").onclick = function () {
+            console.log(123123)
+            Event.trigger("add", num++)
+        }
+    })()
+
+```
+
+## 必须先订阅再发布吗
+可以先执行发布,在订阅, ??
+##全局事件的命名冲突
