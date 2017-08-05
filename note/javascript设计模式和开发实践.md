@@ -1712,5 +1712,76 @@ compare(iterator1,iterator2)
 ```
 ## 迭代类数组对象和字面量对象
 
+```markdown
+ /*倒叙迭代器*/
+var  reverseEach = function(arr,callback){
+    for(var l =arr.length-1;l>=0;l--){
+        callback(l,arr[l]);
+    }
+}
+    reverseEach([0,1,3],function(i,n){
+        console.log(n)
+    }   )
+    /*中止迭代器*/
 
+    var  reverseEach = function(arr,callback){
+        for(var l=0.;l<arr.length;l++){
+           if( callback(l,arr[l])=== false){
+               break;
+            }
+        }
+    };
+
+    reverseEach([0,1,2,4,5,6],function(i,n){
+        if(n>2){
+            return false;
+        }
+        console.log(n)
+    }   )
+
+    /*迭代器模式的应用举例*/
+    
+    var getActiveUploadObj = function () {
+        try{
+            return new ActiveXObject('TZFTNActiveX.FTNUpload')
+        }catch (e){
+            return false;
+        }
+    }
+    
+    var getFlashUploadObj = function () {
+        if(supportFlash()){
+            var str='<object type="application/x-shockwve-flash"></object>';
+            return $(str).appentTo($('body'));
+        }
+        return false;
+    }
+    
+    var getFormUploadObj = function () {
+        var str ='<input name="file" type="file" class="ui-file"/>'; //表单上传
+    }
+    
+    var iteratorUploadObj = function () {
+        for(var i=n,fn;fn=arguments[i++];){
+            var uploadObj = fn();
+            if(uploadObj !== false){
+                return uploadObj;
+            }
+        }
+    }
+    
+    var uploadObj = iteratorUploadObj(getActiveUploadObj,getFlashUploadObj,getFormUploadObj);
+    
+    var getWebkitUploadObj =  function () {
+        
+    }
+    
+    var getHtml5UploadObj = function () {
+        
+    }
+
+    var uploadObj = iteratorUploadObj(getActiveUploadObj,getFlashUploadObj,getFormUploadObj,getWebkitUploadObj,getHtml5UploadObj);
+    
+    
+```
 
