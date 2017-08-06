@@ -73,17 +73,18 @@ chromeLauncher.launch({
             Network.setUserAgentOverride({userAgent});
             Emulation.setDeviceMetricsOverride(deviceMetrics); // 配置浏览器尺寸
             Emulation.setVisibleSize(screenshotMetrics) // 配置截图尺寸
+            Page.navigate({ url: 'https://m.medplus.net' });
         })
             /*照相功能*/ /*两个then如何合写在一起*/
                 .then(() => {
-                    Page.navigate({ url: 'https://m.medplus.net' });
+
                     return new Promise((resolve, reject) => {
                         Page.loadEventFired(() => {
                             setTimeout(function(){
                                 resolve(
                                     Page.captureScreenshot({ format: 'png', fromSurface: true })
                                 )
-                            },1)
+                            },3000)
                         })
                     })
                 })
