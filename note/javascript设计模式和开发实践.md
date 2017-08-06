@@ -2175,4 +2175,84 @@ Event.trigger('sq88',2343434)
 
 ## 必须先订阅再发布吗
 可以先执行发布,在订阅, ??
+
+```markdown
+  var Event = (function () {
+        var clientList = [], //事件缓存列表
+            listen,   // 监听方法
+            trigger,  //发布事件
+            remove;  //取消绑定
+
+        listen = function (key, fn) {
+            if (!clientList[key]) {
+                clientList[key] = [];
+            }
+
+            clientList[key].push(fn)
+
+        };
+        trigger = function () {
+            /*绑定事件*/
+            var key = Array.prototype.shift.apply(arguments),
+                fns = clientList[key];
+
+            if (!fns) {
+                fns && (clientList[key].length = 0);
+            }
+            if (!fns || fns.length == 0) {
+                return false;
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+
+        }
+        remove = function (key, fn) {
+            var fns = clientList[key];
+            if (!fns) {
+                return false;
+            }
+            if (!fn) {
+                fns && (fns.length = 0)
+            } else {
+                for (var i = 0; i < fns.length; i++) {
+                    if (fn === fns[i]) {
+                        fns.splice(i, 1)
+                    }
+                }
+            }
+
+        }
+        return {
+            listen: listen,
+            trigger: trigger,
+            remove: remove
+        }
+
+    })();
+
+
+    Event.listen('tp88', f1 = function (price) {
+        console.log("asdf+" + price)
+    });
+    Event.remove('tp88', f1);
+    Event.trigger('tp88', 898989);
+
+    var a = (function () {
+        var num=0;
+        document.querySelector("#a").onclick = function () {
+            console.log(123123)
+            Event.trigger("add", num++)
+        }
+    })();
+
+    setTimeout(function () {
+        var b = (function () {
+            Event.listen("add",function(data){
+                document.querySelector("#b").innerHTML = data;
+            })
+        })();
+    },3000)
+
+```
 ##全局事件的命名冲突
