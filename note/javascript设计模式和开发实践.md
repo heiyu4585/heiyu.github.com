@@ -2811,3 +2811,79 @@ console.log(folder)
 </body>
 </html>
 ```
+
+## 引用父对象
+
+````markdown
+/************** Folder ******************/
+
+var Folder = function (name) {
+    this.name=name;
+    this.parent=null;
+    this.files=[];
+}
+
+Folder.prototype.add = function (file) {
+    file.parent = this;
+    this.files.push(file)
+}
+
+Folder.prototype.scan = function () {
+    console.log('开始扫描文件夹'+this.name);
+    for(var i=0,file,files=this.files;file=files[i++];){
+        console.log(file)
+        file.scan();
+    }
+};
+
+Folder.prototype.remove = function () {
+  if(!this.parent){ //根节点或 树外的游离节点
+      return;
+  }
+    for(var i=0,files = this.parent.files,l=files.length-1;l>=0;l--){
+       var file = files[l];
+       if(file == this){
+           files.splice(l,1)
+       }
+    }
+}
+
+/************** file ******************/
+var File = function (name) {
+    this.name = name;
+    this.parent=null;
+};
+
+File.prototype.add = function(){
+    throw new Error("文件下不能添加文件")
+}
+File.prototype.scan=function () {
+    console.log("文件开始扫描:"+this.name);
+}
+File.prototype.remove=function () {
+    if(!this.parent){ //根节点或 树外的游离节点
+        return;
+    }
+    for(var i=0,files = this.parent.files,l=files.length-1;l>=0;l--){
+        var file = files[l];
+        if(file == this){
+            files.splice(l,1)
+        }
+    }
+}
+
+
+
+
+var folder = new Folder('学习资料');
+var folder1 = new Folder('javaScript');
+var file4 = new File('深入浅出Node.js');
+
+folder1.add(new File('Javascript设计模式和开发实践'));
+folder.add(folder1);
+folder.add(file4)
+
+folder1.remove();
+folder.scan();
+
+````
