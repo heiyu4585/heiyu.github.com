@@ -2256,3 +2256,558 @@ Event.trigger('sq88',2343434)
 
 ```
 ##全局事件的命名冲突
+待补充
+
+# 命令模式
+
+## 命令模式的用户
+
+> 命令模式的的命令指的是一个执行默写特定事情的指令.
+
+>常见的应用场景: 用时候需要向某些对象发送请求,但是不知道请求的接受者是谁,也不知道被请求的操作是什么.
+此时希望用一种松耦合的方式来设计改软件,使得请求发送者和请求接受者能够消除彼此之间的耦合关系.
+## 命令模式的列子-菜单程序
+```
+  var button1 = document.getElementById("button1")
+    var button2 = document.getElementById("button2")
+    var button3 = document.getElementById("button3")
+
+
+    var setCommand = function(button,command){
+        button.onclick = function(){
+            command.execute();
+        }
+    }
+
+    var MenuBar = {
+        refresh:function(){
+            console.log("刷新")
+        }
+    }
+
+    var SubMenu={
+        add:function () {
+            console.log("zengjia子菜单")
+        },
+        del:function () {
+            console.log("删除子菜单")
+        }
+    }
+
+    var RefreshMenuBarCommand = function (receiver) {
+        this.receiver = receiver;
+    }
+
+    RefreshMenuBarCommand.prototype.execute= function () {
+        this.receiver.refresh();
+    }
+
+    var AddSubMenuCommand =function (receiver) {
+        this.receiver = receiver;
+    }
+    AddSubMenuCommand.prototype.execute = function(){
+        this.receiver.add();
+    }
+
+    var DelSubMenuCommand =function (receiver) {
+        this.receiver = receiver;
+    }
+    DelSubMenuCommand.prototype.execute = function(){
+        console.log("shanchu zid自残点")
+    }
+
+    var refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar)
+    var addSubMenuCommand = new AddSubMenuCommand(SubMenu);
+    var delSubMenuCommand = new DelSubMenuCommand(SubMenu);
+
+    setCommand(button1,refreshMenuBarCommand);
+    setCommand(button2,addSubMenuCommand);
+    setCommand(button3,delSubMenuCommand);
+```
+
+##javascript中命令模式
+```
+   var button1 = document.getElementById("button1")
+      var button2 = document.getElementById("button2")
+      var button3 = document.getElementById("button3")
+  
+      var bindClick = function (button,func) {
+          button.onclick = func;
+      }
+      
+      var MenuBar = {
+          refresh:function () {
+              console.log("刷新菜单界面")
+          }
+      }
+      var SubMenu ={
+          add:function () {
+              console.log("增加子菜单")
+          },
+          del:function () {
+              console.log("s删除子菜单")
+          }
+      }
+      bindClick(button1,MenuBar.refresh);
+      bindClick(button2,SubMenu.add);
+      bindClick(button3,SubMenu.del);    
+```
+### 在面向对象的设计模式中
+```markdown
+  var button1 = document.getElementById("button1")
+
+    var setCommand = function (button,func) {
+        button.onclick = func;
+    };
+
+    var MenuBar =  {
+        refresh: function () {
+            console.log("刷新菜单界面")
+        }
+    }
+    var RefreshMenuBarCommand = function (receiver) {
+        return function () {
+            receiver.refresh()
+        }
+    }
+    var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar)
+
+    setCommand (button1,refreshMenuBarCommand)
+```
+## 撤销命令
+未设置为命令模式
+```markdown
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="ball" style="position:absolute;background: #000;width:50px;height:50px;"></div>
+输入小球的移动后位置: <input type="text " id="pos">
+<button id="moveBtn">开始移动</button>
+
+<script>
+
+    var tween={
+        strongEaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t*t*t+b;
+        },
+        strongEaseOut:function(t,b,c,d){
+            return  c*((t=t/d-1)*t*t*t*t+1)+b;
+        },
+        sineaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t+b
+        },
+        sineaseOut:function(t,b,c,d){
+            return c*((t=t/d-1)*t*t+1)+b;
+        }
+    }
+
+    var Animate = function(dom){
+        this.dom= dom;
+        this.startTime=0;
+        this.startPos=0;
+        this.endPos=0;
+        this.propertyName = null;
+        this.easing= null;
+        this.duration = null;
+    }
+
+    Animate.prototype.start =  function(propertyName,endPos,duration,easing){
+        this.startTime = +new Date;
+        this.startPos = this.dom.getBoundingClientRect()[propertyName]; //dom节点的初始位置
+        this.propertyName = propertyName;
+        this.endPos = endPos;
+        this.duration = duration; //动画持续时间
+        this.easing = tween[easing];
+        var self= this;
+        var timeId = setInterval(function(){
+            if(self.step()=== false){
+                clearInterval(timeId);
+            }
+        },19)
+    }
+    Animate.prototype.step = function(){
+        var t = +new Date();
+        if(t>= this.startTime+this.duration){
+            this.update(this.endPos);
+            return false;
+        }
+        var pos = this.easing(t-this.startTime,this.startPos,
+            this.endPos-this.startPos,this.duration);
+        this.update(pos);
+    }
+
+    Animate.prototype.update = function (pos){
+        this.dom.style[this.propertyName] = pos+"px";
+    }
+
+    
+    var ball = document.getElementById("ball");
+    var pos= document.getElementById('pos');
+    var moveBtn= document.getElementById("moveBtn");
+
+    moveBtn.onclick = function () {
+        var animate= new Animate(ball);
+        animate.start('left',pos.value,1000,'strongEaseIn')
+    }
+
+    
+    
+
+</script>
+</body>
+</html>
+```
+改为命令模式
+```
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="ball" style="position:absolute;background: #000;width:50px;height:50px;"></div>
+输入小球的移动后位置: <input type="text " id="pos">
+<button id="moveBtn">开始移动</button>
+<button id="cancelBtn">取消移动</button>
+<script>
+    var tween={
+        strongEaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t*t*t+b;
+        },
+        strongEaseOut:function(t,b,c,d){
+            return  c*((t=t/d-1)*t*t*t*t+1)+b;
+        },
+        sineaseIn:function(t,b,c,d){
+            return  c*(t/=d)*t*t+b
+        },
+        sineaseOut:function(t,b,c,d){
+            return c*((t=t/d-1)*t*t+1)+b;
+        }
+    }
+
+    var Animate = function(dom){
+        this.dom= dom;
+        this.startTime=0;
+        this.startPos=0;
+        this.endPos=0;
+        this.propertyName = null;
+        this.easing= null;
+        this.duration = null;
+    }
+
+    Animate.prototype.start =  function(propertyName,endPos,duration,easing){
+        this.startTime = +new Date;
+        this.startPos = this.dom.getBoundingClientRect()[propertyName]; //dom节点的初始位置
+        this.propertyName = propertyName;
+        this.endPos = endPos;
+        this.duration = duration; //动画持续时间
+        this.easing = tween[easing];
+        var self= this;
+        var timeId = setInterval(function(){
+            if(self.step()=== false){
+                clearInterval(timeId);
+            }
+        },19)
+    }
+    Animate.prototype.step = function(){
+        var t = +new Date();
+        if(t>= this.startTime+this.duration){
+            this.update(this.endPos);
+            return false;
+        }
+        var pos = this.easing(t-this.startTime,this.startPos,
+            this.endPos-this.startPos,this.duration);
+        this.update(pos);
+    }
+    Animate.prototype.update = function (pos){
+        this.dom.style[this.propertyName] = pos+"px";
+    }
+
+    /**********************/
+    var ball = document.getElementById("ball");
+    var pos= document.getElementById('pos');
+    var moveBtn= document.getElementById("moveBtn");
+    var cancelBtn= document.getElementById("cancelBtn");
+
+    var  MoveCommand =function(receiver,pos){
+        this.receive = receiver;
+        this.pos = pos;
+        this.oldPos=null;
+    };
+    MoveCommand.prototype.execute = function(){
+        this.receive.start('left',pos.value,1000,'strongEaseIn')
+        this.oldPos = this.receive.dom.getBoundingClientRect()[this.receive.propertyName]
+    };
+    MoveCommand.prototype.undo = function(){
+        this.receive.start('left',this.oldPos,1000,'strongEaseIn')
+    };
+
+
+    var moveCommand;
+    moveBtn.onclick = function(){
+        var animate= new Animate(ball);
+        moveCommand = new MoveCommand(animate,pos.value);
+        moveCommand.execute()
+    };
+
+    cancelBtn.onclick = function(){
+        moveCommand.undo()
+    }
+
+</script>
+</body>
+</html>
+```
+## 命令队列
+
+## 宏命令
+```markdown
+var close = {
+    execute:function () {
+        console.log('关门')
+    }
+}
+
+var open = {
+    execute:function () {
+        console.log('open')
+    }
+}
+
+var MaroCommand= function(){
+    return {
+        commandList:[],
+        add:function (command) {
+            this.commandList.push(command)
+        },
+        execute:function () {
+            for(var i=0;i<this.commandList.length;i++){
+                this.commandList[i].execute()
+            }
+        }
+    }
+};
+
+var maroCommand  = MaroCommand()
+    maroCommand.add(close)
+    maroCommand.add(open)
+    maroCommand.execute()
+
+```
+## 智能命令和傻瓜命令
+
+# 组合模式
+##更强大的宏命令
+                                                                 
+```markdown
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>更强大的宏命令</title>
+</head>
+<body>
+<button id="button">开始移动</button>
+<script>
+var MaroCommand= function(){
+    return {
+        commandList:[],
+        add:function (command) {
+            this.commandList.push(command)
+        },
+        execute:function () {
+            for(var i=0;i<this.commandList.length;i++){
+                this.commandList[i].execute()
+            }
+        }
+    }
+};
+/*打开冰箱*/
+var openACCommand = {
+    execute:function () {
+        console.log('打开冰箱')
+    }
+}
+
+/*****家里的电视和音响链接在一起******/
+
+/*打开电视*/
+
+var openTVCommand = {
+    execute:function () {
+        console.log('打开电视')
+    }
+}
+/*音响*/
+var openSoundCommand = {
+    execute:function () {
+        console.log('音响')
+    }
+}
+
+/**/
+
+var maroCommand1  = MaroCommand();
+    maroCommand1.add(openTVCommand)
+    maroCommand1.add(openSoundCommand)
+
+/*关门,打开电视,打开电脑,登陆QQ*/
+/*音响*/
+var closeDoor = {
+    execute:function () {
+        console.log('Door')
+    }
+};
+var openPcCommand= {
+    execute:function () {
+        console.log('Pc')
+    }
+};
+
+var openQQCommand ={
+    execute:function () {
+        console.log('QQ')
+    }
+};
+
+var maroCommand2  = MaroCommand();
+maroCommand2.add(closeDoor);
+maroCommand2.add(openPcCommand);
+maroCommand2.add(openQQCommand);
+
+/*最后给遥控器绑定超级命令*/
+
+var maroCommand  = MaroCommand();
+maroCommand.add(openACCommand);
+maroCommand.add(maroCommand1);
+maroCommand.add(maroCommand2);
+
+
+
+var setCommand =(function(command){
+    document.getElementById('button').onclick=function(){
+        command.execute();
+    }
+})(maroCommand);
+
+
+</script>
+</body>
+</html>
+```
+## 透明性带来的安全问题
+```markdown
+var MaroCommand= function(){
+    return {
+        commandList:[],
+        add:function (command) {
+            this.commandList.push(command)
+        },
+        execute:function () {
+            for(var i=0;i<this.commandList.length;i++){
+                this.commandList[i].execute()
+            }
+        }
+    }
+};
+/*打开冰箱*/
+var openACCommand = {
+    execute:function () {
+        console.log('打开冰箱')
+    },
+    add:function () {
+       throw new Error('叶对象不能添加子节点')
+    },
+}
+var maroCommand  = MaroCommand();
+maroCommand.add(openACCommand)
+openACCommand.add(maroCommand)
+
+```
+## 组合模式的列子-扫描文件夹
+```
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组合模式的列子-扫描文件夹</title>
+</head>
+<body>
+<script>
+/************** Folder ******************/
+
+var Folder = function (name) {
+    this.name=name;
+    this.files=[];
+}
+
+Folder.prototype.add = function (file) {
+    this.files.push(file)
+}
+
+Folder.prototype.scan = function () {
+    console.log('开始扫描文件夹'+this.name);
+    for(var i=0,file,files=this.files;file=files[i++];){
+        console.log(file)
+        file.scan();
+    }
+}
+/************** file ******************/
+var File = function (name) {
+    this.name = name;
+};
+
+File.prototype.add = function(){
+    throw new Error("文件下不能添加文件")
+}
+File.prototype.scan=function () {
+    console.log("文件开始扫描:"+this.name);
+}
+
+
+var folder = new Folder('学习资料');
+var folder1 = new Folder('javaScript');
+var folder2 = new Folder('jQuery');
+
+var  file1 = new File('Javascript设计模式和开发实践');
+var  file2 = new File('精通jQuery');
+var  file3 = new File('重构与模式');
+
+folder1.add(file1);
+folder2.add(file2);
+
+folder.add(folder1);
+folder.add(folder2);
+folder.add(file3);
+
+var folder3 = new Folder('Node.js');
+var file4 = new File('深入浅出Node.js');
+
+
+var file5 = new File('Javascript语言精粹与编程实践.js');
+folder3.add(file4);
+folder3.add(file5);
+console.log(folder)
+
+    folder.scan();
+</script>
+</body>
+</html>
+```
