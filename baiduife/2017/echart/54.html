@@ -71,6 +71,28 @@
         echarts.registerMap('china', chinaJson);
         var chart = echarts.init(document.getElementById('main'));
         chart.setOption({
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'left',
+                top: 'top',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            visualMap: {
+                min: 0,
+                max: 200,
+                calculable: true,
+                inRange: {
+                    color: ['#50a3ba', '#eac736', '#d94e5d']
+                },
+                textStyle: {
+                    color: '#fff'
+                }
+            },
             series: [{
                 type: 'map',
                 map: 'china'
