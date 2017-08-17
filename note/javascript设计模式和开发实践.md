@@ -2887,3 +2887,130 @@ folder1.remove();
 folder.scan();
 
 ````
+# 模板方法模式
+
+```markdown
+/************** Folder ******************/
+var Coffe = function () {
+
+};
+
+Coffe.prototype.boilWater = function () {
+    console.log("把水煮沸");
+};
+
+Coffe.prototype.brewCoffeGrieds = function () {
+    console.log("把沸水冲泡开啡")
+};
+
+Coffe.prototype.pourIncup = function () {
+    console.log("把咖啡倒进杯子")
+};
+
+Coffe.prototype.addSugarAndMilk = function () {
+    console.log("加糖和牛奶")
+}
+
+Coffe.prototype.init = function () {
+    this.boilWater();
+    this.brewCoffeGrieds();
+    this.pourIncup();
+    this.addSugarAndMilk();
+}
+
+/********* tea *********/
+
+var Tea = function () {
+
+};
+
+Tea.prototype.boilWater = function () {
+    console.log("把水煮沸");
+};
+
+Tea.prototype.steepTeaBag = function () {
+    console.log("把沸水冲泡开啡")
+};
+
+Tea.prototype.pourIncup = function () {
+    console.log("把咖啡倒进杯子")
+};
+
+Tea.prototype.addLemon = function () {
+    console.log("加糖和牛奶")
+}
+
+Tea.prototype.init = function () {
+    this.boilWater();
+    this.steepTeaBag();
+    this.pourIncup();
+    this.addLemon();
+}
+
+
+/*********** 提取公共部分 *************/
+
+
+var Beverage = function () {
+
+};
+
+Beverage.prototype.boilWater = function () {
+    console.log("把水煮沸");
+};
+
+Beverage.prototype.brew = function () {
+};
+
+Beverage.prototype.pourIncup = function () {
+};
+
+Beverage.prototype.addCondiments = function () {
+};
+
+Beverage.prototype.init = function () {
+    this.boilWater();
+    this.brew();
+    this.pourIncup();
+    this.addCondiments();
+}
+
+
+var  Coffee = function(){};
+Coffee.prototype = new Beverage();
+/*子类重写*/
+
+Coffee.prototype.brew = function () {
+    console.log("用沸水泡咖啡")
+}
+Coffee.prototype.pourIncup = function () {
+    console.log("把咖啡倒进杯子")
+}
+Coffee.prototype.addCondiments = function () {
+    console.log("加糖和牛奶")
+}
+
+var coffee = new Coffee();
+coffee.init();
+
+
+
+/**************/
+var Tea = function () {
+
+}
+
+Tea.prototype = new Beverage();
+Tea.prototype.brew =function () {
+    console.log("用沸水浸泡茶叶")
+}
+Tea.prototype.pourIncup =function () {
+    console.log("用沸水浸泡茶叶")
+}
+Tea.prototype.addCondiments =function () {
+    console.log("用沸水浸泡茶叶")
+}
+
+var tea = new Tea();
+tea.init();
+```
