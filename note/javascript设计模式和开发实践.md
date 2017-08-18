@@ -3014,8 +3014,190 @@ Tea.prototype.addCondiments =function () {
 var tea = new Tea();
 tea.init();
 ```
+## 钩子函数
+```
+
+var Beverage = function () {
+
+};
+
+Beverage.prototype.boilWater = function () {
+  console.log("子类必须重写boilWater")
+};
+
+Beverage.prototype.brew = function () {
+    console.log("子类必须重写brew")
+};
+
+Beverage.prototype.pourIncup = function () {
+    console.log("子类必须重写pourIncup")
+};
+
+Beverage.prototype.addCondiments = function () {
+    console.log("子类必须重写addCondiments")
+};
+
+Beverage.prototype.init = function () {
+    this.boilWater();
+    this.brew();
+    this.pourIncup();
+    //如果挂钩返回true,则需要调料
+   if(this.customerWatsCondiments()){
+       this.addCondiments();
+   }
+}
+
+var  CoffeeWithHook = function(){};
+CoffeeWithHook.prototype = new Beverage();
+/*子类重写*/
+
+CoffeeWithHook.prototype.brew = function () {
+    console.log("用沸水泡咖啡")
+}
+CoffeeWithHook.prototype.pourIncup = function () {
+    console.log("把咖啡倒进杯子")
+}
+CoffeeWithHook.prototype.addCondiments = function () {
+    console.log("加糖和牛奶")
+}
+
+CoffeeWithHook.prototype.customerWatsCondiments = function () {
+  return window.confirm("请问需要饮料吗")
+}
+
+var coffeeWithHook = new CoffeeWithHook();
+coffeeWithHook.init();
+```
+## 好莱坞原则
+
+> 不要来找我,我会给你打电话
+
+##真的需要继承吗
+```javascript
+
+var Beverage = function (param) {
+
+    var boilWater = function () {
+        console.log("把水煮沸")
+    };
+
+    var brew =  param.brew ||function () {
+        console.log("子类必须重写brew")
+    };
+
+    var pourIncup =  param.pourIncup || function () {
+        console.log("子类必须重写pourIncup")
+    };
+
+    var addCondiments =  param.addCondiments ||function () {
+        console.log("子类必须重写addCondiments")
+    };
+
+    var F = function () {
+
+    }
+
+    F.prototype.init = function () {
+        boilWater();
+        brew();
+        pourIncup();
+        addCondiments();
+    }
+
+    return F;
+};
+
+var Coffee = Beverage({
+     brew : function () {
+        console.log("用沸水泡咖啡")
+    },
+     pourIncup : function () {
+        console.log("把咖啡倒进杯子")
+    },
+     addCondiments : function () {
+        console.log("加糖和牛奶")
+    }
+})
+
+var Beverage = function (param) {
+
+    var boilWater = function () {
+        console.log("把水煮沸")
+    };
+
+    var brew =  param.brew ||function () {
+        console.log("子类必须重写brew")
+    };
+
+    var pourIncup =  param.pourIncup || function () {
+        console.log("子类必须重写pourIncup")
+    };
+
+    var addCondiments =  param.addCondiments ||function () {
+        console.log("子类必须重写addCondiments")
+    };
+
+    var F = function () {
+
+    }
+
+    F.prototype.init = function () {
+        boilWater();
+        brew();
+        pourIncup();
+        addCondiments();
+    }
+
+    return F;
+};
+
+var Coffee = Beverage({
+     brew : function () {
+        console.log("用沸水泡咖啡")
+    },
+     pourIncup : function () {
+        console.log("把咖啡倒进杯子")
+    },
+     addCondiments : function () {
+        console.log("加糖和牛奶")
+    }
+})
+
+var Tea = Beverage({
+    brew : function () {
+        console.log("用沸水浸泡茶叶")
+    },
+    pourIncup : function () {
+        console.log("用沸水浸泡茶叶")
+    },
+    addCondiments : function () {
+        console.log("用沸水浸泡茶叶")
+    }
+})
 
 
+var coffee = new Coffee();
+coffee.init();
+var tea = new Tea();
+tea.init();
+var Tea = Beverage({
+    brew : function () {
+        console.log("用沸水浸泡茶叶")
+    },
+    pourIncup : function () {
+        console.log("用沸水浸泡茶叶")
+    },
+    addCondiments : function () {
+        console.log("用沸水浸泡茶叶")
+    }
+})
+
+
+var coffee = new Coffee();
+coffee.init();
+var tea = new Tea();
+tea.init();
+```
 
 
 
