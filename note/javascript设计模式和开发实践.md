@@ -3199,5 +3199,51 @@ var tea = new Tea();
 tea.init();
 ```
 
+# 亨元模式
 
+## 初始亨元模式
 
+```javascript
+    var Model = function (sex,underwear) {
+        this.sex = sex;
+        this.underwear = underwear
+    };
+
+    Model.prototype.takePhoto = function () {
+        console.log('sex='+this.sex+" underwear "+this.underwear);
+    }
+
+    for(var i=1;i<=50;i++){
+        var maleModel = new Model('male','underwear'+i);
+        maleModel.takePhoto();
+    }
+
+    for(var j=1;j<=50;j++){
+        var femaleMeodel = new Model('female','underwear'+j);
+        femaleMeodel.takePhoto();
+    }
+
+```
+简单优化
+```javascript
+   var Model = function (sex) {
+        this.sex = sex;
+    };
+
+    Model.prototype.takePhoto = function () {
+        console.log('sex='+this.sex+" underwear "+this.underwear);
+    }
+    var maleModel = new Model('male');
+    var femaleMeodel = new Model('female');
+
+    for(var i=1;i<=50;i++){
+        maleModel.underwear = 'underwear'+i;
+        maleModel.takePhoto();
+    }
+
+    for(var j=1;j<=50;j++){
+        femaleMeodel.underwear = 'underwear'+j;
+        femaleMeodel.takePhoto();
+    }
+
+```
