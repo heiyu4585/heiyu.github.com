@@ -1,7 +1,4 @@
 (function () {
-    var notBuild = function () {
-        throw new Error('还没开发');
-    }
     /*创建根元素,window 或者 exports*/
     // Baseline setup
     var root = this;
@@ -530,7 +527,20 @@
         return _.uniq(flatten(arguments, true, true));
     };
 
-    _.intersection = notBuild
+    _.intersection = function(array){
+        if(array == null) return [];
+        var result =[];
+        var argsLength = arguments.length;
+        for(var i=0,length=array.length;i<length;i++){
+            var item = array[i];
+            if(_.contains(result,item)) continue;
+            for(var j=1;j<argsLength;j++){
+                if(!_.contains(arguments[j],item)) break;
+            }
+            if(j === argsLength ) result.push(item);
+        }
+        return result;
+    };
     _.difference = function (array) {
         var rest = flatten(arguments, true, 1);
         return _.filter(array, function (value) {
