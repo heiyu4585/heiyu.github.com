@@ -9,7 +9,7 @@
     /*在压缩时,可以压缩的版本*/
     var ArrayProto = Array.prototype, ObjProto = Object.prototype, Funcproto = Function.prototype;
 
-    /*访问核心原型创建的变量*/
+    /*访问核心原型创建的变量,实现更少的字节和作用域链查找*/
     var
         push = ArrayProto.push,
         slice = ArrayProto.slice,
@@ -29,9 +29,9 @@
 
     // 根元素
     var _ = function (obj) {
-        if (obj instanceof _) return obj;  // obj  是否为 _ 对象的实例
-        if (!(this instanceof _)) return new _(obj);
-        this._wrapped = obj;
+        if (obj instanceof _) return obj;  // obj  是 _ 对象的实例,返回 obj
+        if (!(this instanceof _)) return new _(obj); // 如果this 不是 _的实例,返回 new _(obj)
+        this._wrapped = obj; //?? 跟 wrapped没关系, 保存到_wrapped里面
     }
 
     /*node.js中Underscore 作为 Export
@@ -139,7 +139,9 @@
     /*each方法
     * */
     _.each = _.forEach = function (obj, iteratee, context) {
+        console.log(iteratee);
         iteratee = optimizeCb(iteratee, context);
+
         var i, length;
         if (isArrayLike(obj)) {
             for (i = 0, length = obj.length; i < length; i++) {
