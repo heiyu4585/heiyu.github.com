@@ -139,7 +139,8 @@
     /*each方法
     * */
     _.each = _.forEach = function (obj, iteratee, context) {
-        console.log(iteratee);
+      /*迭代器*/
+      console.log(iteratee);
         iteratee = optimizeCb(iteratee, context);
 
         var i, length;
