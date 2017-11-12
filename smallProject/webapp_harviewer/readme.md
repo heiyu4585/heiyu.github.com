@@ -24,3 +24,5 @@ har1
 >:webapp_harviewer/?har=examples/google.com.har
 
 http://www.softwareishard.com/blog/har-viewer/
+
+http://gitgrimbo.github.io/harviewer/master/
