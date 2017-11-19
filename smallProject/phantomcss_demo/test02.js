@@ -71,12 +71,12 @@ casper.test.begin( '测试咖啡', function ( test ) {
         onFail: function(test){
             console.log("======onFail======");
             console.log(test.filename, test.mismatch);
-            },
+        },
 
         onPass: function(test){
             console.log("======onPass======");
             console.log(test.filename);
-            },
+        },
 
         /*
             Called when creating new baseline images
@@ -84,7 +84,7 @@ casper.test.begin( '测试咖啡', function ( test ) {
         onNewImage: function(){
             console.log("======onNewImage======");
             console.log(test.filename);
-            },
+        },
 
         onTimeout: function(){
             console.log("======onTimeout======");
@@ -113,6 +113,7 @@ casper.test.begin( '测试咖啡', function ( test ) {
             integration
         */
         fileNameGetter: function(root,filename){
+            console.log("======fileNameGetter======");
             // globally override output filename
             // files must exist under root
             // and use the .diff convention
