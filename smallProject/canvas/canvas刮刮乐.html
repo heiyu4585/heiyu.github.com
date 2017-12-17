@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myCanvas</title>
+    <style>
+        canvas,img{
+            position: absolute;
+            left:0;
+            top:0
+        }
+    </style>
+</head>
+<body>
+<img id="scream" src="img_the_scream.jpg" alt="The Scream" width="220" height="277"/>
+<canvas id="myCanvas" width="220" height="280" style="border:1px solid #000"></canvas>
+
+<script>
+    var c= document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");//创建context对象
+
+    ctx.fillStyle="#FF0000";  //绘制一个红色的矩形 //fillstyle定义css颜色,渐变,图案等
+    ctx.fillRect(0,0,220,280); //定义了矩形当前的填充方式
+    ctx.globalCompositeOperation = 'destination-out';
+
+    document.addEventListener("mousedown",function(e){
+        console.log(e.clientX);
+        ctx.beginPath();
+        ctx.arc(e.clientX,e.clientY,40,0,2*Math.PI);
+        ctx.fill();//画实心圆
+    },false);
+
+
+
+//        ctx.stroke();
+
+</script>
+</body>
+</html>
