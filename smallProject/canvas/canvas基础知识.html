@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myCanvas</title>
+</head>
+<body>
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000"></canvas>
+<canvas id="myCanvas2"></canvas>
+<canvas id="myCanvas3"></canvas>
+<canvas id="myCanvas4"></canvas>
+<canvas id="myCanvas5"></canvas>
+<canvas id="myCanvas6"></canvas>
+<canvas id="myCanvas7"></canvas>
+<canvas id="myCanvas8"></canvas>
+<img id="scream" src="img_the_scream.jpg" alt="The Scream" width="220" height="277"/>
+<script>
+    var c= document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");//创建context对象
+    ctx.fillStyle="#FF0000";  //绘制一个红色的矩形 //fillstyle定义css颜色,渐变,图案等
+    ctx.fillRect(0,0,150,75); //定义了矩形当前的填充方式
+    //坐标(0,0)  绘制一个150*75的矩形
+
+    //*****canvas 路径*******
+    //定义开始坐标(0,0)和结束坐标(200,100)
+    var  c = document.getElementById("myCanvas2");
+    var ctx = c.getContext("2d");
+    ctx.moveTo(0,0);
+    ctx.lineTo(200,100);
+    ctx.stroke();  //绘制线条
+    //******* 绘制圆形 *****
+//    arc(x,y,r,start,stop)
+    var c = document.getElementById("myCanvas3");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(95,50,40,0,2*Math.PI);
+    ctx.stroke();
+   //***** 文本******
+
+    var c=document.getElementById("myCanvas4");
+    var ctx=c.getContext('2d');
+    ctx.font='30px Arial'; //定义字体
+    ctx.fillText('hello world',0,50); //在canvas上绘制实心的文本
+
+    var c =document.getElementById('myCanvas5');
+    var ctx=c.getContext('2d');
+    ctx.font='30px Arial';
+    ctx.strokeText('hello world',10,50) //在canvas中绘制空心的文本
+
+    //******* 渐变*****
+    var c = document.getElementById('myCanvas6');
+    var ctx=c.getContext('2d');
+    var grd=ctx.createLinearGradient(0,0,200,0);
+    grd.addColorStop(0,'red');
+    grd.addColorStop(1,"white");
+
+    //填充渐变
+    ctx.fillStyle=grd;
+    ctx.fillRect(10,10,150,80);
+
+    var c=document.getElementById('myCanvas7');
+    var ctx=c.getContext('2d');
+    //创建渐变
+    var grd=ctx.createRadialGradient(75,50,5,90,60,100);
+    grd.addColorStop(0,'red');
+    grd.addColorStop(1,'white');
+    //填充渐变
+    ctx.fillStyle = grd;
+    ctx.fillRect(10,10,150,80)
+
+    var c=document.getElementById("myCanvas8")
+    var ctx=c.getContext('2d');
+    var img=document.getElementById('scream');
+    img.onload = function(){
+        ctx.drawImage(img,10,10)
+    }
+</script>
+</body>
+</html>
