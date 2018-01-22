@@ -1,40 +1,66 @@
 // nodejs 中的path模块
 var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const utils = require('./utils');
+const vueLoaderConfig = require('./vue-loader.conf');
+// var webpack = require('webpack');
+// var HtmlWebpackPlugin = require('html-webpack-plugin');
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 var  webpackConf = {
     // 入口文件，path.resolve()方法，可以结合我们给定的两个参数最后生成绝对路径，最终指向的就是我们的index.js文件
-    // entry: {  index: [   path.resolve(__dirname, '../src/main.js')  ] },
-    // 输出配置
+    entry: { index: [path.resolve(__dirname, '../src/main.js') ]},
+    //TODO 多页面应用
     output: {  // 输出路径是 myProject/output/static
         path: path.resolve(__dirname, '../output'),
-        publicPath:'/',  filename: '[name].[hash].js'
+        publicPath:'/',
+        filename: '[name].[hash].js'
     },
     resolve: {
-        extensions: ['', '.js', '.vue'],
-        alias: {   'vue': 'vue/dist/vue.js'  } // 设置别名vue1不需要设置，vue2必须设置 否则会报错
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+            '@': resolve('src'),
+        }
     },
     module: {
-        loaders: [
-            // 使用vue-loader 加载 .vue 结尾的文件
-            {    test: /\.vue$/,    loader: 'vue'   },
-            {    test: /\.js$/,    loader: 'babel',    exclude: /node_modules/   }  ]
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: vueLoaderConfig
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: [resolve('src'), resolve('test')]
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
+                }
+            },
+            {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('media/[name].[hash:7].[ext]')
+                }
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                }
+            }
+        ]
     },
-    vue: {  loaders: {   js: 'babel'  } },
-    plugins:[
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.resolve(__dirname, '../index.html'),
-            inject: true
-        }),
-        // Webpack 1.0
-        new webpack.optimize.OccurenceOrderPlugin(),
-        // Webpack 2.0 fixed this mispelling
-        // new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
-        // new webpack.NoErrorsPlugin()
-    ]
 };
 module.exports  = webpackConf;
