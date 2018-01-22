@@ -59,7 +59,10 @@ if(app.get('env') == 'development'){
     // 使用 webpack-dev-middleware 中间件
     var devMiddleware = require('webpack-dev-middleware')(compiler, {
         publicPath: '/',
-        stats: {      colors: true,      chunks: false    }
+        stats: {
+            colors: true,
+            chunks: false
+            }
     });
     app.use(devMiddleware);
     app.use(require("webpack-hot-middleware")(compiler));
