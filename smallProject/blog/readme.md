@@ -43,3 +43,14 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 [给非程序员的爬虫教程（十六）：接下来需要学习什么](http://blog.sevenplus.me/)
 
 [基于 Webpack 3 的 Vue.js 工程项目脚手架](https://zhuanlan.zhihu.com/p/27960679)
+
+2018.2.7
+
+1.完成了
+1.vue 热更新
+2.vue开发环境
+3.vue打包
+
+待完成:
+1.数据库连接
+2.
