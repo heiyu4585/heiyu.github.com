@@ -20,3 +20,20 @@ module.exports = {
     image: 'xlink:href'
   }
 }
+debugger;
+console.log({
+    loaders: utils.cssLoaders({
+        sourceMap: sourceMapEnabled,
+        extract: isProduction
+    }),
+    cssSourceMap: sourceMapEnabled,
+    cacheBusting: config.dev.cacheBusting,
+    transformToRequire: {
+        video: ['src', 'poster'],
+        source: 'src',
+        img: 'src',
+        image: 'xlink:href'
+    }
+}.loaders.scss.forEach(function (ele,index) {
+    console.log(ele)
+}))
