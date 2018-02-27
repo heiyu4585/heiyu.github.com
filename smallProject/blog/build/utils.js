@@ -1,9 +1,9 @@
 'use strict'
 const path = require('path')
-//TODO  无需引用config
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+var glob = require('glob');
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -103,3 +103,33 @@ exports.createNotifierCallback = () => {
 exports.resolve =function(dir) {
   return path.join(__dirname, '..', dir)
 };
+
+exports.getEntry=function(globPath) {
+    var entries = {},
+        basename, tmp, pathname;
+    if (typeof (globPath) != "object") {
+        globPath = [globPath]
+    }
+    globPath.forEach((itemPath) => {
+        glob.sync(itemPath).forEach(function (entry) {
+            if ((entry.indexOf("api") == -1) && (entry.indexOf("components") == -1) && (entry.indexOf("asset") == -1) && (entry.indexOf("router") == -1) && (entry.indexOf("store") == -1)) {
+                basename = path.basename(entry, path.extname(entry));
+                if (entry.split('/').length > 5 || basename != "index") {
+                    // tmp = entry.split('/').splice(-3);
+                    // pathname = tmp.splice(0, 1) + '/' + basename; // 正确输出js和html的路径
+                    pathname = path.normalize(entry.substring(entry.indexOf("modules/") + 8, entry.lastIndexOf("/")));
+                    pathname = pathname.replace("\\", "/");
+                    entries[pathname] = entry;
+                } else {
+                    entries[basename] = entry;
+                }
+            }
+
+        });
+    });
+    return entries;
+}
+
+
+
+
