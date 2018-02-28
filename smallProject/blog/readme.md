@@ -2,6 +2,9 @@
 
 koa+vue+mysql搭建博客基础
 
+[多页架构的前后端分离方案（webpack+express）](https://segmentfault.com/a/1190000008644787)
+[基于webpack的前后端分离开发环境实战](https://segmentfault.com/a/1190000009266900)
+[webpack多页面配置6--热加载刷新](https://godbasin.github.io/2017/08/19/webpack-multi-project-6-hot-reload/)
 
 2.
 参考:
@@ -55,4 +58,6 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 1.数据库连接
 
 [初识NodeJS服务端开发（Express+MySQL）](http://www.alloyteam.com/2015/03/sexpressmysql/)
+
 2.
+[Node: Puppeteer + 图像识别 实现百度指数爬虫 #4](https://github.com/Coffcer/Blog/issues/4)
