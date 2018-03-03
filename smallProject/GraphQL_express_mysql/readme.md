@@ -201,9 +201,9 @@ https://github.com/zhaiqianfeng/GraphQL-Demo/tree/master/javascript/advance
 https://github.com/proYang/GraphQL-demo
 https://github.com/naihe138/GraphQL-demo
 封装很好.比较不错
-##坑
+###坑
 
-### node支持 import
+#### node支持 import
 
 下面在项目文件夹新建一个start.js，然后在里面写上以下代码：
 
@@ -222,6 +222,6 @@ require('./server')
 
 安装完毕之后，在命令行运行 node start.js
 
-### mysql
+#### mysql
 
 1.graphQL 与mysql数据库查询的异步问题 : `async awit`
