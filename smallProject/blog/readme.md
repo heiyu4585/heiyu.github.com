@@ -57,7 +57,10 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 待完成:
 1.数据库连接
 
+
 [初识NodeJS服务端开发（Express+MySQL）](http://www.alloyteam.com/2015/03/sexpressmysql/)
 
 2.
 [Node: Puppeteer + 图像识别 实现百度指数爬虫 #4](https://github.com/Coffcer/Blog/issues/4)
+
+3.开发环境 dev添加
