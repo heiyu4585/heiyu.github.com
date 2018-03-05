@@ -30,7 +30,7 @@ var mysql = require('mysql');
 var $conf = require('./conf/db');
 var $sql = require('./dao/userSqlMapping');
 var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+var {graphql, buildSchema } = require('graphql');
 var pool  = mysql.createPool($conf.mysql);
 var util = require('./util/util');
 
@@ -207,6 +207,17 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('error');
+});
+
+//后端解析查询
+graphql(schema, ' query HeroNameAndFriends{\n' +
+    '\tcourses {\n' +
+    '    id\n' +
+    '\t  score\n' +
+    '\t  course\n' +
+    '\t}\n' +
+    '}', root).then((response) => {
+    console.log(response);
 });
 
 module.exports = app;
