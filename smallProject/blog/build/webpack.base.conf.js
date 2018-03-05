@@ -2,6 +2,7 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
 
 
 function resolve(dir) {
@@ -56,60 +57,24 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                // options: vueLoaderConfig,
-                options: {
-                    loaders: {
-                        css: ExtractTextPlugin.extract({
-                            use: 'css-loader',
-                            fallback: 'vue-style-loader' // <- 这是vue-loader的依赖，所以如果使用npm3，则不需要显式安装
-                        }),
-                        sass: ExtractTextPlugin.extract({
-                            use:'css-loader!sass-loader',
-                            fallback: 'vue-style-loader' // <- 这是vue-loader的依赖，所以如果使用npm3，则不需要显式安装
-                        })
-                    }
-                }
-                //TODO 只能写成 lang="scss" 待兼容 style模式
-                //   options: {
-                //       loaders: {
-                //           css: ExtractTextPlugin.extract('vue-style-loader', 'css-loader', 'sass-loader')
-                //       }
-                //    },
-                // options:{
+                options: vueLoaderConfig,
+                //TODO css不能热更新
+                // options: {
                 //     loaders: {
-                //         css: ExtractTextPlugin.extract({
-                //             loader: 'css-loader',
-                //             fallbackLoader: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                //         css:  ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+                //             use: 'css-loader',
+                //             fallback: 'vue-style-loader' // <- 这是vue-loader的依赖，所以如果使用npm3，则不需要显式安装
+                //         })),
+                //         sass: ExtractTextPlugin.extract({
+                //             use:'css-loader!sass-loader',
+                //             fallback: 'vue-style-loader' // <- 这是vue-loader的依赖，所以如果使用npm3，则不需要显式安装
+                //         }),
+                //         scss: ExtractTextPlugin.extract({
+                //             use:'css-loader!sass-loader',
+                //             fallback: 'vue-style-loader' // <- 这是vue-loader的依赖，所以如果使用npm3，则不需要显式安装
                 //         })
                 //     }
                 // }
-
-                //TODO 官方的写死,但是没有起作用
-                // options: {
-                //     loaders: {
-                //         css: [
-                //             [
-                //                 'vue-style-loader',
-                //                 {loader: 'css-loader', options: { sourceMap: false } }
-                //                 ]
-                //         ],
-                //         postcss:
-                //             ['vue-style-loader',
-                //                 {loader: 'css-loader',  options: { sourceMap: false }}],
-                //         scss:
-                //             ['vue-style-loader',
-                //                 {loader: 'css-loader',  options: { sourceMap: false }},
-                //                 {loader: 'sass-loader',  options: { sourceMap: false }}],
-                //     },
-                //     cssSourceMap: false,
-                //     cacheBusting: config.dev.cacheBusting,
-                //     transformToRequire: {
-                //         video: ['src', 'poster'],
-                //         source: 'src',
-                //         img: 'src',
-                //         image: 'xlink:href'
-                //     }
-                // },
 
             },
             {
