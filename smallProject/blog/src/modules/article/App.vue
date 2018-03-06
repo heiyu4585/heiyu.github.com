@@ -240,7 +240,19 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
+    .entry-meta, .entry-meta a {
+        color: #8b8b8b;
+    }
+    .entry-more a {
+        background: #04a4cc;
+        position: absolute;
+        bottom: -1px;
+        right: 20px;
+        color: #fff;
+        padding: 2px 8px;
+        border: 1px solid #04a4cc;
+        _display: none;
+    }
     @media screen and (max-width: 1024px) {
         .entry-site {
             height: 110px;
@@ -261,7 +273,5 @@
         margin: 5px 0 0 0;
     }
 
-    .entry-meta, .entry-meta a {
-        color: #8b8b8b;
-    }
+
 </style>
