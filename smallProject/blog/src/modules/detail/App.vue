@@ -7,12 +7,12 @@
 
 <script>
   // import 'common/css/reset.css';
-  import Hello from 'components/Hello/Hello'
+  import Foot from 'components/Foot'
 
   export default {
     name: 'app',
     components: {
-      Hello
+        Foot
     }
   }
 </script>
