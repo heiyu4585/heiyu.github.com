@@ -38,8 +38,6 @@ app.get('/:pagename?', function (req, res, next) {
     var pagename = req.params.pagename
         ? req.params.pagename + '.html'
         : 'index.html';
-    console.log("00000000000000000000");
-    console.log(compiler.outputPath)
     var filepath = path.join(compiler.outputPath, pagename)
     // 使用webpack提供的outputFileSystem
     compiler.outputFileSystem.readFile(filepath, function (err, result) {
