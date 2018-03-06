@@ -2,18 +2,18 @@
   <div id="app">
     <img src="./images/logo.png">
     <div>two</div>
-    <hello></hello>
+    <Foot></Foot>
   </div>
 </template>
 
 <script>
   // import 'common/css/reset.css';
-  import Hello from 'components/Hello/Hello'
+  import Foot from 'components/Foot'
 
   export default {
     name: 'app',
     components: {
-      Hello
+        Foot
     }
   }
 </script>
