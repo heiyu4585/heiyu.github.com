@@ -1,0 +1,1 @@
+exports.relativeTime = id => id*19;

@@ -1,0 +1,349 @@
+/*初始化*/
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
+/*清除浮动*/
+.clearfix:after{
+    content: "020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    /* 触发 hasLayout */
+    zoom: 1;
+}
+
+/*a{*/
+    /*color: #555;*/
+    /*text-decoration: none;*/
+    /*-webkit-tap-highlight-color: rgba(255,0,0,0);*/
+/*}*/
+
+.content, .content-m, .widget, #footer, #links, #single-widget-main, .csingle-tag, #bdtj, .nav-single, .comments-title, .comment-list li, #respond, #search-main, #nav-login a, #nav-search a, .sticky-box, .sticky-box-m, .authorbio, .single-tag, #bulletin li a, #pagenavi span.current, #scroll li a, #respond input, .comment-list .avatar, .backs, #pagenavi a:visited, #pagenavi span, .single-content, #pagenavi a:hover, #pagenavi a, .social span, #message img, .page-links span, .comment-nav .page-numbers, button, input, select, textarea {
+    border-radius: 2px;
+}
+
+
+#header, #main {
+    width: 98%;
+    margin: 0 auto;
+}
+/*.main-header*/
+.main-header {
+    /*float: left;*/
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding:5px 0 0 10px;
+}
+.main-header h1 {
+    font-size: 20px;
+}
+.title-main {
+    margin: 4px 0;
+}
+
+.main-header h2 {
+    font-size: 14px;
+    color: #999;
+}
+
+/*#site-nav*/
+#site-nav {
+    background: #04a4cc;
+    height: 40px;
+    font-size: 14px;
+}
+
+#site-nav li a, #site-nav li a:link, #site-nav li a:visited {
+    display: block;
+    padding: 0 20px 0 20px;
+    line-height: 40px;
+    color: #fff;
+}
+
+#site-nav li {
+    float: left;
+    height: 40px;
+    border-right: 1px solid #82c1e5;
+    border-left: 1px solid #008eb2;
+}
+
+/*************************#main-content*/
+/*左侧 文章正文 内容*/
+
+#primary {
+    width: 67%;
+    float: left;
+}
+.content {
+    position: relative;
+    background: #fff;
+    margin: 0 0 10px 0;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+}
+
+.content-m, .content-im {
+    position: relative;
+    background: #fff;
+    color: #000;
+    margin: 0 0 10px 0;
+    padding: 10px 20px;
+    border: 1px solid #04a4cc;
+    transition: all 0.5s ease-in 0s;
+}
+.new-ico {
+    position: absolute;
+    background: #e50000;
+    font-size: 12px;
+    color: #fff;
+    top: -1px;
+    right: -1px;
+    line-height: 16px;
+    padding: 0 3px;
+    border: 1px solid #e50000;
+    border-radius: 0 2px 0 0;
+    _display: none;
+}
+
+.entry-header {
+    position: relative;
+}
+
+.entry-header .title-heavy {
+    position: absolute;
+    background: #04a4cc;
+    top: 0;
+    left: -21px;
+    width: 5px;
+    height: 23px;
+}
+
+.entry-header h2 {
+    font-size: 15px;
+    margin: 0 0 5px 0;
+}
+
+.entry-title {
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.thumbnail, .sticky-thumbnail, .single-main img {
+    animation: fade-in;
+    animation-duration: 1.5s;
+    -webkit-animation: fade-in 1.5s;
+}
+
+.thumbnail {
+    position: relative;
+    float: left;
+    width: 140px;
+    height: 100px;
+    margin: 6px 15px 0 0;
+    overflow: hidden;
+}
+
+
+.thumbnail a img {
+    width: 140px;
+    height: 100px;
+    -webkit-transition: -webkit-transform .3s linear;
+    -moz-transition: -moz-transform .3s linear;
+    -o-transition: -o-transform .3s linear;
+    transition: transform .3s linear;
+}
+
+.entry-site {
+    height: 100px;
+    overflow: hidden;
+    text-justify: inter-ideograph;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+/*列表项 时间等*/
+.entry-meta, .entry-meta a {
+    color: #8b8b8b;
+}
+
+.entry-meta {
+    margin: 5px 0 0 0;
+}
+
+
+/*时间小图标*/
+.icon-date, .icon-cat, .icon-comment, .icon-views, .icon-edit, .icon-bulletin, .meta-site .icon-zan {
+    font-size: 12px;
+    color: #bababa;
+    margin: 0 3px 0 0;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'ality';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/*阅读全文按钮*/
+.entry-meta, .entry-meta a {
+    color: #8b8b8b;
+}
+.entry-more a {
+    background: #04a4cc;
+    position: absolute;
+    bottom: -1px;
+    right: 20px;
+    color: #fff;
+    padding: 0 8px;
+    border: 1px solid #04a4cc;
+    _display: none;
+}
+/******************分页*/
+#pagenavi {
+    float: right;
+}
+#pagenavi span.current, #pagenavi a:hover {
+    background: #04a4cc;
+    color: #fff;
+    border: 1px solid #04a4cc;
+}
+
+#pagenavi a, #pagenavi a:visited, #pagenavi span {
+    float: left;
+    background: #fff;
+    margin: 0 5px 10px 0;
+    padding: 6px 8px;
+    line-height: 100%;
+    border: 1px solid #ccc;
+}
+/**************************右侧 工具 */
+
+#sidebar {
+    width: 32%;
+    overflow: hidden;
+    float: right;
+}
+#sidebar h3 {
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #ccc;
+}
+
+.widget {
+    background: #fff;
+    margin: 0 0 10px 0;
+    border: 1px solid #ccc;
+}
+
+
+/*分类栏目*/
+.widget ul, #sidebar #searchform, #calendar_wrap, .tagcloud {
+    padding: 5px 10px 10px 10px;
+}
+
+.widget_categories, .widget_archive, .widget_links {
+    padding: 0 0 10px 0;
+}
+.widget-title p {
+    float: left;
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    margin: 0 8px 0 0;
+    padding: 1px 0;
+    border-right: 1px solid #ccc;
+}
+.icon-st {
+    font-size: 24px;
+    color: #888;
+    line-height: 35px;
+}
+.icon-st:before {
+    content: "\e609";
+}
+
+.widget ul li {
+    width: 99%;
+    line-height: 180%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.widget_categories li, .widget_archive li, .widget_links li {
+    float: left;
+    width: 49.5% !important;
+    text-align: center;
+    margin: 8px -1px 0 0;
+    border: 1px solid #ccc;
+}
+
+.widget_categories a, .widget_archive a, .widget_links a {
+    padding: 0 20px;
+}
+
+/*搜索框*/
+.widget #searchbar {
+    margin: 5px 0;
+}
+#sidebar #searchform, #calendar_wrap, .tagcloud {
+    padding: 5px 10px 10px 10px;
+}
+
+#s, .swap_value {
+    width: 65%;
+    height: 31px;
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+}
+
+#searchform #searchsubmit, #searchsubmit {
+    background: #04a4cc;
+    width: 60px;
+    height: 31px;
+    color: #fff;
+    margin: 1px 0 0 0;
+    border: none;
+    vertical-align: top;
+    -webkit-appearance: none;
+}
+
+.li-icon {
+    background: #ccc;
+    font-size: 12px;
+    color: #fff;
+    line-height: 180%;
+    margin: 0 5px 0 0;
+    padding: 0 5px;
+    border-radius: 2px;
+}
+/*热门文章*/
+.li-icon-1, .li-icon-2, .li-icon-3 {
+    background: #e50000;
+}
+
+
+/*foot*/
+.site-info {
+    text-align: center;
+    padding: 15px 0;
+}
