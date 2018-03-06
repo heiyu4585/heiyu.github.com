@@ -8,7 +8,8 @@ var user = {
     // queryAll: 'select * from user',
     queryAll:"SELECT * FROM `user` limit 10",
     addUser:'INSERT INTO user( name, sex,intro) VALUES(?,?,?)',
-    course:"SELECT * FROM `course`  limit 10",
+    courses:"SELECT * FROM `course`",
+    courseById:"SELECT * FROM `course`  where userId= ? limit 10",
 };
 
 module.exports = user;
