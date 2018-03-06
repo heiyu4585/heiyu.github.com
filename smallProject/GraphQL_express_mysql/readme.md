@@ -601,7 +601,7 @@ fragment post on Post{
 ## 服务端是如何实现的
 
 
-### 简单方式(app_simple)
+### 简单方式(app_simple.js)
 
 ```
 var express = require('express');
