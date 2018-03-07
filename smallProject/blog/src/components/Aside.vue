@@ -110,11 +110,11 @@
         list-style-type: square;
     }
     .widget li {
-        /*float: left;*/
-        /*width: 210px;*/
+        float: left;
+        width: 210px;
         line-height: 1.4;
-        /*color: #777;*/
-        /*font-size: 14px;*/
+        color: #777;
+        font-size: 14px;
         margin-top: 8px;
     }
     .widget ul li ul li {

@@ -200,6 +200,9 @@
 </script>
 
 <style lang="scss">
+    .el-aside, .el-main{
+        overflow: inherit;
+    }
     #app {
         max-width: 1080px;
         margin: 0 auto;
