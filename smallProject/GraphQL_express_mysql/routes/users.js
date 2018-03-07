@@ -12,6 +12,16 @@ router.get('/addUser', function(req, res, next) {
     userDao.add(req, res, next);
 });
 
+
+//graphql
+var graphqlHTTP = require('express-graphql');
+var userSchema =require ('../graphql/user/schema');
+
+router.use('/graphql', graphqlHTTP({
+    schema: userSchema,
+    graphiql: true, //启用GraphiQL
+}));
+
 router.get('/queryAll', function(req, res, next) {
 
     // userDao.queryAll(req, res, next);
