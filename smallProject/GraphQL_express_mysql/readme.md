@@ -114,7 +114,7 @@ query {
 }
 ```
 
-###变更
+### 变更
 ```
 mutation {
   addUser (name:"nk",sex:"22",intro:"sdfasdfasdf"){
@@ -849,7 +849,7 @@ const Mutation = new GraphQLObjectType({
 
 1. 学习使用 DataLoader 来获取列表数据
 
-2. 接口
+2. 高级用法 接口 联合 等
 
 
 #相关文档:
