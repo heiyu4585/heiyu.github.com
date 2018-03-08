@@ -66,6 +66,7 @@ app.use(router);
 
 app.use(express.static('dist'));
 
+
 //graphql
 var graphqlHTTP = require('express-graphql');
 var schema =require ('./schema');
@@ -74,6 +75,12 @@ app.use('/api', graphqlHTTP({
     schema: schema,
     graphiql: true, //启用GraphiQL
 }));
+
+
+
+app.use(function(req, res, next) {
+    res.status(404).send('Sorry cant find that!');
+});
 
 //
 module.exports = app.listen(8081, function (err) {

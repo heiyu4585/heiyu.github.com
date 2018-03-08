@@ -9,7 +9,7 @@ const {
     GraphQLNonNull
 } = require('graphql');
 
-const _ = require("underscore");
+// const _ = require("underscore");
 
 // const AddressList = require("../../data/address");
 const $articleSql = require('./articleSqlMapping');
@@ -21,15 +21,33 @@ const Article = new GraphQLObjectType({
         id:{
             type:new GraphQLNonNull(GraphQLInt)
         },
-        article_title:{
+        art_title:{
             type:new GraphQLNonNull(GraphQLString)
         },
-        category:{
+        art_content:{
             type:GraphQLString
         },
-        content:{
+        category_name:{
             type:GraphQLString
         },
+        art_creatime:{
+            type:GraphQLString
+        }
+    })
+});
+const Category = new GraphQLObjectType({
+    name:"Category",
+    description:"栏目列表",
+    fields:()=>({
+        id:{
+            type:new GraphQLNonNull(GraphQLInt)
+        },
+       category_name:{
+           type:GraphQLString
+       },
+        category_des:{
+            type:GraphQLString
+        }
     })
 });
 //
@@ -122,10 +140,8 @@ const Mutation = new GraphQLObjectType({
         }
     })
 })
-const Query = new GraphQLObjectType({
-    name: 'BlogSchema',
-    description: 'Root of the Blog Schema',
-    fields: () => ({
+module.exports = {
+    query:{
         article:{
             type:new GraphQLList(Article),
             args:{
@@ -140,58 +156,43 @@ const Query = new GraphQLObjectType({
             resolve: async (source)=>{
                 return await util.searchSql($articleSql.queryAll);
             }
-        }
-    })
-});
-module.exports = {
-    query:{
-        user:{
-            type:Article,
-            description:'根据id查询单个用户',
-            args: {
-                id: {type: new GraphQLNonNull(GraphQLInt)}
-            },
-            resolve:async function (source,{id}) {
-                return (await util.searchSql($sql.queryAll))[id];
-            }
         },
-        users:{
-            type:new GraphQLList(User),
-            description:'查询全部用户列表',
-            resolve:async function () {
-                return await util.searchSql($sql.queryAll);
+        categories:{
+            type:new GraphQLList(Category),
+            resolve: async (source)=>{
+                return await util.searchSql($articleSql.categories);
             }
         }
     },
-    mutation:{
-        addUser:{
-            type:User,
-            description:'添加用户',
-            args: {
-                id:{type: GraphQLInt},
-                name:{type: new GraphQLNonNull(GraphQLString)},
-                sex:{type: new GraphQLNonNull(GraphQLString)},
-                intro:{type: new GraphQLNonNull(GraphQLString)},
-                skills:{type:new GraphQLList(new GraphQLNonNull(GraphQLString))}
-            },
-            resolve:async function (source,{id,name,sex,intro}) {
-                var user={
-                    name:name,
-                    sex:sex,
-                    intro:intro
-                };
-                return await util.searchSql( $sql.addUser,[user.name,user.sex,user.intro]);
-            }
-        },
-        addUserByInput:{
-            type:User,
-            description:'通过Input添加用户',
-            args: {
-                userInfo:{type: UserInput},
-            },
-            resolve:async function (source,{userInfo}) {
-                return await util.searchSql( $sql.addUser,[userInfo.name,userInfo.sex,userInfo.intro]);
-            }
-        }
-    }
+    // mutation:{
+    //     addUser:{
+    //         type:User,
+    //         description:'添加用户',
+    //         args: {
+    //             id:{type: GraphQLInt},
+    //             name:{type: new GraphQLNonNull(GraphQLString)},
+    //             sex:{type: new GraphQLNonNull(GraphQLString)},
+    //             intro:{type: new GraphQLNonNull(GraphQLString)},
+    //             skills:{type:new GraphQLList(new GraphQLNonNull(GraphQLString))}
+    //         },
+    //         resolve:async function (source,{id,name,sex,intro}) {
+    //             var user={
+    //                 name:name,
+    //                 sex:sex,
+    //                 intro:intro
+    //             };
+    //             return await util.searchSql( $sql.addUser,[user.name,user.sex,user.intro]);
+    //         }
+    //     },
+    //     addUserByInput:{
+    //         type:User,
+    //         description:'通过Input添加用户',
+    //         args: {
+    //             userInfo:{type: UserInput},
+    //         },
+    //         resolve:async function (source,{userInfo}) {
+    //             return await util.searchSql( $sql.addUser,[userInfo.name,userInfo.sex,userInfo.intro]);
+    //         }
+    //     }
+    // }
 };

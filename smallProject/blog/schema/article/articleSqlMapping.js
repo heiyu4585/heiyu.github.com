@@ -9,7 +9,9 @@ var user = {
     addUser:'INSERT INTO user( name, sex,intro) VALUES(?,?,?)',
     courses:"SELECT * FROM `course`",
     courseById:"SELECT * FROM `course`  where userId= ? limit 10",
-    queryAll:"SELECT * FROM `articles`",
+    queryAll:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
+        left JOIN category ON articles_category_relationship.category_id = category.id`,
+    categories:`SELECT * FROM category`
 };
 
 module.exports = user;
