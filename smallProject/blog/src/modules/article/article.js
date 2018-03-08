@@ -32,13 +32,49 @@ new Vue({
     },
     mounted: function () {
         // GET request for remote image
+console.log("==================")
+        $.ajax({
+            url: "/api",
+            method: "post",
+            contentType:"application/json",
+            dataType:"json",
+            Accept:"application/json",
+            data:JSON.stringify({
+                query:
+                    `
+                    {
+                    categories{
+                      id
+                      category_name
+                      category_des
+                    }
+                    }
+                    `
+            }) ,
+            success: function (data) {
+                console.log(data)
+            }
+        })
+
         axios({
             method:'post',
             url:'/api',
-            responseType:'json'
+            data: {
+                query:
+                    `
+                    {
+                    categories{
+                      id
+                      category_name
+                      category_des
+                    }
+                    }
+                    `
+            }
+            ,
         })
             .then(function(response) {
-                response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+                console.log(response)
             });
     },
     beforeUpdate: function () {
