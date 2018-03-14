@@ -8,9 +8,14 @@ var user = {
     // queryAll: 'select * from user',
     addUser:'INSERT INTO user( name, sex,intro) VALUES(?,?,?)',
     courses:"SELECT * FROM `course`",
+    articleLength:"SELECT COUNT(*) as total FROM articles",
+    articleById:"SELECT * FROM `articles` left JOIN  category on articles.art_category_id = category.id where articles.id= ?",
     courseById:"SELECT * FROM `course`  where userId= ? limit 10",
-    queryAll:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
-        left JOIN category ON articles_category_relationship.category_id = category.id`,
+    articles:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
+        left JOIN category ON articles_category_relationship.category_id = category.id limit ? , ?`,
+    articlesByCategoryId:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
+        left JOIN category ON articles_category_relationship.category_id = category.id where category.id= ? limit ? , ?`,
+    articlesByCategoryIdLength:"SELECT COUNT( *)  as total FROM articles_category_relationship where category_id =? ",
     categories:`SELECT * FROM category`
 };
 

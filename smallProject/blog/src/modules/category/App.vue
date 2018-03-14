@@ -35,6 +35,7 @@
     import Foot from 'components/Foot';
     import Article from 'components/Article';
     import axios from 'axios';
+    const util = require("../../../util/util");
 
     export default {
         name: 'app',
@@ -44,7 +45,8 @@
                 artList: [],
                 total_items:0,
                 currentPage: 1, //当前页
-                page_items:1   //每页显示的数目
+                page_items:1,  //每页显示的数目
+                category_id:null
             }
         },
         methods: {
@@ -53,10 +55,9 @@
             },
             handleCurrentChange(val) {
                 this.currentPage =val;
-                console.log(`当前页: ${val}`);
-                this.getArticle({currentPage:this.currentPage,page_items:this.page_items});
+                this.getArticle({currentPage:this.currentPage,page_items:this.page_items,category_id:this.category_id});
             },
-            getArticle({currentPage,page_items}){
+            getArticle({currentPage,page_items,category_id}){
                 axios({
                     method: 'post',
                     url: '/api',
@@ -64,7 +65,7 @@
                         query:
                             `
                         {
-                         articles(page_no:${currentPage},page_items:${page_items}){
+                         articles(page_no:${currentPage},page_items:${page_items},category_id:${category_id}){
                           page_items
                           page_no
                           total_items
@@ -83,6 +84,7 @@
                     }
                 })
                     .then(function (response) {
+                        console.log(response);
                         this.artList = response.data.data.articles.rows;
                         this.total_items = response.data.data.articles.total_items;
                         this.page_no = response.data.data.articles.page_no;
@@ -98,8 +100,8 @@
         },
         mounted: function () {
             // GET request for remote image
-            console.log(this.currentPage);
-            this.getArticle({currentPage:this.currentPage,page_items:this.page_items});
+            this.category_id=util.getUrlKey("id");
+            this.getArticle({currentPage:this.currentPage,page_items:this.page_items,category_id:this.category_id});
         },
     }
 </script>
