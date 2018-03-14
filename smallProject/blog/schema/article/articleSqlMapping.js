@@ -11,10 +11,13 @@ var user = {
     articleLength:"SELECT COUNT(*) as total FROM articles",
     articleById:"SELECT * FROM `articles` left JOIN  category on articles.art_category_id = category.id where articles.id= ?",
     courseById:"SELECT * FROM `course`  where userId= ? limit 10",
+    //文章总数
     articles:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
         left JOIN category ON articles_category_relationship.category_id = category.id limit ? , ?`,
+    //根据栏目id查询文章列表
     articlesByCategoryId:`SELECT * FROM articles left JOIN articles_category_relationship ON articles.id = articles_category_relationship.article_id
         left JOIN category ON articles_category_relationship.category_id = category.id where category.id= ? limit ? , ?`,
+   //栏目中文章数量
     articlesByCategoryIdLength:"SELECT COUNT( *)  as total FROM articles_category_relationship where category_id =? ",
     categories:`SELECT * FROM category`
 };
