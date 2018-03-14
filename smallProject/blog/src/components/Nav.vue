@@ -1,14 +1,34 @@
 <template>
     <nav id="site-nav" class="main-nav">
-        <div class="menu-pc%e7%ab%af%e8%8f%9c%e5%8d%95-container"><ul id="menu-pc%e7%ab%af%e8%8f%9c%e5%8d%95" class="menu"><li id="menu-item-1792" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1792"><a href="http://www.siyuweb.com/tool">工具</a></li>
-            <li id="menu-item-1793" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1793"><a href="http://www.siyuweb.com/diary">日志</a></li>
-            <li id="menu-item-1794" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1794"><a href="http://www.siyuweb.com/texiao">特效搜集</a></li>
-        </ul></div>				<ul><li class="fill"></li></ul>
+        <div class="">
+            <ul class="menu">
+                <li>
+                    <a href="/">博客</a>
+                </li>
+                <li>
+                    <a href="/project">项目</a>
+                </li>
+            </ul>
+        </div>
+        <ul><li class="fill"></li></ul>
     </nav>
 </template>
 
 <script type="text/ecmascript-6">
-
+    import 'common/common.scss';
+    import axios from 'axios';
+    export default {
+        name: 'Nav',
+        data () {
+            return {
+                NavList:{}
+            }
+        },
+        components: {
+        },
+        mounted: function () {
+        },
+    }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">

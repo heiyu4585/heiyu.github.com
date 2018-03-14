@@ -53,6 +53,7 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 1.vue 热更新
 2.vue开发环境
 3.vue打包
+4.初步完成grahql
 
 待完成:
 1.数据库连接
@@ -68,9 +69,14 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 
 ## todoList
 ~~博客样式参考  http://zaaack.github.io/2015/12/29/projects/#chrome-timer~~
+1.文章页搭建对于mackdown
 
 1. 登录系统
 
-2.分页graphql
+2.~~分页graphql~~  完成
+
+3. 后台系统 
+
+4. ssr
 
 https://segmentfault.com/a/1190000009565131
