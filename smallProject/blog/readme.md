@@ -99,4 +99,6 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 
 5. vue-router article文章修改和栏目是否使用同一个layout
 
+6.更新修改文章
+
 https://segmentfault.com/a/1190000009565131
