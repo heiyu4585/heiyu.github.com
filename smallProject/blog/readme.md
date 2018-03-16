@@ -83,6 +83,8 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 3.vue打包
 4.初步完成grahql
 5.数据库连接
+6.markdown前后台支持
+
 
 待完成:
 1.文章页搭建对于mackdown
