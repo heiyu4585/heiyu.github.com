@@ -6,7 +6,8 @@ const {
     GraphQLInt,
     GraphQLFloat,
     GraphQLEnumType,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLInputObjectType
 } = require('graphql');
 
 var moment = require('moment');
@@ -20,7 +21,7 @@ const Article = new GraphQLObjectType({
     name: "Article",
     description: "一个文章",
     fields: () => ({
-        id: {
+        art_id: {
             type: new GraphQLNonNull(GraphQLInt)
         },
         art_title: {
@@ -31,6 +32,9 @@ const Article = new GraphQLObjectType({
         },
         art_des: {
             type: GraphQLString
+        },
+        art_category_id:{
+            type:GraphQLInt
         },
         art_create_time: {
             type: GraphQLString,
@@ -46,7 +50,34 @@ const Article = new GraphQLObjectType({
         }
     })
 });
+//添加文章对象
+const  ArticleInfo=new GraphQLInputObjectType({
+    name:'ArticleInfo',
+    description:"添加文章对象",
+    fields:()=>({
+        art_id:{type:GraphQLInt},
+        art_title:{type:new GraphQLNonNull(GraphQLString)},
+        art_content:{type:new GraphQLNonNull(GraphQLString)},
+        art_des:{type:new GraphQLNonNull(GraphQLString)},
+        category_id:{type:new GraphQLNonNull(GraphQLInt)}
+    }),
+});
 
+//添加文章返回的对象
+const ArticleAddInfo = new GraphQLObjectType({
+    name: "ArticleAddInfo",
+    description: "添加文章返回的对象",
+    fields: () => ({
+        art_id: {
+            type:  GraphQLInt
+        },
+        relationshipInsertId:{
+            type:  GraphQLInt
+        }
+    })
+});
+
+//带有分页数据的文章列表
 const ArticlePagination = new GraphQLObjectType({
     name: "ArticlePagination",
     description: "ArticlePagination",
@@ -77,7 +108,7 @@ const Category = new GraphQLObjectType({
     name: "Category",
     description: "栏目列表",
     fields: () => ({
-        id: {
+        category_id: {
             type: new GraphQLNonNull(GraphQLInt)
         },
         category_name: {
@@ -136,7 +167,6 @@ const Category = new GraphQLObjectType({
 //     })
 // });
 
-
 const Mutation = new GraphQLObjectType({
     name: "Mutation",
     description: "增删改数据",
@@ -179,17 +209,17 @@ const Mutation = new GraphQLObjectType({
             }
         }
     })
-})
+});
 module.exports = {
     query: {
         article: {
             type: new GraphQLList(Article),
             args: {
-                id: {type: GraphQLInt}
+                art_id: {type: GraphQLInt}
             },
             resolve: async(source, args) => {
-                console.log(await util.searchSql($articleSql.articleById,[args.id]))
-                return await util.searchSql($articleSql.articleById,[args.id]);
+                console.log(args)
+                return await util.searchSql($articleSql.articleById,[args.art_id]);
             }
         },
         articles: {
@@ -201,7 +231,10 @@ module.exports = {
                 category_id:{type:GraphQLInt}
             },
             resolve: async (source,args) => {
+                console.log(args)
                 let limitLeft = (args.page_no-1)*args.page_items;
+                console.log("========")
+                console.log("limitleft"+limitLeft)
                 // let limitRight =args.page_no*args.page_items;
                 //          # 总共有多少条数据
                 // total_items: {
@@ -238,6 +271,7 @@ module.exports = {
                     result.rows = await util.searchSql($articleSql.articles,[limitLeft,args.page_items]);
                 }
                 console.log(result);
+
                 return result;
             }
         },
@@ -248,35 +282,48 @@ module.exports = {
             }
         }
     },
-    // mutation:{
-    //     addUser:{
-    //         type:User,
-    //         description:'添加用户',
-    //         args: {
-    //             id:{type: GraphQLInt},
-    //             name:{type: new GraphQLNonNull(GraphQLString)},
-    //             sex:{type: new GraphQLNonNull(GraphQLString)},
-    //             intro:{type: new GraphQLNonNull(GraphQLString)},
-    //             skills:{type:new GraphQLList(new GraphQLNonNull(GraphQLString))}
-    //         },
-    //         resolve:async function (source,{id,name,sex,intro}) {
-    //             var user={
-    //                 name:name,
-    //                 sex:sex,
-    //                 intro:intro
-    //             };
-    //             return await util.searchSql( $sql.addUser,[user.name,user.sex,user.intro]);
-    //         }
-    //     },
-    //     addUserByInput:{
-    //         type:User,
-    //         description:'通过Input添加用户',
-    //         args: {
-    //             userInfo:{type: UserInput},
-    //         },
-    //         resolve:async function (source,{userInfo}) {
-    //             return await util.searchSql( $sql.addUser,[userInfo.name,userInfo.sex,userInfo.intro]);
-    //         }
-    //     }
-    // }
+    mutation:{
+        // addUser:{
+        //     type:User,
+        //     description:'添加用户',
+        //     args: {
+        //         id:{type: GraphQLInt},
+        //         name:{type: new GraphQLNonNull(GraphQLString)},
+        //         sex:{type: new GraphQLNonNull(GraphQLString)},
+        //         intro:{type: new GraphQLNonNull(GraphQLString)},
+        //         skills:{type:new GraphQLList(new GraphQLNonNull(GraphQLString))}
+        //     },
+        //     resolve:async function (source,{id,name,sex,intro}) {
+        //         var user={
+        //             name:name,
+        //             sex:sex,
+        //             intro:intro
+        //         };
+        //         return await util.searchSql( $sql.addUser,[user.name,user.sex,user.intro]);
+        //     }
+        // },
+        articleAdd:{
+            type:ArticleAddInfo,
+            description:'新增文章',
+            args: {
+                articleInfo:{type: ArticleInfo},
+            },
+            resolve:async function (source,{articleInfo}) {
+                //如果存在id,曾更新
+                if(articleInfo.art_id){
+
+                }else{
+                    //否则新增
+                    let insertId = (await util.searchSql($articleSql.articleInsert,
+                        [articleInfo.art_title,articleInfo.art_content,articleInfo.art_des,articleInfo.category_id])).insertId;
+                    // let relationshipInsertId = (await util.searchSql( $articleSql.relationshipInsert,
+                    //     [insertId,articleInfo.category_id])).insertId;
+                    return {
+                        art_id:insertId,
+                        // relationshipInsertId:relationshipInsertId
+                    }
+                }
+            }
+        }
+    }
 };

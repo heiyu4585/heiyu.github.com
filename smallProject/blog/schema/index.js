@@ -20,15 +20,16 @@ const Query=new GraphQLObjectType({
         articleSchema.query
     )),
 });
-// const Mutation=new GraphQLObjectType({
-//     name: 'BlogMuation',
-//     description: 'Root of the Blog Schema',
-//     fields:()=>(Object.assign({},
-//         articleSchema.mutation
-//         )),
-// });
+const Mutation=new GraphQLObjectType({
+    name: 'BlogMuaMutationtion',
+    description: 'Root of the Blog Schema',
+    fields:()=>(Object.assign({},
+        articleSchema.mutation
+        )),
+});
 const schema = new GraphQLSchema({
-    query: Query
+    query: Query,
+    mutation:Mutation
 });
 
 module.exports = schema;

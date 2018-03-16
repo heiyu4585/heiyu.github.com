@@ -44,7 +44,7 @@
                 artList: [],
                 total_items:0,
                 currentPage: 1, //当前页
-                page_items:1   //每页显示的数目
+                page_items:8   //每页显示的数目
             }
         },
         methods: {
@@ -69,7 +69,7 @@
                           page_no
                           total_items
                           rows{
-                         id
+                         art_id
                         art_title
                         art_content
                         art_des

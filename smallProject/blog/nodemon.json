@@ -15,7 +15,9 @@
     "watch": [
     "test/fixtures/",
     "test/samples/",
-        "blog/**"
+    "schema/",
+    "build/",
+    "config/"
 ],
     "env": {
     "NODE_ENV": "development"
