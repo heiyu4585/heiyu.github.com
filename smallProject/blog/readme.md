@@ -1,4 +1,17 @@
+1.
+后台markdown使用的是 [simplemde-markdown-editor](https://github.com/sparksuite/simplemde-markdown-editor)
+ 
+ 参考 [markdown](https://segmentfault.com/a/1190000009762198#articleHeader14)
+
+
+
+
+
 >koa + vue + vueRouter + vueX + ssr
+
+
+
+
 
 koa+vue+mysql搭建博客基础
 
@@ -47,16 +60,8 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 
 [基于 Webpack 3 的 Vue.js 工程项目脚手架](https://zhuanlan.zhihu.com/p/27960679)
 
-2018.2.7
 
-1.完成了
-1.vue 热更新
-2.vue开发环境
-3.vue打包
-4.初步完成grahql
 
-待完成:
-1.数据库连接
 
 
 [初识NodeJS服务端开发（Express+MySQL）](http://www.alloyteam.com/2015/03/sexpressmysql/)
@@ -69,6 +74,17 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 
 ## todoList
 ~~博客样式参考  http://zaaack.github.io/2015/12/29/projects/#chrome-timer~~
+
+2018.2.7
+
+1.完成了
+1.vue 热更新
+2.vue开发环境
+3.vue打包
+4.初步完成grahql
+5.数据库连接
+
+待完成:
 1.文章页搭建对于mackdown
 
 1. 登录系统
@@ -78,5 +94,7 @@ webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 3. 后台系统 
 
 4. ssr
+
+5. vue-router article文章修改和栏目是否使用同一个layout
 
 https://segmentfault.com/a/1190000009565131

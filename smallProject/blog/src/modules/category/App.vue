@@ -70,7 +70,7 @@
                           page_no
                           total_items
                           rows{
-                         id
+                         art_id
                         art_title
                         art_content
                         art_des
