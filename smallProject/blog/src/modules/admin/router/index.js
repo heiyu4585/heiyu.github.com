@@ -5,6 +5,7 @@ const index = { template: '<div>index</div>' }
 import article from '../components/article';
 import articleAdd from '../components/articleAdd';
 import articleEdit from '../components/articleEdit';
+import articleList from '../components/articleList';
 
 export default ([
         {
@@ -23,6 +24,11 @@ export default ([
                     path: 'add',
                     name:"add",
                     component: articleAdd
+                },
+                {
+                    path: 'list',
+                    name:"art_list",
+                    component: articleList
                 },
                 {
                     path: 'edit',

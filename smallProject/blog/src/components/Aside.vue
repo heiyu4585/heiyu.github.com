@@ -20,7 +20,7 @@
                         :key="nav.id"
                 >
                     <!--https://segmentfault.com/q/1010000009175454/a-1020000009175738-->
-                    <a :href=" nav.category_url">
+                    <a :href="'category?id='+nav.category_id">
                         {{ nav.category_name }}
                     </a>
                 </li>
@@ -63,7 +63,7 @@
                         `
                     {
                     categories{
-                      id
+                      category_id
                       category_name
                       category_des
                       category_url

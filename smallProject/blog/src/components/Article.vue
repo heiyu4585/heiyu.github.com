@@ -7,7 +7,7 @@
                 <header class="entry-header">
                     <div class="title-heavy"></div>
                     <h2 class="entry-title">
-                        <a :href="`post/${item.id}`" rel="bookmark"
+                        <a :href="'article?id='+item.art_id" rel="bookmark"
                            :title=item.art_title>
                             {{item.art_title}}
                         </a>
@@ -24,14 +24,16 @@
 				<span class="meta-site">
 					<span class="date"><i class="icon-date"></i>{{item.art_create_time}}</span>
 					<span class="cat"><i class="icon-cat"></i>
-                        <a :href="item.category_url" rel="category tag">{{item.category_name}}</a></span>
+                        <a :href="'/category?id=' + item.art_category_id">查看</a>
+                    </span>
+
 					<span class="comment"><i class="icon-comment"></i><a
                             href="javascript:;">暂无评论</a></span>
 					<i class="icon-zan"></i>喜欢
 0					<span class="views"><i
                         class="icon-views"></i>阅读 4 次</span>									</span>
                         <span class="entry-more">
-                            <a :href="`post/${item.id}`" rel="bookmark" title="共 10881字 阅读全文">阅读全文</a>
+                            <a :href="`post/${item.art_id}`" rel="bookmark" title="共 10881字 阅读全文">阅读全文</a>
                         </span>
                     </div>
                     <!-- .entry-meta -->

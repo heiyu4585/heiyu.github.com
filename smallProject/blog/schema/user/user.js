@@ -1,6 +1,6 @@
 
-var $sql = require('../../dao/userSqlMapping');
-var util = require("../../util/util");
+var $sql = require('./userSqlMapping');
+const util = require("../../util/util");
 var {
     GraphQLList,
     GraphQLObjectType,
