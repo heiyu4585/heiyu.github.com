@@ -11,13 +11,17 @@
                         <h1 class="single-title">{{articleContent.art_title}}</h1>
                         <div class="single-meta">
                             <span class="date"><i class="icon-date"></i>{{articleContent.art_create_time}}</span>
-                            <span class="cat"><i class="icon-cat"></i><a :href=`/category?id=${articleContent.id}` rel="category tag">{{articleContent.category_name}}</a></span>
-                            <span class="comment"><i class="icon-comment"></i><a href="http://www.siyuweb.com/javascript/3227.html#respond">暂无评论</a></span>
-                            <span class="views"><i class="icon-views"></i>阅读 9 次</span>					</div>
+                            <span class="cat"><i class="icon-cat"></i><a :href="'/category?id='+articleContent.id " rel="category tag">
+                                {{articleContent.category_name}}</a>
+                            </span>
+                            <span class="comment"><i class="icon-comment"></i>
+                                <a href="#">暂无评论</a>
+                            </span>
+                            <span class="views"><i class="icon-views"></i>阅读 9 次</span>
+                        </div>
                         <!-- .entry-meta -->
                     </header>
                     <!-- .single-header -->
-
                     <div class="single-main">
                         <div class="content-main" v-html="articleContent.art_content">
                         </div>
@@ -61,7 +65,7 @@
                         query:
                             `
 {
-  article(id:${this.articleId}){
+  article(art_id:${this.articleId}){
     art_id
     art_title
     art_content

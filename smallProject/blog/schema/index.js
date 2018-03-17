@@ -12,6 +12,7 @@ var {
 } = require('graphql');
 
 const articleSchema = require('./article');
+const UserSchema = require('./user/user');
 
 const Query=new GraphQLObjectType({
     name: 'BlogQuery',
@@ -21,7 +22,7 @@ const Query=new GraphQLObjectType({
     )),
 });
 const Mutation=new GraphQLObjectType({
-    name: 'BlogMuaMutationtion',
+    name: 'BlogMutation',
     description: 'Root of the Blog Schema',
     fields:()=>(Object.assign({},
         articleSchema.mutation
