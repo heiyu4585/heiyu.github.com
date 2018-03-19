@@ -30,6 +30,9 @@ var graphqlHTTP = require('express-graphql');
 var userSchema =require ('./graphql/user/schema');
 var blogSchema =require ('./graphql/article/schema');
 
+
+// var userSchema =require ('./graphql/user/userSchame');
+
 app.use('/graphql', graphqlHTTP({
     schema: userSchema,
     graphiql: true, //启用GraphiQL

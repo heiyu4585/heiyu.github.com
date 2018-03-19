@@ -54,15 +54,16 @@ var $conf = require('../conf/db');
 var pool  = mysql.createPool($conf.mysql);
 
 async function searchSql($sql,params) {
-    return new Promise((resolve, reject) => {
+  return   new Promise((resolve, reject) => {
         pool.getConnection(function (err, connection) {
             connection.query($sql, params,function (err, result) {
+
                 connection.release();
                 if (err) {
-                    return reject(err)
+                    reject(err)
                 }
                 if(result.insertId) result.id = result.insertId;
-                return resolve(result);
+                 resolve(result);
             });
         });
     })
