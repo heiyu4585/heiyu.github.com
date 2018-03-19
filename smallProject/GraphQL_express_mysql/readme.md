@@ -1,27 +1,70 @@
-# GraphQL入门到放弃
+# GraphQL+express+mysql 完整demo
 
-##  相关概念
-### GraphQL是什么
+
+
+入门到放弃
+
+
+安装步骤:
+
+`npm install `
+
+启动步骤
+
+`npm start`
+
+访问:
+
+'localhost:3003'
+
+查看相关的接口访问
+
+访问调试工具:
+
+`http://localhost:3003/graphql`
+`http://localhost:3003/article`
+
+官方的简单版本
+`/app_simple.js`
+
+1.schame 最小的实现版本 
+`/graphql/user/userSchame.js`
+
+
+#grapql调研报告 
+
+
+
+## GraphQL是什么
 `GraphQL` 是一个Facebook于2012开发出来且2015开源的应用层的查询语言,你需要在后台定义一个基于GraphQL的图形模式,然后你的客户端就可以查询他们想要的数据,而不需要后台重新定义一个接口返回你需要的数据.
 
 ![graphql介绍](http://ww3.sinaimg.cn/large/006y8lVagw1face0i49unj31kw0wxmzx.jpg)
 
 因为不需要更改你后台,所以这种方式比 `REST API` 方式更好,让我们可以在不同的客户端上灵活改变数据显示.
 
-### 为什么要用
+GraphQL 是一个规范.这意味着你可以在任何语言上实现 GraphQL.[点击这里](http://facebook.github.io/graphql/)你可以查看更多关于 GraphQL 的介绍.Facebook 有一个对于[JavaScript](https://github.com/graphql/graphql-js)的 GraphQL 实现.
 
-GraphQL对你的API中的数据提供了一套易于理解的完整描述，使得客户端能够准确地获得它需要的数据，而且没有任何冗余，也让 API 更容易地随着时间推移而演进，还能用于构建强大的开发者工具。
-1. 获取多个资源只用一个请求
-2. 请求你所要的数据不多不少
-3. 描述所有的可能类型系统
 
-### GraphQL 是一个规范.
+## 为什么要用
 
-这意味着你可以在任何语言上实现 GraphQL.[点击这里](http://facebook.github.io/graphql/)你可以查看更多关于 GraphQL 的介绍.Facebook 有一个对于[JavaScript](https://github.com/graphql/graphql-js)的 GraphQL 实现.
+GraphQL对你的API中的数据提供了一套易于理解的完整描述，使得客户端能够准确地获得它需要的数据，而且没有任何冗余，也让 API 更容易地随着时间推移而演进，还能用于构建强大的开发者工具。 
+  获取多个资源只用一个请求 
+
+1. 声明式。描述所有的可能类型系统 查询的结果格式由请求方（即客户端）决定而非响应方（即服务器端）决定。你不需要编写很多额外的接口来适配客户端请求
+
+2. 减少开发文档的维护工作量,相对应的减少沟通成本
+
+3. 强类型。每个 GraphQL 查询必须遵循其设定的类型才会被执行。
+
+4. 请求合并 多个接口可以通过组合为一个
+
+5. 请求你所要的数据不多不少 
 
 ## 如何使用
 
 ### 自省
+
+http://localhost:3003/graphql
 
 GraphQL是可自省的，也就是说你可以通过查询一个GraphQL知道它自己的schema细节。
 
@@ -96,7 +139,7 @@ query {
 ###单独查询(有参数)
 ```$xslt
 {
-	course(userId:1) {
+	course(id:1) {
 	  score
 	  course
 	}
@@ -317,6 +360,7 @@ mutation {
 }
 ```
 ### 嵌套查询
+http://localhost:3003/article
 
 有时候我们需要对查询到的数据进行筛选,比如限制大小,这时候就需要一个嵌套查询来实现这个功能了.
 
@@ -397,7 +441,9 @@ graphql(schema, ' query HeroNameAndFriends{\n' +
         console.log(response);
     });
 ```
-## 分片
+## 分片  
+
+http://localhost:3003/article
 
 > 在 GraphQL 中,分片是一段能够复用的片段.
 
