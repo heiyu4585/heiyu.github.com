@@ -10,8 +10,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const BabelEnginePlugin = require('babel-engine-plugin');
 
-const env = require('./config/prod.env');
+const env = require('../config/prod.env');
 console.log('==========js/[name].[chunkhash].js');
 console.log(utils.assetsPath('js/[name].[chunkhash].js'));
 console.log('------------js/[name].[chunkhash].js');
@@ -41,7 +42,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         }
       },
       sourceMap: config.build.productionSourceMap,
-      parallel: true
+      parallel: true,
+        ecma: 8
     }),
     // extract css into its own file
     new ExtractTextPlugin({
