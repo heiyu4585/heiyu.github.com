@@ -12,28 +12,25 @@ vue+vueRouter+express+express+mysql+graphQL
 5. mysql数据库连接
 6. markdown前后台支持
 7. express+webpack 一套环境搭建前后端应用
-3.开发环境 dev添加
-
+4. 后台系统  博客文章的新增,更新
 
 ## todoList
 
-TODOlist待完成:
-  1.文章页搭建对于mackdown
+  1. 文章页搭建对于mackdown
   
   1. 登录系统
   
-  3.开发环境 dev添加
-  
-  2.~~分页graphql~~  完成
-  
-  3. 后台系统 
+  3. 开发环境 dev添加
   
   4. ssr
   
   5. vue-router article文章修改和栏目是否使用同一个layout
   
-  6.更新修改文章
+  6. 更新修改文章
 
+  7. graphQL+passport https://github.com/jessedvrs/graphql-passport-example
+  
+  8. graphql引用方式修改
 
 
 1.markdown组件
@@ -62,8 +59,6 @@ TODOlist待完成:
 [admin-vue](https://admin.vuebulma.com/#/)
 
 [Vue 2.0 Admin后台管理模板对比](http://lanyuanxiaoyao.com/2017/07/05/vue-admin/#vue-adminstar-4876)
-
-
 
 
 
