@@ -9,3 +9,5 @@
 
 [vue-cli-multipage](多页应用)  感觉已经过时
 [官方文档开发中 Server(DevServer)](https://doc.webpack-china.org/configuration/dev-server/)
+
+[[prerender-spa-plugin]--微型Vue项目的静态化利器](https://juejin.im/post/5ab31b8cf265da239706c2df)
