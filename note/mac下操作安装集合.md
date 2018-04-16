@@ -1,5 +1,5 @@
-## mac下安装mysql
-### 相关操作
+# mac下安装mysql
+## 相关操作
     启动MySQL服务
     sudo /usr/local/MySQL/support-files/mysql.server start
 
@@ -23,7 +23,7 @@
     kill 命令用于终止进程
     例如： kill -9 [PID]
 
-### mysql安装
+## mysql安装
     1、官网下载mysql安装包mysql-5.7.13-osx10.11-x86_64.bmg安装
     2、安装完成后终端输入：
     mysql --version
@@ -52,7 +52,9 @@
 
 [mac安装mysql的两种方法（含配置）](https://www.jianshu.com/p/fd3aae701db9)
 
-#### mac下安装mysql5.7.18，连接出现Access denied for user 'root'@'localhost' (using password: YES
+## 遇到的问题
+
+### mac下安装mysql5.7.18，连接出现Access denied for user 'root'@'localhost' (using password: YES
 
     mac下，mysql5.7.18连接出错，错误信息为：Access denied for user 'root'@'localhost' (using password: YES)
     （）里面的为shell中输入的命令，一定要输全包括；&等符号
@@ -69,7 +71,7 @@
 [MAC下MYSQL5.7.17连接不上的问题及解决办法](http://www.jb51.net/article/107028.htm)
 
 
-#### Mysql:is not allowed to connect to this MySQL server
+### Mysql:is not allowed to connect to this MySQL server
 
     如果你想连接你的mysql的时候发生这个错误：
 
@@ -91,13 +93,13 @@
 
     GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.10.40.54' IDENTIFIED BY '123456' WITH GRANT OPTION;
 
-#### Disable ONLY_FULL_GROUP_BY
+### Disable ONLY_FULL_GROUP_BY
      mysql > SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
       mysql >SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
 参考： [Disable ONLY_FULL_GROUP_BY](https://stackoverflow.com/questions/23921117/disable-only-full-group-by)
 
-### Mac下MySQL卸载方法
+## Mac下MySQL卸载方法
 
     在OSX中安装Mysql如果一旦出现错误，很难卸载，需要手动删除部分Mysql运行和配置文件，如下为删除相关文件的shell，可能不存在，但尽量查找并删除，避免出现一些莫名问题。
 
@@ -114,7 +116,7 @@
 
 参考：[How do you uninstall MySQL from Mac OS X?](https://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-mac-os-x)
 
-### Mac下安装 MongoDB
+# Mac下安装 MongoDB
     更为简单的方法：
     通过 homebrew 安装：brew install mongodb
     如果报错：
