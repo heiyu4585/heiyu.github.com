@@ -316,6 +316,8 @@ $ sudo vim /usr/local/etc/nginx/nginx.conf
     }
 这个时候，再使用pinger.com在浏览器里访问时就不会出现跳转的问题了。
 
+[Mac下Nginx的安装和配置](http://jalan.space/2017/01/12/2017-01-13-mac-os-nginx/)
+
 [Mac环境下Nginx实现反向代理](http://www.liuchungui.com/blog/2015/10/21/mhuan-jing-xia-nginxshi-xian-fan-xiang-dai-li/)
 
 [Nginx 配置简述](https://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/)
