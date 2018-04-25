@@ -19,22 +19,18 @@
 
 ## nginx常用命令
 
-nginx  #启动nginx
-nginx -s quit  #快速停止nginx
-nginx -V #查看版本，以及配置文件地址
-nginx -v #查看版本
-nginx -s reload|reopen|stop|quit   #重新加载配置|重启|快速停止|安全关闭nginx
-nginx -h #帮助
+- nginx  #启动nginx
+- nginx -s quit  #快速停止nginx
+- nginx -V #查看版本，以及配置文件地址
+- nginx -v #查看版本
+- nginx -s reload|reopen|stop|quit   #重新加载配置|重启|快速停止|安全关闭nginx
+- nginx -h #帮助
+- sudo nginx -s stop(
+- nginx -t 测试配置
+- ngnix -s reload
+- brew uninstall nginx  卸载nginx
 
-sudo nginx -s stop(
-nginx -t
-ngnix -s reload
 
-卸载nginx
-
-brew uninstall nginx
-测试配置
- nginx -t
 ## Access-Control-Allow-Origin 跨域问题
 
 ```
