@@ -1,4 +1,61 @@
 #nginx相关操作
+mac装了两个nginx~
+
+## CentOS 7 yum 安装 Nginx
+### 1.添加Nginx到YUM源
+添加CentOS 7 Nginx yum资源库,打开终端,使用以下命令:
+
+`sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm`
+### 2.安装Nginx
+在你的CentOS 7 服务器中使用yum命令从Nginx源服务器中获取来安装Nginx：
+
+`sudo yum install -y nginx`
+Nginx将完成安装在你的CentOS 7 服务器中。
+
+### 3.启动Nginx
+刚安装的Nginx不会自行启动。运行Nginx:
+
+`sudo systemctl start nginx.service`
+如果一切进展顺利的话，现在你可以通过你的域名或IP来访问你的Web页面来预览一下Nginx的默认页面；
+
+![nginx default](http://images.statics.9696e.com/wp-content/uploads/2014/11/nginx_default.png)
+
+如果看到这个页面,那么说明你的CentOS 7 中 web服务器已经正确安装。
+
+CentOS 7 开机启动Nginx
+`sudo systemctl enable nginx.service`
+更多systemctl命令可查看《[systemctl命令用法](http://www.9696e.com/archives/1253)》
+
+Nginx配置信息
+网站文件存放默认目录
+
+`/usr/share/nginx/html`
+
+网站默认站点配置
+
+`/etc/nginx/conf.d/default.conf`
+
+自定义Nginx站点配置文件存放目录
+
+`/etc/nginx/conf.d/`
+
+Nginx全局配置
+
+`/etc/nginx/nginx.conf`
+
+Nginx启动
+
+`nginx -c nginx.conf`
+
+在这里你可以改变设置用户运行Nginx守护程序进程一样,和工作进程的数量得到了Nginx正在运行,等等。
+Linux查看公网IP
+您可以运行以下命令来显示你的服务器的公共IP地址:
+
+`ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'`
+
+
+
+
 
 ## 相关目录
  - nginx安装文件目录
@@ -63,6 +120,29 @@ http {
         }
     }
     include /etc/nginx/conf.d/*.conf;
+}
+```
+## nginx 一个ip配置多个网站
+
+```
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444; # 过滤其他域名的请求，返回444状态码
+}
+server {
+    listen 80;
+    server_name www.aaa.com; # www.aaa.com域名
+    location / {
+        proxy_pass http://localhost:8080; # 对应端口号8080
+    }
+}
+server {
+    listen 80;
+    server_name www.bbb.com; # www.bbb.com域名
+    location / {
+        proxy_pass http://localhost:8081; # 对应端口号8081
+    }
 }
 ```
 
@@ -274,5 +354,103 @@ server {
 
 }
  ```
+ 
+ 
+ 
+ 
+ 
+```
 
+server
+  {
+    listen      80;
+    server_name triage.allinmed.cn;
+ #   rewrite ^(.*)$  https://$host$1 permanent;
+    location ~ ^/apple-app-site-association {
+                default_type application/pkcs7-mime;
+                proxy_pass http://192.168.1.53;
+                proxy_set_header Host  $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                }
+
+location ~ ^/ {
+
+                 proxy_pass http://10.0.1.128:8010;
+                  proxy_set_header Host  $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                }
+
+
+
+
+        location ~ ^/plugins/{
+                  proxy_pass http://192.168.1.53;
+                  proxy_set_header Host  $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                }
+
+
+        location ~* \.(htm|html|js|css|mp3|gif|jpeg)$ {
+        #proxy_pass http://192.168.1.53;
+        try_files $uri $uri/ /index.html;
+        proxy_pass http://10.0.1.128:8010;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For   $proxy_add_x_forwarded_for;
+        client_max_body_size    20m;
+        client_body_buffer_size 128k;
+        proxy_connect_timeout   300;
+        proxy_send_timeout      300;
+        proxy_read_timeout      300;
+        proxy_buffer_size       32k;
+        proxy_buffers           4 64k;
+        proxy_busy_buffers_size 64k;
+        proxy_temp_file_write_size 128k;
+
+#       if ($request_uri ~* (^\/|\.html|)$) {
+#       add_header    Cache-Control no-cache;
+#       }
+#        expires 24h;
+       }
+        location ~ ^/call/qiniu/storage/{
+          proxy_pass http://dynamic-web-allinmedpC;
+          proxy_set_header Host  $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          client_max_body_size    2G;
+          proxy_connect_timeout   3000;
+          proxy_send_timeout      3000;
+          proxy_read_timeout      3000;
+          client_body_buffer_size 128k;
+       }
+
+    location ~ ^/call/{
+        proxy_pass http://dynamic-web-allinmedPC;
+        proxy_set_header Host  $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        client_max_body_size    20m;
+        proxy_connect_timeout   300;
+        proxy_send_timeout      300;
+        proxy_read_timeout      300;
+        client_body_buffer_size 128k;
+       }
+
+     location ~ .*\.(php|jsp|cgi)?$ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://dynamic-web-allinmedPC;
+        }
+        error_page 404 = /;
+    #access_log  /usr/local/nginx/logs/access.log;
+    #error_log   /usr/local/nginx/logs/error.log;
+}
+
+
+```
 
