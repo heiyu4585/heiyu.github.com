@@ -1,5 +1,80 @@
+## Linux软件安装目录
+
+/usr：系统级的目录，可以理解为C:/Windows/，/usr/lib理解为C:/Windows/System32。
+/usr/local：用户级的程序目录，可以理解为C:/Progrem Files/。用户自己编译的软件默认会安装到这个目录下。
+/opt：用户级的程序目录，可以理解为D:/Software，opt有可选的意思，这里可以用于放置第三方大型软件（或游戏），当你不需要时，直接rm -rf掉即可。在硬盘容量不够时，也可将/opt单独挂载到其他磁盘上使用。
+
+源码放哪里？
+
+/usr/src：系统级的源码目录。
+
+/usr/local/src：用户级的源码目录。 
+
 ## 相关操作
+### 查看git安装目录
+`查看git安装目录`
+###CentOS如何查看端口是被哪个应用/进程占用
+netstat -nap #会列出所有正在使用的端口及关联的进程/应用
+
+lsof -i :portnumber #portnumber要用具体的端口号代替，可以直接列出该端口听使用进程/应用
+
+`netstat -lnp|grep 88 `  #88请换为你的apache需要的端口，如：80
+
+`ps 1777 ` //查看相应进程号的程序详细路径
+
+### 内存 cpu占用
+ 1.CPU占用最多的前10个进程： 
+
+`ps auxw|head -1;ps auxw|sort -rn -k3|head -10 `
+
+2.内存消耗最多的前10个进程 
+
+`ps auxw|head -1;ps auxw|sort -rn -k4|head -10` 
+
+3.虚拟内存使用最多的前10个进程 
+
+`ps auxw|head -1;ps auxw|sort -rn -k5|head -10`
+### ln
+linux环境下创建和删除软链接
+
+`ln -s /home/zhenwx/htccode-v1/    /home/zhenwx/htccode`
+
+建立/home/zhenwx/htccode-v1 的软连接
+
+
+linux下的软链接类似于windows下的快捷方式
+
+
+ln -s /home/zhenwx/htccode-v1/    /home/zhenwx/htccode     中的/home/zhenwx/htccode-v1/就是源文件，/home/zhenwx/htccode      是链接文件名,其作用是当进入/home/zhenwx/htccode     目录，实际上是链接进入了/home/zhenwx/htccode-v1/目录
+
+如上面的示例，当我们执行命令   cd /home/zhenwx/htccode/的时候  实际上是进入了 /home/zhenwx/htccode-v1/
+
+值得注意的是执行命令的时候,应该是/home/zhenwx/htccode-v1/ 目录已经建立，不要创建目录/home/zhenwx/htccode/。
+
+删除软链接：  
+   `rm -rf  /home/zhenwx/htccode  注意不是rm -rf  /home/zhenwx/htccode/`
+
+
+
+
+
 ### [文件夹操作](https://my.oschina.net/junn/blog/137479)
+
+### 设置文件夹的读写权限:
+
+`sudo chmod -R 777 /data`
+
+权限码描述
+
+```
+sudo chmod 600 ××× （只有所有者有读和写的权限）
+sudo chmod 644 ××× （所有者有读和写的权限，组用户只有读的权限）
+sudo chmod 700 ××× （只有所有者有读和写以及执行的权限）
+sudo chmod 666 ××× （每个人都有读和写的权限）
+sudo chmod 777 ××× （每个人都有读和写以及执行的权限）
+
+-R表示包含设置所有子目录
+```
 
 #### linux 重命名文件和文件夹
 
@@ -64,83 +139,82 @@
     # unzip -t large.zip
     6.我用-v选项发现music.zip压缩文件里面有很多目录和子目录，并且子目录中其实都是歌曲mp3文件，我想把这些文件都下载到第一级目录，而不是一层一层建目录：
     # unzip -j music.zip
-### 安装mysql
-#### linux CentOS6.5 yum安装mysql 5.6
-    1.新开的云服务器，需要检测系统是否自带安装mysql
-    # yum list installed | grep mysql
 
-    2.如果发现有系统自带mysql，果断这么干
-    # yum -y remove mysql-libs.x86_64
-
-    3.随便在你存放文件的目录下执行，这里解释一下，由于这个mysql的yum源服务器在国外，所以下载速度会比较慢，还好mysql5.6只有79M大，而mysql5.7就有182M了，所以这是我不想安装mysql5.7的原因
-    # wget http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
-
-    4.接着执行这句,解释一下，这个rpm还不是mysql的安装文件，只是两个yum源文件，执行后，在/etc/yum.repos.d/ 这个目录下多出mysql-community-source.repo和mysql-community.repo
-    # rpm -ivh mysql-community-release-el6-5.noarch.rpm
-
-    5.这个时候，可以用yum repolist mysql这个命令查看一下是否已经有mysql可安装文件
-    #yum repolist all | grep mysql
-
-    6.安装mysql 服务器命令（一路yes）：
-    # yum install mysql-community-server
-
-    7.安装成功后
-    # service mysqld start
-
-    8.由于mysql刚刚安装完的时候，mysql的root用户的密码默认是空的，所以我们需要及时用mysql的root用户登录（第一次回车键，不用输入密码），并修改密码
-    # mysql -u root
-    # use mysql;
-    # update user set password=PASSWORD("这里输入root用户密码") where User='root';
-
-    9.授权（自动创建）一个mysql的非root的aaa用户，能访问localhost上的testdb数据库，密码是xxxx，最后刷新权限
-    # grant all privileges on testdb.* to aaa@localhost identified by 'xxxx';
-    # flush privileges;
-    10.创建一个utf8的表(如果你有需要的话)之后退出
-    # CREATE DATABASE `database` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-    # exit;
-
-    11.查看mysql是否自启动,并且设置开启自启动命令
-    # chkconfig --list | grep mysqld
-    # chkconfig mysqld on
-
-    12.mysql安全设置(系统会一路问你几个问题，看不懂复制之后翻译，基本上一路yes)：
-    # mysql_secure_installation
-
-    13.晚安
-    # exit
-
-[linux CentOS6.5 yum安装mysql 5.6](https://segmentfault.com/a/1190000007667534)
 
 #### linux 安装nodejs
 
-    CentOS 下安装 Node.js
-    1、下载源码，你需要在https://nodejs.org/en/download/下载最新的Nodejs版本，本文以v0.10.24为例:
-    cd /usr/local/src/
-    wget http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz
-    2、解压源码
-    tar zxvf node-v0.10.24.tar.gz
-    3、 编译安装
+
+##### 二进制文件安装
+linux安装nodejs有很多种方式，可以下载源码编译安装，可以下载二进制文件，也可以直接使用yum命令安装,这里简单介绍下使用二进制文件的方法
+首先下载nodejs二进制文件 下载地址 我们可以选择最新或者稳定的nodejs版本右键复制链接
+这里写图片描述
+
+使用wget或curl下载二进制文件
+
+```
+wget https://nodejs.org/dist/v9.8.0/node-v9.8.0-linux-x64.tar.xz
+tar -xvf node-v9.8.0-linux-x64.tar.xz
+cd node-v9.8.0-linux-x64/bin
+./node -v
+```
+
+在bin目录下既可以看到node的执行文件和npm执行文件的链接了.但是只有配置了环境变量才可以在全局使用node
+我们可以通过修改.bashrc文件添加环境变量,在文件最后一行添加下列export，PATH为解压后node执行文件所在的bin目录
+
+```
+vim ~/.bashrc 
+export PATH=/root/node-v9.8.0-linux-x64/bin:$PATH
+```
+
+此时安装已完成，关闭当前终端，再打开新的终端中就可以生效了
+或者执行source ~/.bashrc命令即可在当前终端中生效
+PS：也可以添加软连接将安装目录链接到全局
+
+`ln -s  /usr/local/src/node-v8.11.1-linux-x64/bin/node /usr/local/bin/node`
+
+`ln -s  /usr/local/src/node-v8.11.1-linux-x64/bin/npm /usr/local/bin/npm`
+
+
+####源码编译安装
+
+1、下载源码，你需要在https://nodejs.org/en/download/下载最新的Nodejs版本，本文以v0.10.24为例:
+```
+cd /usr/local/src/`
+wget http://nodejs.org/dist/v8.11.1/node-v8.11.1.tar.gz
+```
+2、解压源码
+   ` tar zxvf node-v8.11.1.tar.gz`
+3、 编译安装
+    ```
     cd node-v0.10.24
-    ./configure --prefix=/usr/local/node/0.10.24
+    ./configure --prefix=/usr/local/node/8.11.1
     make
     make install
-    4、 配置NODE_HOME，进入profile编辑环境变量
-    vim /etc/profile
+    ```
+4、 配置NODE_HOME，进入profile编辑环境变量
+   ` vim /etc/profile`
     设置nodejs环境变量，在 export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL 一行的上面添加如下内容:
+   ```
     #set for nodejs
-    export NODE_HOME=/usr/local/node/0.10.24
+    export NODE_HOME=/usr/local/node/8.11.1
     export PATH=$NODE_HOME/bin:$PATH
-    :wq保存并退出，编译/etc/profile 使配置生效
-    source /etc/profile
-    验证是否安装配置成功
-    node -v
-    输出 v0.10.24 表示配置成功
-    npm模块安装路径
+    ```
+:wq保存并退出，编译/etc/profile 使配置生效
+    
+    `source /etc/profile`
+    
+验证是否安装配置成功
+    
+  `node -v`
+  
+输出 v0.10.24 表示配置成功
+    
+npm模块安装路径
     /usr/local/node/0.10.24/lib/node_modules/
     注：Nodejs 官网提供了编译好的Linux二进制包，你也可以下载下来直接应用。
     [http://www.runoob.com/nodejs/nodejs-install-setup.html](http://www.runoob.com/nodejs/nodejs-install-setup.html)
 
-    [Node.js + MongoDB 开发环境搭建](http://unicornx.github.io/2016/05/25/20160525-nodejs-mongodb-envsetup/)
+[Node.js + MongoDB 开发环境搭建](http://unicornx.github.io/2016/05/25/20160525-nodejs-mongodb-envsetup/)
 
 坑:
 
@@ -148,4 +222,173 @@
 
 `sudo yum install gcc-c++   //安装gcc`
 
+
 [Centos6.4编译安装Node.js(已验证）](https://www.cnblogs.com/felixzh/p/5822354.html)
+
+#### 使用yum安装
+
+安装nodejs
+`yum install -y nodejs`
+
+查看版本
+`node -v`
+
+安装node版本管理工具n
+`npm install -g n`
+
+升级node为最新稳定版
+`n stable`
+查看是否升级成功
+
+```
+node -v
+# 显示最新版本号v8.2.1
+```
+
+###  centos安装jenkins
+Jenkins是开源的,使用Java编写的持续集成的工具，在Centos上可以通过yum命令行直接安装。记录下安装的过程，方便以后查找。需要先安装Java,如果已经Java可以跳过该步骤。
+
+####安装Java
+看到当前系统Java版本的命令:
+
+`java -version`
+
+如果显示Java版本号，说明已经正确安装，如果显示没有该命令，需要安装Java：
+
+`sudo yum install java`
+
+该命令如果检测到Java不存在可以直接安装Java,如果已存在则可以升级Java。
+
+####安装Jenkins
+首先要先添加`Jenkins`源:
+
+```
+sudo wget -O /etc/yum.repos.d/jenkins.repo http://jenkins-ci.org/redhat/... 
+sudo rpm --import http://pkg.jenkins-ci.org/red...
+```
+添加完成之后直接使用yum命令安装Jenkins:
+
+`yum install jenkins`
+
+####启动Jenkins
+使用命令启动`Jenkins`:
+
+`sudo service jenkins start`
+
+`Starting Jenkins                                           [  OK  ]`
+在浏览器中输入：http://<服务器ip>:8080/ 就可以进入Jenkins界面直接使用了 。
+停止Jenkins服务的命令为：
+
+`sudo service jenkins stop`
+
+####相关配置
+Jenkins安装目录：
+
+  
+ `/var/lib/jenkins/`
+Jenkins配置文件地址：
+
+
+`/etc/sysconfig/jenkins`
+这就是Jenkins的配置文件，可以在这里查看Jenkins默认的配置。
+
+`cat jenkins`
+
+这里介绍下三个比较重要的配置：
+
+```
+JENKINS_HOME
+
+JENKINS_USER
+
+JENKINS_PORT
+```
+
+JENKINS_HOME是Jenkins的主目录，Jenkins工作的目录都放在这里,Jenkins储存文件的地址,Jenkins的插件，生成的文件都在这个目录下。
+
+```
+## Path:        Development/Jenkins
+## Description: Jenkins Continuous Integration Server
+## Type:        string
+## Default:     "/var/lib/jenkins"
+## ServiceRestart: jenkins
+#
+# Directory where Jenkins store its configuration and working
+# files (checkouts, build reports, artifacts, ...).
+#
+JENKINS_HOME="/var/lib/jenkins"
+
+```
+JENKINS_USER 是Jenkins的用户，拥有$JENKINS_HOME和/var/log/jenkins的权限。
+
+```
+## Type:        string
+## Default:     "jenkins"
+## ServiceRestart: jenkins
+#
+# Unix user account that runs the Jenkins daemon
+# Be careful when you change this, as you need to update
+# permissions of $JENKINS_HOME and /var/log/jenkins.
+#
+JENKINS_USER="jenkins"
+```
+JENKINS_PORT 是Jenkins的端口，默认端口是8080。
+
+
+```
+## Type:        integer(0:65535)  
+## Default:     8080
+## ServiceRestart: jenkins
+## Port Jenkins is listening on.
+# Set to -1 to disable
+#JENKINS_PORT="8080"
+
+```
+
+####jenkins 自定义项目路径和jenkins根目录
+
+1.自定义项目路径：
+
+进入job-配置-高级项目选项-选择使用“自定义的工作空间”，配置后项目不用放到jenkins默认的workspace里了。
+![jenkins设置工作空间](https://img-blog.csdn.net/20140327113426578?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZWxldmVuNTIx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+
+
+#### ERROR: Failed to clean the workspace java.io.IOException: Unable to delete. Tried 3 times (of a maximum of 3) waiting 0.1 sec between
+
+1.安装git,及配置git
+2.打开对应目录的读写权限
+3.SSH key 配置
+
+#### Error: EACCES: permission denied, access '/usr/local/lib/node_modules' npm ERR! at Error (native)
+
+
+在linux环境中安装package.json中的相关node_modules时，会报如下错误：
+   ` Error: EACCES: permission denied`
+    意思是，当前用户没有写入权限，这是因为有些node_modules在安装时，需要创建一些目录，或者写入一些文件
+ 
+ 解决方案 
+ 
+     1.通过 sudo npm install 安装即可；
+     2.可能会提示 sudo: npm: command not found 错误；
+     3.解决办法是
+        sudo ln -s /usr/local/bin/npm /usr/bin/npm  
+        sudo ln -s /usr/local/bin/node /usr/bin/node     
+ 
+
+### [如何在CentOS 6.x/7.x上安装git及最新](https://my.oschina.net/antsky/blog/514586)
+
+` yum info git`
+
+`yum install -y git`
+
+`git --version`
+
+注意：如果安装完查看版本不是我们安装的最新版，请重新执行下面的操作
+
+```
+# yum remove -y git
+# source /etc/bashrc
+# git --version
+```
+
+[node项目部署——阿里云centos部署git服务](https://www.jianshu.com/p/d7713fbd3e5d)
