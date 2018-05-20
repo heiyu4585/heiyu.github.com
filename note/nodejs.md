@@ -1,5 +1,54 @@
 #nodejs
 
+
+
+##nodejs读写json文件
+
+```
+
+var fs=reauire('fs');
+var file="d:\\0.json";
+var result=JSON.parse(fs.readFileSync( file));
+//操作对象
+```
+
+## nodejs 写json文件
+```
+var coors = {};
+    coors.left_top = {};
+    coors.right_top = {};
+    coors.left_bottom = {};
+    coors.right_bottom = {};
+//填充coors中内容
+var filename = "d:\\coors\\0.json";
+ fs.writeFileSync(filename, JSON.stringify(coors));
+ //对象嵌套
+ var fs = require('fs');
+var fileDirectory = "D:\\column";
+var newfileDirectory = "d:\\new";
+if (fs.existsSync(fileDirectory)) {
+    var files = fs.readdirSync(fileDirectory);
+
+    for (var i = 0; i < files.length; i++) {
+
+        var filePath = fileDirectory + "/" + files[i];
+        var newfilepath = newfileDirectory + "/" + files[i]
+        var filestr = JSON.parse(fs.readFileSync(filePath));
+        for (var item in filestr) {
+            var  inter=filestr[item];
+             for(var m in inter)
+             {
+                inter[m]=parseFloat(inter[m]);
+
+             }
+            fs.writeFileSync(newfilepath, JSON.stringify(filestr));
+        }
+
+    }
+} else {
+    console.log(fileDirectory + "  Not Found!");
+}
+```
 ## NodeJS获取命令行后面的参数
 假设有如下的命令行 node  test.js arg1 arg2 arg3，现在想在test.js中获取后面的参数arg1、arg2、arg3…
 
@@ -44,6 +93,51 @@ exec(cmd, function(err, stdout, stderr) {
 
 ## 入门资料
 [Node.js 入门](https://cnodejs.org/getstart)
+
+需要看的笔记
+如何通过饿了么 Node.js 面试
+https://github.com/ElemeFE/node-interview/tree/master/sections/zh-cn
+
+
+
+
+https://github.com/sqrthree/sqrthree.github.io/issues/8
+ 在 Chrome 开发者工具中调试 node.js 
+http://www.cnblogs.com/dolphinX/p/3485345.html
+
+
+
+
+Nodejs学习笔记（四）--- 与MySQL交互（felixge/node-mysql）
+nodejs中mysql用法
+
+node.js中mysql连接池的使用
+
+
+express  api中文    https://www.zybuluo.com/XiangZhou/note/208532
+
+
+nodejs  调试(待整理)
+
+https://github.com/node-inspector/node-inspector
+http://www.barretlee.com/blog/2015/10/07/debug-nodejs-in-command-line/
+http://www.cnblogs.com/moonz-wu/archive/2012/01/15/2322120.html
+
+安装
+
+`curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+https://www.uis.cc/2016/09/19/Installation-and-unloading-of-nodejs-on-Linux/`
+
+npm和node.js升级
+
+https://www.jianshu.com/p/e6b42bfcf633
+
+https://segmentfault.com/a/1190000009025883
+
+nodejs 卸载
+`# whereis node`
+`find / -name  node`
+https://www.jianshu.com/p/05740cc4db30
 ## 坑:
 ### nodejs 不支持 import
 `npm install --save-dev babel-cli`

@@ -2,24 +2,31 @@
 
 ## 常用命令
 
-### 安装pm2
+安装pm2
 `npm install -g pm2`
 
-### 启动应用
+启动应用
 `pm2 start app.js`
-### 列出所有应用
+
+ 列出所有应用
 `pm2 list`
-### 查看资源消耗
+
+查看资源消耗
 `pm2 monit`
-### 查看某一个应用状态
+
+查看某一个应用状态
 `pm2 describe [app id]`
-### 查看所有日志
+
+查看所有日志
 `pm2 logs`
-### 重启应用
+
+重启应用
 `pm2 restart [app id]`
-### 停止应用
+
+停止应用
 `pm2 stop [app id]`
-### 开启api访问
+
+开启api访问
 `pm2 web`
 
 
@@ -142,8 +149,74 @@ PM2是一款非常优秀的Node进程管理工具，它有着丰富的特性：�
 
 关于pm2的使用，主要还是运用于常驻脚本。 
 
- 
+## 相关配置
+以 [upload-fiddle](https://github.com/tangxinfa/upload-fiddle) 项目为例。
 
+统一配置其它脚本需要的环境变量 .bashrc
+
+```
+export PATH=`pwd`/node/bin:`pwd`/../node/bin:`pwd`/node_modules/pm2/bin:/usr/local/node/bin:$PATH
+export NODE_ENV=${NODE_ENV:-production}
+export NODE_CONFIG_DIR=`pwd`/config
+export APP_NAME="upload-fiddle"
+export APP_SCRIPT=`pwd`/src/index.js
+```
+
+### 启动脚本 start.sh
+
+```
+ #!/bin/bash
+
+source .bashrc
+pm2 --node-args="--harmony" -n "$APP_NAME" start "$APP_SCRIPT" -i 0 --watch "`pwd`/src/*.js"
+```
+
+### 停止脚本 stop.sh
+
+```
+ #!/bin/bash
+
+source .bashrc
+pm2 --node-args="--harmony" stop "$APP_NAME"
+```
+
+### 重启脚本 restart.sh
+
+```
+#!/bin/bash
+
+source .bashrc
+pm2 --node-args="--harmony" restart "$APP_NAME"
+```
+## 用法
+ - 启动
+
+`./start.sh`
+
+ - 停止
+
+`./stop.sh`
+
+ - 重启
+
+`./restart.sh`
+## 缺点
+ - 程序退出过程中的日志无法捕获？
+	不一定。使用 pm2 stop 会有同样的问题，但是pm2支持优雅退出（ pm2 gracefulReload ），此时不但退出过程中的日志能够正常捕获，而且可以实现服务0停机时间。
+
+ - 重启可能失败
+	是的。=pm2 restart= 并没有采用激进的措施（kill -9）确保旧进程结束。重现步骤：用gdb调试运行中的node进程（gdb node <PID>后不执行任何gdb命令），然后用pm2 restart重启服务，此时旧的进程杀不死，新的进程被创建。
+
+ - 允许程序同时启动多个实例
+	pm2对启动的程序进行了唯一性标识，但是它将启动的信息保存在了当前用户的home目录下（~/.pm2），所以使用其它帐号时还是有能够启动多个程序实例，对于这一点forever也存在同样的问题。
+
+	对于服务器来说，多帐号是常态，应该默认防止这种问题发生。
+
+## 程序写日志相关
+用c/c++写日志的时候我一般都会使用日志库，如：log4cxx 、zlog ，这些日志库容易使用而且很稳定，支持将日志写到文件或控制台，支持按大小、日期分割日志文件，支持限定日志文件数、占用空间。
+
+但是node.js下最好的写日志方式其实是将日志直接输出到错误输出（stderr），由 forever 、pm2 这样的后台服务监护工具来写日志文件。这是因为node.js做为一种动态语言，容易出现异常，特别是前期开发阶段，很多分支没有跑到，往往是写日志的语句出错，此时日志库是很难做到将异常时程序的调用堆栈写到日志文件中的，由台后服务监护工具来做能确保万无一失。 
+[后台服务监护工具：forever与pm2](http://blog.kankanan.com/article/540e53f0670d52a176d162a45de55177ff1a-forever-4e0e-pm2.html)
 
 ## 资料
 
