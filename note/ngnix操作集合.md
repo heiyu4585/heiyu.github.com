@@ -1,6 +1,40 @@
 #nginx相关操作
 mac装了两个nginx~
 
+
+## Nginx配置信息相关配置
+
+
+网站文件存放默认目录
+
+`/usr/share/nginx/html`
+
+网站默认站点配置
+
+`/etc/nginx/conf.d/default.conf`
+
+自定义Nginx站点配置文件存放目录
+
+`/etc/nginx/conf.d/`
+
+Nginx全局配置
+
+`/etc/nginx/nginx.conf`
+
+
+## mac 
+nginx log目录:
+
+`/usr/local/var/log/nginx`
+
+`/usr/local/etc/nginx`
+
+## nginx 配置 location
+[nginx配置location总结及rewrite规则写法](http://seanlook.com/2015/05/17/nginx-location-rewrite/)
+
+[nginx的location配置详解](https://blog.csdn.net/tjcyjd/article/details/50897959)
+
+
 ## CentOS 7 yum 安装 Nginx
 ### 1.添加Nginx到YUM源
 添加CentOS 7 Nginx yum资源库,打开终端,使用以下命令:
@@ -26,22 +60,6 @@ CentOS 7 开机启动Nginx
 `sudo systemctl enable nginx.service`
 更多systemctl命令可查看《[systemctl命令用法](http://www.9696e.com/archives/1253)》
 
-Nginx配置信息
-网站文件存放默认目录
-
-`/usr/share/nginx/html`
-
-网站默认站点配置
-
-`/etc/nginx/conf.d/default.conf`
-
-自定义Nginx站点配置文件存放目录
-
-`/etc/nginx/conf.d/`
-
-Nginx全局配置
-
-`/etc/nginx/nginx.conf`
 
 Nginx启动
 
@@ -167,6 +185,16 @@ http {
 - [ ] [搞懂nginx的rewrite模块](https://segmentfault.com/a/1190000008102599)
 - [ ] [实战开发一个Nginx扩展 (Nginx Module)](https://segmentfault.com/a/1190000009769143)
  - [x] 
+ 
+ 
+ 
+## 坑
+1. 2018/05/08 11:40:12 [error] 24296#0: *6201 kevent() reported that connect() failed (61: Connection refused) while connecting to upstream, client: 127.0.0.1, server: triage.allinmed.cn, request: "GET / HTTP/1.1", upstream: "http://10.0.1.128:8010/", host: "triage.allinmed.cn"
+bogon:nginx allin$ cd ..
+
+ 
+ 
+ 
  
  
  ## 当前配置

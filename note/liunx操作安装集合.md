@@ -1,5 +1,11 @@
 ## Linux软件安装目录
 
+##todolist
+
+- zsh mac  软连接配置
+- Mac下使用siege做系统压力测试  先安装 安装macports,用dmg方式：
+## 文件目录
+
 /usr：系统级的目录，可以理解为C:/Windows/，/usr/lib理解为C:/Windows/System32。
 /usr/local：用户级的程序目录，可以理解为C:/Progrem Files/。用户自己编译的软件默认会安装到这个目录下。
 /opt：用户级的程序目录，可以理解为D:/Software，opt有可选的意思，这里可以用于放置第三方大型软件（或游戏），当你不需要时，直接rm -rf掉即可。在硬盘容量不够时，也可将/opt单独挂载到其他磁盘上使用。
@@ -34,16 +40,16 @@ lsof -i :portnumber #portnumber要用具体的端口号代替，可以直接列�
 3.虚拟内存使用最多的前10个进程 
 
 `ps auxw|head -1;ps auxw|sort -rn -k5|head -10`
+
 ### ln
+
 linux环境下创建和删除软链接
 
 `ln -s /home/zhenwx/htccode-v1/    /home/zhenwx/htccode`
 
 建立/home/zhenwx/htccode-v1 的软连接
 
-
 linux下的软链接类似于windows下的快捷方式
-
 
 ln -s /home/zhenwx/htccode-v1/    /home/zhenwx/htccode     中的/home/zhenwx/htccode-v1/就是源文件，/home/zhenwx/htccode      是链接文件名,其作用是当进入/home/zhenwx/htccode     目录，实际上是链接进入了/home/zhenwx/htccode-v1/目录
 
@@ -56,9 +62,60 @@ ln -s /home/zhenwx/htccode-v1/    /home/zhenwx/htccode     中的/home/zhenwx/ht
 
 
 
-
-
 ### [文件夹操作](https://my.oschina.net/junn/blog/137479)
+
+
+### 远程推送代码
+```
+        //         //项目推送
+        //     console.log("====== 开始:项目推送 ========");
+        //     await dealCommand('rsync -avz -e ssh '+SSRPath+' root@192.168.1.172:/data/test/').then(msg=>{
+        //         console.log(msg)
+        //     }).catch(err=>{
+        //         console.log(err)
+        //     });
+        //     console.log("====== 完成:项目推送 ========");
+```
+###  删除文件夹
+```
+var rimraf = require('rimraf');
+rimraf('/some/directory', function () { console.log('done'); });
+```
+#### 删除文件时排除指定文件夹
+`ls|grep -v 'd1\|d2'|xargs rm -r`
+其他:
+
+```
+实现在 /home/user/ 目录中，除了 dir1 和 dir2 目录保留，将其它文件和目录都删除 
+查过 rm 命令没有 exclude 参数，我就用了 find 来做排除删除： 
+
+find -maxdepth 1 ! \( -path "/home/user/dir1" -o -path "/home/user/dir2" \) -exec rm -r {} \; 
+```
+
+[在删除某处文件时要排除一些目录或文件使用的命令，看看谁的命令更简洁](http://forum.ubuntu.com.cn/viewtopic.php?f=21&t=79442)
+
+### 循环查看文件
+
+ `tail -n 100 -f file.name`
+ 
+ 
+```
+ -f 循环读取
+
+-q 不显示处理信息
+
+-v 显示详细的处理信息
+
+-c<数目> 显示的字节数
+
+-n<行数> 显示行数
+
+--pid=PID 与-f合用,表示在进程ID,PID死掉之后结束. 
+
+-q, --quiet, --silent 从不输出给出文件名的首部 
+
+-s, --sleep-interval=S 与-f合用,表示在每次反复的间隔休眠S秒
+```
 
 ### 设置文件夹的读写权限:
 
@@ -374,6 +431,18 @@ JENKINS_PORT 是Jenkins的端口，默认端口是8080。
         sudo ln -s /usr/local/bin/npm /usr/bin/npm  
         sudo ln -s /usr/local/bin/node /usr/bin/node     
  
+ ###  sudo：抱歉，您必须拥有一个终端来执行 sudo 
+ 
+ ```
+ 方案1. ssh 添加 -t 选项
+
+方案2. 执行sudo的机器上，编辑 /etc/sudoer ,注释掉：
+
+
+Defaults    requiretty
+1
+Defaults    requiretty
+ ````
 
 ### [如何在CentOS 6.x/7.x上安装git及最新](https://my.oschina.net/antsky/blog/514586)
 

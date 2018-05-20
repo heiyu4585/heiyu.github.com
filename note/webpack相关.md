@@ -33,11 +33,46 @@ export PATH=$NODE_HOME:$PATH
 
 ps:可能需要重启
 
+
+### ERROR in static/js/vendor.xxxx.js from UglifyJs Unexpected token: punc webpack打包出错解决
+
+指定文件中包含es6 ,未通过babel转码在build文件夹中的webpack.base.conf.js文件中，做如下修改：
+将报错的文件添加resoleve下,通过babel转下码
+
+```
+{
+
+test: /\.js$/,
+
+loader: 'babel-loader',
+
+include: [resolve('src'),
+resolve('test'),resolve('node_modules/bootstrap-vue/lib')]
+
+}
+```
+
+参考:https://blog.csdn.net/wild46cat/article/details/78024796
+
+
+
+### (node:1784) DeprecationWarning: Chunk.modules is deprecated. Use Chunk.getNumberOfModules/mapModules/forEachModule/containsModule instead.
+
+原因：webpack3.0中extract-text-webpack-plugin插件不推荐使用Chunk.modules，插件index.js文件中
+解决:使用extract-text-webpack-plugin插件的时候报错,只是一个警告不影响工具使用，该问题还在修复中；
+
+
+详情：<https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/529>
+
+参考 : [webpack生成环境与开发环境配置](http://hedonglin.com/2017/07/02/webpack%E7%94%9F%E6%88%90%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/
+)
+
 ### liunx 下通过命令行命令去执行对应的命令时,总是找不到
 
 `写在npm scripts里才会去找node_modules里的webpack，直接命令行运行就是全局的`
 直接运行 webpack -v，显示的是全局安装的版本。
 局部版本运行，可以使用 npm run 脚本相关命令
+
 
 #### 绑定sudo
 
