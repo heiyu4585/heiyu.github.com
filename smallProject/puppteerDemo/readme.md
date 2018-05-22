@@ -1,22 +1,32 @@
+当前完成 快照 ,比对  ,抓取数据 
+
+todolist
+
+
+1.定时任务
+2.是否可以与微信相连
+3.puppteer 还能做哪些
+
+
 项目目标:
 
 重点是熟悉puppteer
 
+任务包括 添加url,快照,延迟,对比()
+
+以下不是重点
+
 1. 可以前台添加任务,并执行,
-2. 任务包括 添加url,快照,延迟,对比()
 3. 熟悉puppteer,并进行分享
-
-
-
-
 * egg 后端
 * vue 前端
 * 是否同构再议
-
 todolist:
-
 1. 熟悉mongod ,将项目改为mongod
 2. 了解egg的vue服务端渲染
+
+
+
 [基于webpack的前端工程解决方案和egg+vue服务端客户端渲染项目实践](http://hubcarl.github.io/blog/2017/04/15/webpack-project/) 不错
 
 [Puppeteer的入门教程和实践](https://www.jianshu.com/p/2f04f9d665ce)
