@@ -104,6 +104,8 @@ async function getDataFromJueJin(url, photoName) {
 
     // 延迟
     await page.waitFor(1000);
+// 等待指定元素
+//     await page.waitForSelector('h3 a');
 
     const targetData = await page.evaluate(() => {
         // return [...document.querySelectorAll('.result a')].filter(item => {
