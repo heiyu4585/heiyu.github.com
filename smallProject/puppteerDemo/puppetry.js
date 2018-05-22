@@ -72,6 +72,7 @@ function compare(base, compare) {
         console.log(data.misMatchPercentage)
         if (data.misMatchPercentage >= 0.1) {
             console.log("测试未通过")
+            // 此处可调用邮箱 等 通知
             // logUtil.debug('data.misMatchPercentage:', data.misMatchPercentage)
             // logUtil.debug('misMath source:', source)
             let r = data.getDiffImage().pack().pipe(fs.createWriteStream("./diff.png"));
