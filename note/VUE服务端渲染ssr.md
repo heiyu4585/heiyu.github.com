@@ -1,6 +1,38 @@
-# ssr项目梳理
+[TOC]
+# VUE服务端渲染ssr
 
-## 达到了什么效果
+## 遇到的问题
+#### 在ssr中使用puppeteer中报错 Can't resolve 'child_process' ,Module not found: Error: Can't resolve 'fs' in
+
+解决方案:
+
+  
+`In your webpack.config.*.js file, add the following to plugins after new webpack.DllPlugin({}):`
+
+[Module not found: Error: Can't resolve 'fs'](https://github.com/react-boilerplate/react-boilerplate/issues/1278)
+
+其他:
+
+`new webpack.IgnorePlugin(/your_package_name_here/)`. For me, it was yarn that was blowing stuff up.
+
+```
+node: {
+    fs: 'empty',
+    child_process: 'empty',
+  },
+```  
+
+```
+just put in package.json
+"browser":{
+"child_process": false
+}
+```
+[Module not found: Can't resolve 'child_process'](https://github.com/mikaelbr/node-notifier/issues/192)
+
+## ssr项目梳理
+
+### 达到了什么效果	
 1. 更快的获取内容
  
  	- 测速方式 :首次清除缓存,后续不清除
@@ -113,4 +145,5 @@ ssr/时间|-|-|-|-|-| -|平均数|
 };
 
 ```
+
 

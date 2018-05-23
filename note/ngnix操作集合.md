@@ -1,33 +1,35 @@
 #nginx相关操作
 mac装了两个nginx~
 
-
 ## Nginx配置信息相关配置
 
+网站文件存放默认目录`/usr/share/nginx/html`
 
-网站文件存放默认目录
+网站默认站点配置`/etc/nginx/conf.d/default.conf`
 
-`/usr/share/nginx/html`
+自定义Nginx站点配置文件存放目录`/etc/nginx/conf.d/`
 
-网站默认站点配置
+Nginx全局配置`/etc/nginx/nginx.conf`
 
-`/etc/nginx/conf.d/default.conf`
+## 相关目录
+ - nginx安装文件目录`/usr/local/Cellar/nginx`
 
-自定义Nginx站点配置文件存放目录
+- nginx配置文件目录`/usr/local/etc/nginx`
 
-`/etc/nginx/conf.d/`
+- config文件目录`/usr/local/etc/nginx/nginx.conf`
 
-Nginx全局配置
+- 系统hosts位置`/private/etc/hosts`
 
-`/etc/nginx/nginx.conf`
+- 看日志 `/usr/local/nginx/logs或/var/log/nginx`目录下找到`access.log`和`error.log`
 
+### mac 
+log目录:`/usr/local/var/log/nginx`
 
-## mac 
-nginx log目录:
+安装路径 `/usr/local/etc/nginx`
 
-`/usr/local/var/log/nginx`
+### 192.168.1.172
 
-`/usr/local/etc/nginx`
+安装路径 `# cd /usr/local/nginx/`
 
 ## nginx 配置 location
 [nginx配置location总结及rewrite规则写法](http://seanlook.com/2015/05/17/nginx-location-rewrite/)
@@ -72,29 +74,6 @@ Linux查看公网IP
 `ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'`
 
 
-
-
-
-## 相关目录
- - nginx安装文件目录
-
-`/usr/local/Cellar/nginx`
-
-- nginx配置文件目录
-
-`/usr/local/etc/nginx`
-
-- config文件目录
-
-`/usr/local/etc/nginx/nginx.conf`
-
-- 系统hosts位置
-
-`/private/etc/hosts`
-
-- 看日志 
-
-`/usr/local/nginx/logs或/var/log/nginx`目录下找到`access.log`和`error.log`
 ## nginx常用命令
 
 - nginx  #启动nginx
@@ -175,8 +154,41 @@ http {
    add_header Access-Control-Allow-Methods GET,POST,OPTIONS;  
   ......  
  }  
- ```
- 
+```
+
+## http 强转 https
+#### error code 497
+
+```
+[html] view plain copy
+497 - normal request was sent to HTTPS  
+```
+
+#### 解释：当此虚拟站点只允许https访问时，当用http访问时nginx会报出497错误码
+
+#### 思路
+利用error_page命令将497状态码的链接重定向到https://test.com这个域名上
+
+####  配置
+
+```
+server {  
+    listen       192.168.1.11:443;  #ssl端口  
+    listen       192.168.1.11:80;   #用户习惯用http访问，加上80，后面通过497状态码让它自动跳到443端口  
+    server_name  test.com;  
+    #为一个server{......}开启ssl支持  
+    ssl                  on;  
+    #指定PEM格式的证书文件   
+    ssl_certificate      /etc/nginx/test.pem;   
+    #指定PEM格式的私钥文件  
+    ssl_certificate_key  /etc/nginx/test.key;  
+      
+    #让http请求重定向到https请求   
+    error_page 497  https://$host$uri?$args;  
+}  
+```
+ [nginx强制使用https访问(http跳转到https)](https://blog.csdn.net/wzy_1988/article/details/8549290)
+ [Nginx的https配置记录以及http强制跳转到https的方法梳理](https://cloud.tencent.com/developer/article/1026994)
  
  # todoList
  
@@ -184,7 +196,7 @@ http {
 - [ ] [Nginx 反向代理解决前后端联调跨域问题](https://cloud.tencent.com/developer/article/1075355)
 - [ ] [搞懂nginx的rewrite模块](https://segmentfault.com/a/1190000008102599)
 - [ ] [实战开发一个Nginx扩展 (Nginx Module)](https://segmentfault.com/a/1190000009769143)
- - [x] 
+- [x] 
  
  
  
@@ -246,9 +258,9 @@ http {
  
  
  
- ## 默认配置
+## 默认配置
  
- ``` 
+``` 
 #user  nobody;
 worker_processes  1;
 
@@ -479,6 +491,155 @@ location ~ ^/ {
     #error_log   /usr/local/nginx/logs/error.log;
 }
 
+```
+
+## 服务器配置备份
+
+### 192.168.1.172
+
+安装路径 `# cd /usr/local/nginx/`
+
+#### nginx.conf
 
 ```
+#nginx.conf
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+        upstream dynamic-web {
+                server   192.168.1.54:8081;
+        }
+    include /usr/local/nginx/conf/vhost/*.conf;
+}
+```
+
+
+#### fenzhen_allinmed.conf
+
+```
+server
+  {
+    listen      80;
+    listen      443;
+    server_name triage.allinmed.cn;
+    ssl on;
+ssl_certificate ../sslkey/214249009910207.pem;
+ssl_certificate_key ../sslkey/214249009910207.key;
+ssl_session_timeout 5m;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_ciphers ALL:!DH:!EXPORT:!RC4:+HIGH:+MEDIUM:-LOW:!aNULL:!eNULL;
+ssl_prefer_server_ciphers   on;
+   # rewrite ^(.*)$  https://$host$1 permanent;
+    location ~ ^/apple-app-site-association {
+                default_type application/pkcs7-mime;
+                proxy_pass http://127.0.0.1:8010;
+                proxy_set_header Host  $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		}
+    
+	location ~ ^/ {
+
+                 proxy_pass http://127.0.0.1:8010;
+                  proxy_set_header Host  $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                }
+
+
+   	location ~ ^/plugins/{
+                 # proxy_pass http://127.0.0.1:8010;
+                  proxy_pass http://dynamic-web;
+                  proxy_set_header Host  $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                }
+
+
+    	location ~* \.(htm|html|js|gif|ico|json|swf|css|ftl|vm|png|jpg|map|xml|cur|mp3)$ {
+#	proxy_pass http://dynamic-web;
+	proxy_pass http://127.0.0.1:8010;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For   $proxy_add_x_forwarded_for;
+        client_max_body_size    20m;
+        client_body_buffer_size 128k;
+        proxy_connect_timeout   300;
+        proxy_send_timeout      300;
+        proxy_read_timeout      300;
+        proxy_buffer_size       32k;
+        proxy_buffers           4 64k;
+        proxy_busy_buffers_size 64k;
+        proxy_temp_file_write_size 128k;
+
+#	if ($request_uri ~* (^\/|\.html|)$) {
+#	add_header    Cache-Control no-cache;
+#	}
+#        expires 24h;
+       }
+    	location ~ ^/call/qiniu/storage/{
+        proxy_pass http://dynamic-web;
+        proxy_set_header Host  $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        client_max_body_size    2G;
+        proxy_connect_timeout   3000;
+        proxy_send_timeout      3000;
+        proxy_read_timeout      3000;
+        client_body_buffer_size 128k;
+       }
+  
+    location ~ ^/call/{
+        proxy_pass http://dynamic-web;
+        proxy_set_header Host  $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	client_max_body_size    20m;
+	proxy_connect_timeout   300;
+        proxy_send_timeout      300;
+        proxy_read_timeout      300;
+        client_body_buffer_size 128k;
+       } 
+
+     location ~ .*\.(php|jsp|cgi)?$ {
+	proxy_set_header Host $host;
+	proxy_set_header X-Real-IP $remote_addr;
+	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_pass http://dynamic-web;
+	}
+    access_log  /var/log/nginx/access.log;   
+    error_log   /var/log/nginx/error.log;   
+}   
+  
+```
+
+
+
 

@@ -1,5 +1,8 @@
 #pm2 相关
 
+项目中的应用
+ `pm2 start server.js --name fenzhen_allinmed -i max`
+
 ## 常用命令
 
 安装pm2
@@ -80,7 +83,7 @@ pm2 startOrRestart /file/path/ecosystem.json : 通过配置文件启动服务
         }
     ]
  }
- ```
+```
  
 上述采用cluster模式启动了4个服务进程；如果服务占用的内存超过300M，会自动进行重启。
 
@@ -154,12 +157,14 @@ PM2是一款非常优秀的Node进程管理工具，它有着丰富的特性：�
 
 统一配置其它脚本需要的环境变量 .bashrc
 
+
 ```
 export PATH=`pwd`/node/bin:`pwd`/../node/bin:`pwd`/node_modules/pm2/bin:/usr/local/node/bin:$PATH
 export NODE_ENV=${NODE_ENV:-production}
 export NODE_CONFIG_DIR=`pwd`/config
 export APP_NAME="upload-fiddle"
 export APP_SCRIPT=`pwd`/src/index.js
+
 ```
 
 ### 启动脚本 start.sh
@@ -169,6 +174,8 @@ export APP_SCRIPT=`pwd`/src/index.js
 
 source .bashrc
 pm2 --node-args="--harmony" -n "$APP_NAME" start "$APP_SCRIPT" -i 0 --watch "`pwd`/src/*.js"
+
+
 ```
 
 ### 停止脚本 stop.sh

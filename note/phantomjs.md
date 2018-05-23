@@ -147,3 +147,13 @@ page.open(url);
 
 ### harviewer
 https://www.bstester.com/2015/12/harviewer-building
+
+
+
+
+#### 中文乱码:
+解决方法:
+`phantom.outputEncoding="gb2312";`
+https://github.com/ariya/phantomjs/issues/11743
+
+[Phantomjs 使用说明](http://www.jianshu.com/p/15cba843bb55)
