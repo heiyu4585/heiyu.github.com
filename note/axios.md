@@ -1,4 +1,76 @@
+[TOC]
 # axios
+## axios请求JSON问题详解
+
+  -  当参数是JSON对象时，默认的Content-Type是application/json。
+  -  
+  ```
+	axios.post('/user', {
+
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  ```
+  
+此时传递的参数是Request Payload格式`{firstName:"Fred",lastName:"Flintstone"}`
+
+```
+如果出现No 'Access-Control-Allow-Origin' header is present on the requested resource的错误，则是跨域问题。本人喜欢直接配置服务器来解决跨域：例如Nginx配置：Nginx配置跨域请求
+```
+  2. 当参数是`JSON字符串`时，默认的Content-Type是application/x-www-form-urlencoded。
+
+```
+axios.post('/user', JSON.stringify({
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  }))
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+```
+此时传递的参数是Form Data格式`key : value：`
+
+```
+{"firstName":"Fred","lastName":"Flintstone"}:
+```
+如上。其实这是一个无效的数据，key为`{"firstName":"Fred","lastName":"Flintstone"}`，value为空。
+  3. 要想使用application/x-www-form-urlencoded格式，需要进行数据转换，虽然有两种方式`URLSearchParams`和`qs`两种方式。我更喜欢使用`qs`库的方式，代码如下：
+  
+```
+axios.interceptors.request.use((req) => {
+    if (req.method === 'post') {
+     req.data = qs.stringify(req.data);
+    }
+    return req;
+}, (error) => Promise.reject(error));
+```
+
+之后使用axios的时候，只需要传递json对象就可以：
+
+```
+axios.post('/user', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+ 
+```
+http://blog.csdn.net/qq_27008807/article/details/78945990
 
 ## axios请求超时,设置重新请求的完美解决方法
 
@@ -165,3 +237,25 @@ export default axios
 ```
 
 [axios拦截设置和错误处理](https://blog.csdn.net/sjn0503/article/details/74729300)
+
+## 参考资料
+[axios全攻略](https://ykloveyxk.github.io/2017/02/25/axios%E5%85%A8%E6%94%BB%E7%95%A5/)
+
+[Vue-cli proxyTable 解决开发环境的跨域问题](https://www.jianshu.com/p/ee72c3d7f233?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+)
+
+[Vue2.0总结———vue使用过程常见的一些问题](https://www.cnblogs.com/yufann/p/Vue-Node10.html)
+
+[[总结]vue开发常见知识点及问题资料整理（持续更新）](http://www.zhimengzhe.com/Javascriptjiaocheng/392662.html)
+
+[官方:vueRouter](https://router.vuejs.org/zh-cn/advanced/navigation-guards.html)  
+
+
+
+
+
+
+
+
+
+
