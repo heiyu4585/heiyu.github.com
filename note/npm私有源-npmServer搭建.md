@@ -266,6 +266,22 @@ npm config edit
 
 ## 以下内容不投稿
 
+1.- 404 Not found @XXX/XX 
+
+![npm-pack-404](http://p7b4glo0g.bkt.clouddn.com/npm-package-404.jpg)
+
+当前问题:私有源安装安装不成功
+原因:项目中存在npm私有源,安装时使用找不到唯医的私有源,使用npmserver私有源 又找不到其他的私有源
+
+出现私有包安装404时的解决方法: 
+
+先用临时源安装唯医npmserver私有包
+`npm install @allin/wap-share  --save --registry http://192.168.1.149:7001 --scope=@allin`
+
+在安装其余包
+
+
+
 
 3. package.json配置详解:
 
@@ -357,6 +373,7 @@ npm config edit
 
 
 ## 遇到的问题
+
 
 - fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
      警告如下：
