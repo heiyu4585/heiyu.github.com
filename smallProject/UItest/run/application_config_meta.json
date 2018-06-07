@@ -1,0 +1,296 @@
+{
+  "keys": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js",
+  "middleware": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js",
+  "view": {
+    "defaultViewEngine": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js",
+    "mapping": {
+      ".tpl": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js"
+    },
+    "root": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view/config/config.default.js",
+    "cache": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view/config/config.default.js",
+    "defaultExtension": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view/config/config.default.js"
+  },
+  "static": {
+    "prefix": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js",
+    "dir": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-static/config/config.default.js",
+    "dynamic": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-static/config/config.default.js",
+    "preload": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-static/config/config.default.js",
+    "buffer": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-static/config/config.default.js",
+    "maxFiles": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-static/config/config.default.js"
+  },
+  "news": {
+    "pageSize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js",
+    "serverUrl": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.default.js"
+  },
+  "mysql": {
+    "client": {
+      "host": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+      "port": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+      "user": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+      "password": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+      "database": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js"
+    },
+    "app": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+    "agent": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/config/config.dev.js",
+    "default": {
+      "database": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-mysql/config/config.default.js",
+      "connectionLimit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-mysql/config/config.default.js"
+    }
+  },
+  "session": {
+    "maxAge": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-session/config/config.default.js",
+    "key": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-session/config/config.default.js",
+    "httpOnly": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-session/config/config.default.js",
+    "encrypt": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-session/config/config.default.js"
+  },
+  "security": {
+    "domainWhiteList": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+    "protocolWhiteList": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+    "defaultMiddleware": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+    "csrf": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "useSession": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "ignoreJSON": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "cookieName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "sessionName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "headerName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "bodyName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "queryName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "xframe": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "hsts": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "maxAge": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "includeSubdomains": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "dta": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "noopen": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "nosniff": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "xssProtection": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "csp": {
+      "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "policy": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js",
+      "checkAddress": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+    }
+  },
+  "helper": {
+    "shtml": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-security/config/config.default.js"
+  },
+  "jsonp": {
+    "limit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-jsonp/config/config.default.js",
+    "callback": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-jsonp/config/config.default.js",
+    "csrf": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-jsonp/config/config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-onerror/config/config.default.js",
+    "appErrorFilter": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-onerror/config/config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-i18n/config/config.default.js",
+    "dirs": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-i18n/config/config.default.js",
+    "queryField": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-i18n/config/config.default.js",
+    "cookieField": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-i18n/config/config.default.js",
+    "cookieMaxAge": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-i18n/config/config.default.js"
+  },
+  "watcher": {
+    "type": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-watcher/config/config.default.js",
+    "eventSources": {
+      "default": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-watcher/config/config.default.js",
+      "development": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-watcher/config/config.default.js"
+    }
+  },
+  "multipart": {
+    "autoFields": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "defaultCharset": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "fieldNameSize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "fieldSize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "fields": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "fileSize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "files": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "fileExtensions": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js",
+    "whitelist": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-multipart/config/config.default.js"
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-schedule/config/config.default.js",
+      "file": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-schedule/config/config.default.js"
+    }
+  },
+  "logrotator": {
+    "filesRotateByHour": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "hourDelimiter": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "filesRotateBySize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "maxFileSize": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "maxFiles": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "rotateDuration": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js",
+    "maxDays": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-logrotator/config/config.default.js"
+  },
+  "nunjucks": {
+    "autoescape": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view-nunjucks/config/config.default.js",
+    "throwOnUndefined": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view-nunjucks/config/config.default.js",
+    "trimBlocks": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view-nunjucks/config/config.default.js",
+    "lstripBlocks": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view-nunjucks/config/config.default.js",
+    "cache": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg-view-nunjucks/config/config.default.js"
+  },
+  "env": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "name": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "proxy": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "protocolHeaders": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "ipHeaders": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "hostHeaders": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "pkg": {
+    "name": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "version": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "description": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "private": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "dependencies": {
+      "egg": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-mysql": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-scripts": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-view-nunjucks": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "node-resemble-js": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "nodemailer": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "puppeteer": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "devDependencies": {
+      "autod": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "autod-egg": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-bin": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-ci": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "egg-mock": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "eslint": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "eslint-config-egg": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "webstorm-disable-index": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "engines": {
+      "node": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "scripts": {
+      "start": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "stop": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "dev": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "debug": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "test": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "test-local": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "cov": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "lint": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "ci": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "autod": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "ci": {
+      "version": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "repository": {
+      "type": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "url": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "author": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "license": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "baseDir": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "HOME": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "rundir": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "dump": {
+    "ignore": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "notFound": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "sitefile": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "middlewares": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "httpClient": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "bodyParser": {
+    "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "formLimit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "jsonLimit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "strict": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "queryString": {
+      "arrayLimit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "depth": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "parameterLimit": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    }
+  },
+  "logger": {
+    "dir": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "env": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "level": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "consoleLevel": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "disableConsoleAfterReady": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "outputJSON": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "buffer": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "appLogName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "coreLogName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "agentLogName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "errorLogName": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "coreLogger": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "allowDebugAtProd": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "dnsCacheMaxLength": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "dnsCacheMaxAge": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "request": {
+      "timeout": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "freeSocketKeepAliveTimeout": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "freeSocketKeepAliveTimeout": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+    "logging": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "coreMiddleware": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "workerStartTimeout": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "port": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js",
+      "hostname": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+    }
+  },
+  "clusterClient": {
+    "responseTimeout": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+  },
+  "onClientError": "/Users/allin/workspaces/heiyu4585.github.com/smallProject/UItest/node_modules/egg/config/config.default.js"
+}
