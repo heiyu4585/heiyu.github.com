@@ -125,6 +125,46 @@
 
 
 ## 坑
+
+### Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'arthas_local.logTable.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+
+使用
+```
+/*按照siteid查询分类总数 按照pageID进行分类*/
+
+pageCategoryOrderByPageIdTotal: "SELECT COUNT(categoryTable.id) as total FROM (select id from `performance_main_log` as logTable where logTable.site_id = ? and UNIX_TIMESTAMP(logTable.create_time)*1000 BETWEEN ? and ? GROUP BY sps_page_id) categoryTable",
+ 
+ // 改为
+ 
+SELECT COUNT(categoryTable.id) as total FROM ( select ANY_VALUE(id) as id from `performance_main_log` as logTable where logTable.site_id = ?  and UNIX_TIMESTAMP(logTable.create_time)*1000 BETWEEN ? and ?  GROUP BY sps_page_id ) categoryTable,
+   
+```
+
+资料:
+
+以下面的例子來說，如果 name 是 primary key 或是 unique NOT NULL column，GROUP 時 address 可以對映到唯一 name。反之，將造成一個 address 會找到超過一個 name ，這種情況（nonaggregated columns）是被禁止的。
+
+```mysql> SELECT name, address, MAX(age) FROM t GROUP BY name;
+> ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP
+BY clause and contains nonaggregated column 'mydb.t.address' which
+is not functionally dependent on columns in GROUP BY clause; this
+is incompatible with sql_mode=only_full_group_by
+```
+
+#### 解法一：ANY_VALUE()
+
+`mysql> SELECT name, ANY_VALUE(address), MAX(age) FROM t GROUP BY name;`
+
+#### 解法二：關閉 ONLY_FULL_GROUP_BY mode
+```
+mysql> set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+mysql> set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+Note.
+```
+一對多的資料，展開後會出現多筆，但只要回傳一筆，原本的版本可以對 id 進行 GROUP。但是新版的 MYSQL 禁止這種 GROUP 0.0”
+
+[在 MacOS 上安裝/更新 MySQL 筆記](http://v123582.github.io/blog/2016/01/26/%E5%9C%A8mac-%E6%9B%B4%E6%96%B0-mysql-%E7%AD%86%E8%A8%98/)
+
 ### Access denied for user 'XX'@'xx.xx.x.xx' (using password: YES)
 
 把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。

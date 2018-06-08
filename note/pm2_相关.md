@@ -5,33 +5,29 @@
 
 ## 常用命令
 
-安装pm2
-`npm install -g pm2`
+```
+npm install -g pm2             # 安装pm2
 
-启动应用
-`pm2 start app.js`
+pm2 start app.js             # 启动应用
 
- 列出所有应用
-`pm2 list`
+pm2 list             # 列出所有应用
+ 
+pm2 monit             # 查看资源消耗
 
-查看资源消耗
-`pm2 monit`
+pm2 describe [app id]         # 查看某一个应用状态
+pm2 logs  #查看所有日志
+pm2 start app.js [-i 4]         # 托管运行app.js, 可通过-i指定进程数，也可传递'-i max'
+pm2 start app.js --name app     # 命名启动进程
+pm2 list                        # 显示所有进程状态
+pm2 monit                       # 监视所有进程的资源使用状况
+pm2 logs                        # 显示所有进程日志
+pm2 stop [all | name | id]      # 停止全部或者指定name或id的进程
+pm2 restart [all | name | id]   # 重启全部或者指定name或id的进程
+pm2 reload [all | name |id]     # 0秒停机重载进程
+pm2 delete [all | name |id]     # 删除全部或者指定name或id的进程
 
-查看某一个应用状态
-`pm2 describe [app id]`
-
-查看所有日志
-`pm2 logs`
-
-重启应用
-`pm2 restart [app id]`
-
-停止应用
-`pm2 stop [app id]`
-
-开启api访问
-`pm2 web`
-
+pm2 web                      #开启api访问
+```
 
 ### 预定义运行配置文件
 我们可以预定义一个配置文件，然后制定运行这个配置文件，比如我们定义一个文件process.json，内容如下：
