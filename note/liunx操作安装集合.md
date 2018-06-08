@@ -91,6 +91,11 @@ http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/scp.html
 var rimraf = require('rimraf');
 rimraf('/some/directory', function () { console.log('done'); });
 ```
+
+### 退出终端后,npm start 终端
+
+nohup npm run start &  启动，然后按任意键，如果没有出现 exit 表示启动成功，最后退出终端的时候使用 exit 断开链接，不要直接关闭终端，这点切记。
+
 #### 删除文件时排除指定文件夹
 `ls|grep -v 'd1\|d2'|xargs rm -r`
 其他:
@@ -103,6 +108,17 @@ find -maxdepth 1 ! \( -path "/home/user/dir1" -o -path "/home/user/dir2" \) -exe
 ```
 
 [在删除某处文件时要排除一些目录或文件使用的命令，看看谁的命令更简洁](http://forum.ubuntu.com.cn/viewtopic.php?f=21&t=79442)
+
+### 复制文件夹时,排除指定目录
+这个需求不要用cp命令了，因为那牵扯到太多的正则表达式，太复杂。简单一点的方法是用rsync命令。
+
+用法示例：
+
+`rsync -av --progress a/ b/ --exclude 3/`
+
+可以有多个--exclude参数，
+
+`rsync -av --progress a/ b/ --exclude 3/ --exclude 2/ `
 
 ### 循环查看文件
 

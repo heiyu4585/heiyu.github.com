@@ -1,12 +1,12 @@
-# npm私有源-npmServer搭建
+# npm私有仓库-npmServer搭建
 
 ## npm源是什么
 
 就是下载需要依赖包的服务器地址，默认是` npm ---- https://registry.npmjs.org/`
-国内的小伙伴会发现，国外的源速度太慢，于是就会找到国内的淘宝源
+国内的小伙伴会发现，国外的源速度太慢， 于是就会找到国内的淘宝源
 `taobao - https://registry.npm.taobao.org/`
 
-## npm私有源-npmServer的意义
+## npm私仓库-npmServer的意义
 
 公司出于自身隐私保护需要，不想把自己的代码开源到包管理区，但是又急需一套完整包管工具，来管理越来越多的组件、模块和项目。
 
@@ -23,7 +23,7 @@
 安装 | 复杂 | 简单
 配置  |较多，适合个性化需求较多的  |较少
 配置——修改默认镜像  |不支持 | 支持
-存储 | mysql | 文件格式，直观
+存储 | mysql等 | 文件格式，直观
 服务托管  |默认后台运行 | pm2, doker, forever
 文档资料  |较多 | 较少
 
@@ -31,8 +31,12 @@
 
 ## cnpm安装(服务端)
 ### 下载及安装依赖
-$git clone git://github.com/cnpm/cnpmjs.org.git 
-$cd ./cnpmjs.org && npm install 
+
+```
+	$ git clone git://github.com/cnpm/cnpmjs.org.git
+	$ cd ./cnpmjs.org 
+   & npm install
+```
 
 注意:不要下载到alpha版本
 
@@ -77,10 +81,13 @@ cnpm 默认的两个访问端口是：
 
 ### 启动
 
-开发环境 `npm run dev`
-生产环境  `npm start `
-查看状态 `npm run status`
-停止服务 `npm run stop`
+开发环境 `$ npm run dev`
+
+生产环境  `$ npm start `
+
+查看状态 `$ npm run status`
+
+停止服务 `$ npm run stop`
 
 ### 访问
 
@@ -94,22 +101,22 @@ cnpm 默认的两个访问端口是：
   
 - 查看当前包信息
 
- - `> cnpm info`
+ - `$ npm info`
  - http://127.0.0.1/package/@allin/buttonTest
  
 ## 客户端配置:
 
 ### 操作流程
  
-1.发布私有包流程
+#### 发布私有包流程
 
 - 切换源(执行一次即可)
    
-   `npm config set registry http://127.0.0.1:7001`
+   `$ npm config set registry http://127.0.0.1:7001`
 
 - 添加用户(第一次发布包：)
   
-  `npm adduser`
+  `$ npm adduser`
     
     输入姓名:***
     
@@ -119,7 +126,7 @@ cnpm 默认的两个访问端口是：
 
 - 登陆 (非第一次发布包：)
     
-    `npm login --registry http://127.0.0.1:7001 --scope=@allin`
+    `$ npm login --registry http://127.0.0.1:7001 --scope=@allin`
     
     输入姓名:***
     
@@ -129,28 +136,29 @@ cnpm 默认的两个访问端口是：
 
 - 发布私有包
     
-`npm publish`
+	`$ npm publish`
     
- 3.下载私有包
+- 下载私有包
 
-`npm install @allin/button  --save`
+	`$ npm install @allin/button  --save`
 
-  也可以使用临时源下载私有包  
-`npm install @allin/amed  --save --registry http://127.0.0.1:7001 --scope=@allin`
+  也可以使用临时源下载私有包
+  
+	`$ npm install @allin/amed  --save --registry http://127.0.0.1:7001 --scope=@allin`
 
-4.下载共有包(因为npmServer对于非私有包会转发到taobao源)
+- 下载公有包(npmServer对于非私有包会转发到taobao源)
 
-`npm install vue  --save`
+	`$ npm install vue  --save`
 
 
 #### 版本号控制 
 
 ```
-*: 任意版本
-1.1.0: 指定版本
-~1.1.0: 1.1.0 <= 版本 < 1.2.0
-^1.1.0: 1.1.0 <= 版本 < 2.0.0
-latest：安装最新版本。
+	*: 任意版本
+	1.1.0: 指定版本
+	~1.1.0: 1.1.0 <= 版本 < 1.2.0
+	^1.1.0: 1.1.0 <= 版本 < 2.0.0
+	latest：安装最新版本。
 ```
 
 #### 更新机制
@@ -162,31 +170,33 @@ latest：安装最新版本。
     
 - 必须包含的文件
 
-        package.json
-        readme.md
-
+```
+	-package.json
+	-readme.md
+```
 ##  常见问题
+
 - 发布失败
 
 ```
-#package.json 
-"name": "@allin/amed",(此处要注意 添加@allin,allin为唯医网命名,请根据自身情况命名为其他)
+	#package.json 
+	"name": "@allin/amed",(此处要注意 添加@allin,allin为唯医网命名,请根据自身情况命名为其他)
 ```
 
 - 设置默认发布至私有源
 
 ```
-#package.json
-"publishConfig" : { //这个配置是会在模块发布时用到的一些值的集合。如果你不想模块被默认被标记为最新的，或者默认发布到公共仓库，可以在这里配置tag或仓库地址。
-  	    "registry" : "http://127.0.0.1:7001"
-    } 
-    
+	#package.json
+	"publishConfig" : { //这个配置是会在模块发布时用到的一些值的集合。如果你不想模块被默认被标记为最新的，或者默认发布到公共仓库，可以在这里配置tag或仓库地址。
+	  	    "registry" : "http://127.0.0.1:7001"
+	 } 
+	    
 ```
--  npm publish  时要打开该模块的模块路径
+-  npm publish  时要在命令行打开该模块的模块路径
 
-`cd allin/amed`
-
-`npm publish`
+	`$ cd allin/amed`
+	
+	`$ npm publish`
 
 
 -  npm publish
@@ -203,36 +213,35 @@ latest：安装最新版本。
 ```
 2. 如何修改为自己的私有包增加共同管理者
 
-`npm owner add yaoqiao @allin/buttonli`
+`$ npm owner add XXX @allin/buttonli`
 
 ```
-npm author add dead_horse cnpmjs.org
+$ npm author add dead_horse cnpmjs.org
 
-
-npm owner ls <package name>
-npm owner add <user> <package name>
-npm owner rm <user> <package name>
+$ npm owner ls <package name>
+$ npm owner add <user> <package name>
+$ npm owner rm <user> <package name>
 
 ```
 
 - 恢复为淘宝源
 
-`cnpm config set registry https://registry.npm.taobao.org`
+	`$ npm config set registry https://registry.npm.taobao.org`
 
 - 恢复为默认npm源
 
-`cnpm config set registry https://registry.npmjs.org/`
+	`$ npm config set registry https://registry.npmjs.org/`
 
 - 如何清除已设置的npm淘宝镜像
 
 ```
-npm config delete registry
-npm config delete disturl
+	$ npm config delete registry
+	$ npm config delete disturl
 ```
 或者 
 
 ```
-npm config edit
+	$ npm config edit
 ```
 
 找到淘宝那两行,删除
@@ -242,22 +251,22 @@ npm config edit
 ## 周边知识点
 
 1. npm恢复为淘宝源
-`cnpm config set registry https://registry.npm.taobao.org`
+	`$ npm config set registry https://registry.npm.taobao.org`
 
 2. npm恢复为默认npm源
- `cnpm config set registry https://registry.npmjs.org/`
+	 `$ npm config set registry https://registry.npmjs.org/`
 
-3. 推荐nrm切换源
+3. 推荐使用nrm切换源
 
 ## 参考
 
 
 [跟我一起部署和定制 CNPM——基础部署](https://xcoder.in/2016/07/09/lets-cnpm-base-deploy/)
-
+	
 [CNPM搭建私有的NPM服务](http://blog.fens.me/nodejs-cnpm-npm/)
-
+	
 [cnpm官方文档](https://github.com/cnpm/cnpm)
-
+	
 [NPM 相关知识](https://github.com/wy-ei/notebook/issues/42)
 
 
