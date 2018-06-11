@@ -118,6 +118,12 @@ fs.readFile(csvFilePath, 'utf-8', function (err, data) {
             // console.log("finalResult================")
             // console.log(finalResult);
             writeFile("finalResult.json", finalResult);
+
+            //todo 以12306为底,排除 东南西北后 合并库文件至 12306
+            // 出现 未 命中的情况怎么办
+            //只提供未处理的数据即可,反馈结果即可
+
+
         })
 });
 
