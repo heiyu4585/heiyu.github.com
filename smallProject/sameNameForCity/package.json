@@ -1,0 +1,15 @@
+{
+  "name": "sameNameForCity",
+  "version": "1.0.0",
+  "description": "* 使用库 https://github.com/Keyang/node-csvtojson\r  * 数据源 https://github.com/eduosi/district",
+  "main": "12306.json.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.3"
+  }
+}
