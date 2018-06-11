@@ -1,45 +1,36 @@
 # todolist
 
-## ssr项目
-## 需要注意的点
-1.并不是简单的套用即可.ssr存在一些前后端不通用的代码,插件,全局变量,等.比如swiper
+
+## 拼音按首字母排序
+[只需两步快速获取微信小程序源码](https://juejin.im/post/5b0e431f51882515497d979f)
+
+[12306车站代码（生成json文件](https://www.jianshu.com/p/fd42fde4f776)
+
+[全国省市县数据库](https://github.com/eduosi/district)
+
+
+
+
+
+
 
 ## ssr项目
-1. loadtest
-1. 拉取第一个地方,然后 复制到 serverrender项目中, 避免混乱
-1. 是否考虑压测
-1. node启用进程后,本身如何退出
-1. nginx配置https
-1. 梳理项目整体思路
-完成流程图及原型图
-2. 构建流程开发
-3. arthas配置中心开发
-      修改/构建/重启/项目管理/记录相关
-4. 服务器环境配置
+
+3. arthas配置中心开发  修改/构建/重启/项目管理/记录相关
 5. nginx 动静分离
 6. 语法分析/编译  ast
-7. barbel 报错修改
+
 8. 完成git拉取及jinkens构建功能(为骨科pc端开启jenkisjob  (或者其他切换方式))
-9. 日志保存功能
-10. 前期以host切换环境,后期直接更改代码,否则
-1. 开发整体偏完成核心功能后,稳定性及可行性的,顾先完成主体功能后,进行压测
+
+1. 是否考虑压测 loadtest,开发整体偏完成核心功能后,稳定性及可行性的,顾先完成主体功能后,进行压测
 开发周边功能:业务线在arthas维护预取接口等
-6. 如何控制多个项目的修改,重启等.
-   --配置命令行同步代码,如果可行,
+
 
 ### 遇到的问题:
 1. 配置文件比较死,格式化也会造成服务挂
-2. 如果在git clone 的项目中再次使用 git clone 子项目无法被add进 副项目
- 通过node复制一份
-3. 解决Linux关闭终端(关闭SSH等)后运行的程序自动停止
-远程通过命令行启动
-4  Node#moveTo was deprecated. Use Container#append.
+4.  Node#moveTo was deprecated. Use Container#append.
 5. 首页中调用的js和css 因为转发到8013端口,在80端口上没有,当前做法是复制过去.
-
 4. h5多页面 会把其他的router引入,不停的跳转,暂未找到原因
-VueAwesomeSwiper  报错
-fastclick 报错
-
 
 ### 以后需跟进的问题:
 1. linux cp -r 如何复制隐藏文件
@@ -49,7 +40,24 @@ fastclick 报错
 8. 接口出现不能访问的问题时,服务整个挂了 ,应该是未做空值处理
 
 ### 已完成
-
+>1. nginx配置https
+>2. 构建流程开发
+>10. 前期以host切换环境,后期直接更改代码,否则
+>1. 梳理项目整体思路   完成流程图及原型图
+>1. 如何控制多个项目的修改,重启等.
+   --配置命令行同步代码,如果可行,
+>2. 如果在git clone 的项目中再次使用 git clone 子项目无法被add进 副项目
+ - 通过node复制一份  通过先拉取项目 通过node复制时,排除.git目录实现
+>1. 拉取第一个地方,然后 复制到 serverrender项目中, 避免混乱
+>1. 日志保存功能
+>7. barbel 报错修改
+>1.VueAwesomeSwiper  报错  fastclick 报错
+>4. 服务器环境配置
+>1. node启用进程后,本身如何退出
+ -  pm2/forever/
+ - nohup npm run start & 启动，然后按任意键，如果没有出现 exit 表示启动成功，最后退出终端的时候使用 exit 断开链接，不要直接关闭终端，这点切记。
+ -  解决Linux关闭终端(关闭SSH等)后运行的程序自动停止
+远程通过命令行启动
 > 3. ~arthas ssh连接 服务器是 调用的服务需要绝度路径,或者 执行下环境变量~~
 > 1. 了解 preload 和prefethc 对于缓存的优化
 > 1. alinnode 性能监控(后续需要考虑的问题:)
