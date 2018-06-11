@@ -4,8 +4,11 @@
 执行方法:
 `node app`
 
-最终结果为:
-`finalResult.json`
+最终结果为:`finalResult.json`
+12306结果: `12306Data.json`
+库结果  :  `districtData.json`
+库不在12306中: ` notIn12306Data.json`
+12306不在库中: ` notInDistrictData.json`
 
  ## 遇到的问题
  1. excel乱码
