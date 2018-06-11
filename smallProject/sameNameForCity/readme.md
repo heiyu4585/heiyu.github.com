@@ -1,8 +1,8 @@
  * 使用库 https://github.com/Keyang/node-csvtojson
  * 数据源 https://github.com/eduosi/district
+          https://kyfw.12306.cn/otn/resources/js/framework/station_name.js
 
-执行方法:
-`node app`
+执行方法:`node app`
 
 最终结果为:`finalResult.json`
 12306结果: `12306Data.json`
