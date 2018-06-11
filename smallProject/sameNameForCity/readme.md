@@ -1,6 +1,12 @@
  * 使用库 https://github.com/Keyang/node-csvtojson
  * 数据源 https://github.com/eduosi/district
 
+执行方法:
+`node app`
+
+最终结果为:
+`finalResult.json`
+
  ## 遇到的问题
  1. excel乱码
  用wps打开正常，如何分割单元格
