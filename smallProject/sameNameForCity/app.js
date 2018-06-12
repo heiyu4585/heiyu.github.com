@@ -109,7 +109,7 @@ fs.readFile(csvFilePath, 'utf-8', function (err, data) {
                 }
                 if (!isInIt) {
                     var isInItData = [];
-                    console.log(notInDistrictData[i][0]);
+                    // console.log(notInDistrictData[i][0]);
                     isInItData.push(notInDistrictData[i][0]);
                     isInItData.push(notInDistrictData[i][1].substring(0,1));
                     finalResult.push(isInItData)
