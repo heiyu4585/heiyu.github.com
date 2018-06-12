@@ -100,20 +100,20 @@ fs.readFile(csvFilePath, 'utf-8', function (err, data) {
 
             var finalResult =districtData;
             for (var i = 0; i < notInDistrictData.length; i++) {
-                var notIn =["东","西","南","北"];
-                var isInIt= false;
-                for (var j = 0; j < notIn.length; j++) {
-                    if (notInDistrictData[i][0].indexOf(notIn[j]) !== -1) {
-                        isInIt = true
-                    }
-                }
-                if (!isInIt) {
+                // var notIn =["东","西","南","北"];
+                // var isInIt= false;
+                // for (var j = 0; j < notIn.length; j++) {
+                //     if (notInDistrictData[i][0].indexOf(notIn[j]) !== -1) {
+                //         isInIt = true
+                //     }
+                // }
+                // if (!isInIt) {
                     var isInItData = [];
                     // console.log(notInDistrictData[i][0]);
                     isInItData.push(notInDistrictData[i][0]);
                     isInItData.push(notInDistrictData[i][1].substring(0,1));
                     finalResult.push(isInItData)
-                }
+                // }
             }
             // console.log("finalResult================")
             // console.log(finalResult);
