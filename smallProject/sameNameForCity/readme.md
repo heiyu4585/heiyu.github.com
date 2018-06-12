@@ -1,4 +1,6 @@
- * 使用库 https://github.com/Keyang/node-csvtojson
+项目
+解决的问题: 城市有多音字时如何处理
+ * csv转为json使用库 https://github.com/Keyang/node-csvtojson
  * 数据源 https://github.com/eduosi/district
           https://kyfw.12306.cn/otn/resources/js/framework/station_name.js
 
@@ -54,3 +56,32 @@ Excel自动按照unicode编码读取，就会出现乱码问题了。掌握了�
 大概思路
 1.12306文件的数据源是12306官方网站提供
 2.git库 包括了中国各省/自治区/直辖市、市/自治州/盟/地区、区/县/县级市/旗数据
+
+
+
+需要解决的问题: 地区列表多音字无法识别，目前通过本地白名单解决，但可能仍有未覆盖到的地名。
+
+思考:
+
+当前从2个方向入手:
+1.12306官方网站,比较权威,正确性有保障,但是是以火车站为维度(个人猜测),数据会存在一些 东,西,南,北(类似:北京,北京东,北京西,上海,上海虹桥)等
+2.github 城市库 数据相对比较全,个人项目
+
+做了哪些:
+1.对12306数据处理
+2.对城市库csv文件进行出来了
+3.根据12306数据对city数据进行一定的排错
+
+输出:
+
+1.输出12306网站的json文件(排除东南西北)
+2.输出city数据转为json文件
+3.输出合并后json文件
+
+参考:
+
+ [12306](https://kyfw.12306.cn/otn/resources/js/framework/station_name.js)
+ [github城市库](https://github.com/eduosi/district)
+
+
+
