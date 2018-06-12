@@ -48,7 +48,7 @@ fs.readFile(csvFilePath, 'utf-8', function (err, data) {
                 let dataTwo = data12306[i].split("|");
                 var dataThree = [];
                 dataThree.push(dataTwo[1]);
-                dataThree.push(dataTwo[0]);
+                dataThree.push(dataTwo[0].substring(0,1));
                 array12306.push(dataThree)
             }
             // console.log("array12306================");
