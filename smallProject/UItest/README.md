@@ -11,10 +11,12 @@ see [egg docs][egg] for more detail.
 ### Development
 
 ```bash
+//安装
 $ npm i
 
+//启动
 $ EGG_SERVER_ENV=dev npm run dev
-$ open http://127.0.0.1:7002/index.html
+$ open http://127.0.0.1:7001/index.html
 
 ```
 
