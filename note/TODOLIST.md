@@ -28,7 +28,6 @@
 
 #### 参考
 
-[只需两步快速获取微信小程序源码](https://juejin.im/post/5b0e431f51882515497d979f)
 [12306车站代码（生成json文件](https://www.jianshu.com/p/fd42fde4f776)
 [全国省市县数据库](https://github.com/eduosi/district)
 
