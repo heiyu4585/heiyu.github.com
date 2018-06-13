@@ -215,6 +215,8 @@ pm2 --node-args="--harmony" restart "$APP_NAME"
 
 	对于服务器来说，多帐号是常态，应该默认防止这种问题发生。
 
+- Can pm2 run an 'npm start' script
+  `pm2 start npm -- start	`
 ## 程序写日志相关
 用c/c++写日志的时候我一般都会使用日志库，如：log4cxx 、zlog ，这些日志库容易使用而且很稳定，支持将日志写到文件或控制台，支持按大小、日期分割日志文件，支持限定日志文件数、占用空间。
 
@@ -226,3 +228,6 @@ pm2 --node-args="--harmony" restart "$APP_NAME"
 [pm2官方文档](http://pm2.keymetrics.io/docs/usage/quick-start/)
 
 [关于Node进程管理器PM2使用技巧和需要注意的地方 ](https://github.com/jawil/blog/issues/7)
+
+
+
