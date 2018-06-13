@@ -39,9 +39,13 @@
 #### 参考
 
 [微信公众平台技术文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1445241432)
+
 [微信JS-SDK说明文档](https://mp.weixin.qq.com/wiki?action=doc&id=mp1421141115&t=0.6433997488875112#gaishu)
+
 [企业号开发中心](http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3)
+
 [微信 JS 接口签名校验工具](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign)
+
 [企业微信接口调试工具](http://work.weixin.qq.com/api/devtools/devtool.php)
 
 ### 部分Android设备出现无法唤起相册/相机的现象。IM中发送图片使用云信SDK，目前尚未支持公众号JSSDK选取图片。
@@ -50,7 +54,17 @@
 
 ### 其他项目(1,2,3,6)是骨科正在解决中或者偶现问题.
 
+
+
+
+
+
+
+
+
+
 --
+
 ## ssr项目
 
 3. arthas配置中心开发  修改/构建/重启/项目管理/记录相关
