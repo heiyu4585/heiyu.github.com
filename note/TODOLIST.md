@@ -1,19 +1,57 @@
 # todolist
 
+## 骨科遇到的技术难点
 
-## 拼音按首字母排序
+### 地区列表多音字无法识别，目前通过本地白名单解决，但可能仍有未覆盖到的地名。
+
+#### 思考:
+
+当前从2个方向入手:
+1.12306官方网站,比较权威,正确性有保障,但是是以火车站为维度(个人猜测),数据会存在一些 东,西,南,北(类似:北京,北京东,北京西,上海,上海虹桥)等
+2.github 城市库 数据相对比较全,个人项目
+
+### 依赖
+  * 数据源 https://github.com/eduosi/district
+             https://kyfw.12306.cn/otn/resources/js/framework/station_name.js
+  * 技术栈: csv转为json使用库 https://github.com/Keyang/node-csvtojson
+
+#### 做了哪些:
+1.对12306城市数据数据处理
+2.对github城市库csv文件进行处理
+3.以12306数据为基准做合并
+
+#### 输出:
+
+1.输出12306网站的json文件(排除东南西北)
+2.输出city数据转为json文件
+3.输出合并后json文件
+
+#### 参考
+
 [只需两步快速获取微信小程序源码](https://juejin.im/post/5b0e431f51882515497d979f)
-
 [12306车站代码（生成json文件](https://www.jianshu.com/p/fd42fde4f776)
-
 [全国省市县数据库](https://github.com/eduosi/district)
 
 
+### 微信公众号SDK仅支持选取图片，目前不支持选取视频。
 
+结论: 官方暂时未提供视频类的上传接口 官方提供的接口文档  https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
 
+#### 参考
 
+[微信公众平台技术文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1445241432)
+[微信JS-SDK说明文档](https://mp.weixin.qq.com/wiki?action=doc&id=mp1421141115&t=0.6433997488875112#gaishu)
+[企业号开发中心](http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3)
+[微信 JS 接口签名校验工具](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign)
+[企业微信接口调试工具](http://work.weixin.qq.com/api/devtools/devtool.php)
 
+### 部分Android设备出现无法唤起相册/相机的现象。IM中发送图片使用云信SDK，目前尚未支持公众号JSSDK选取图片。
 
+此项依赖云信IM,暂时不去深入了解.
+
+### 其他项目骨科正在解决中或者偶现问题,建议作为基建组以后的技术攻关方向.
+
+--
 ## ssr项目
 
 3. arthas配置中心开发  修改/构建/重启/项目管理/记录相关
