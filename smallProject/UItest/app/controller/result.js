@@ -17,7 +17,7 @@ class UserController extends Controller {
     async setBase() {
         console.log("开始执行 setBase")
         const ctx = this.ctx;
-        await this.ctx.service.result.screenShot("https://www.baidu.com/", 'monitoring/allinmed_base.png');
+        await this.ctx.service.result.screenShot("https://triage.allinmed.cn/", 'monitoring/allinmed_base.png');
         let isExist = fs.existsSync("monitoring/allinmed_base.png");
         console.log("isExist",isExist);
        if(isExist){
