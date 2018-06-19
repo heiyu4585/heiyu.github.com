@@ -1,53 +1,74 @@
-全国县级以上行政区划地名多音异读正音表					
-序号	地名	读音	所在省区	正确注音	
-1	代城	daicheng	河北	dài 代	
-2	蔚县	yu|xian	河北	yù 预	
-3	乐亭	lao|ting	河北	lào 烙	
-4	洪洞	hong|tong	山西	tóng 同	
-5	侯马	hou|ma	山西	hóu 猴	
-6	长子	zhang|zi	山西	zhǎng 掌	
-7	穆棱	mu|ling 	黑龙江	líng 灵	
-8	绥棱	sui|leng	黑龙江	lèng 楞	
-9	阿城	a|cheng	黑龙江	ā 阿	
-10	六合	lu|he	江苏	lù 陆	
-11	台州	tai|zhou	浙江	tāi 胎	
-12	天台	tian|tai	浙江	tāi 胎
-13	丽水	li|shui	浙江	lí 离
-14	乐清	yue|qing	浙江	yuè 岳
-15	歙县	she|xian	安徽	shè 社
-16	六安	lu|an	安徽	lù 陆
-17	涡阳	guo|yang	安徽	guō 锅
-18	蚌埠	beng|bu	安徽	bèng 泵
-19	闽侯	min|hou	福建	hòu 厚
-20	铅山	yan|shan	江西	yán 沿
-21	万载	wan|zai	江西	zaì 在
-22	济南	ji|nan	山东	jí 挤
-23	单县	shan|xian	山东	shàn 善
-24	莘县	shen|xian	山东	shēn 申
-25	冠县	guan|xian	山东	guān 观
-26	东阿	dong|e	山东	ē
-27	牟平	mu|ping	山东	mù 木
-28	尉氏	wei|shi	河南	weì 卫
-29	泌阳	bi|yang	河南	bì 必
-30	渑池	mian|chi	河南	miǎn 免
-31	浚县	xun|xian	河南	xùn 训
-32	黄陂	huang|pi	湖北	pí 皮
-33	监利	jian|li	湖北	jiàn 见
-34	番禺	pan|yu	广东	pān 潘
-35	大埔	da|bu	广东	bù 布
-36	通什	tongn|za	海南	zá 杂
-37	筠连	jun|lian	四川	jūn 均
-38	犍为	qian|wei	四川	qián 钱
-39	吴堡	wu|bu	陕西	bù 补
-40	安塞	an|sai	陕西	sài 赛
-41	子长	zi|chang	陕西	cháng 常
-42	尉犁	yu|li	新疆	yù 预
-43	荥阳	xing|yang	河南	xínɡ）
-44	巴音郭楞	ba|yin|guo|leng	新疆	lénɡ）
-45	亳州	bo|zhou	安徽	（bó）
-46	巴彦淖尔	ba|yan|nao|er	内蒙古	（nào）
-47	莘庄	xin|zhuang	上海	（xīn）
-48	柘城	zhe|cheng	河南	（zhè）
-49	涪陵	fu|ling	重庆	（fú）
-50	莒县	jun|xian	山东	（jǔ）
-51	大城	dai|cheng	dài	代
+全国县级以上行政区划地名多音异读正音表
+序号	地名	读音	首字母	所在省区	分类
+1	代城	daicheng	d	河北	城市
+2	蔚县	yu|xian	y	河北	城市
+3	乐亭	lao|ting	l	河北	城市
+4	洪洞	hong|tong	h	山西	城市
+5	侯马	hou|ma	h	山西	城市
+6	长子	zhang|zi	z	山西	城市
+7	穆棱	mu|ling 	m	黑龙江	城市
+8	绥棱	sui|leng	s	黑龙江	城市
+9	阿城	a|cheng	a	黑龙江	城市
+10	六合	lu|he	l	江苏	城市
+11	台州	tai|zhou	t	浙江	城市
+12	天台	tian|tai	t	浙江	城市
+13	丽水	li|shui	l	浙江	城市
+14	乐清	yue|qing	y	浙江	城市
+15	歙县	she|xian	s	安徽	城市
+16	六安	lu|an	l	安徽	城市
+17	涡阳	guo|yang	g	安徽	城市
+18	蚌埠	beng|bu	b	安徽	城市
+19	闽侯	min|hou	m	福建	城市
+20	铅山	yan|shan	y	江西	城市
+21	万载	wan|zai	w	江西	城市
+22	济南	ji|nan	j	山东	城市
+23	单县	shan|xian	s	山东	城市
+24	莘县	shen|xian	s	山东	城市
+25	冠县	guan|xian	g	山东	城市
+26	东阿	dong|e	d	山东	城市
+27	牟平	mu|ping	m	山东	城市
+28	尉氏	wei|shi	w	河南	城市
+29	泌阳	bi|yang	b	河南	城市
+30	渑池	mian|chi	m	河南	城市
+31	浚县	xun|xian	x	河南	城市
+32	黄陂	huang|pi	h	湖北	城市
+33	监利	jian|li	j	湖北	城市
+34	番禺	pan|yu	p	广东	城市
+35	大埔	da|bu	d	广东	城市
+36	通什	tongn|za	t	海南	城市
+37	筠连	jun|lian	j	四川	城市
+38	犍为	qian|wei	q	四川	城市
+39	吴堡	wu|bu	w	陕西	城市
+40	安塞	an|sai	a	陕西	城市
+41	子长	zi|chang	z	陕西	城市
+42	尉犁	yu|li	y	新疆	城市
+43	荥阳	xing|yang	x	河南	城市
+44	巴音郭楞	ba|yin|guo|leng	b	新疆	城市
+45	亳州	bo|zhou	b	安徽	城市
+46	巴彦淖尔	ba|yan|nao|er	b	内蒙古	城市
+47	莘庄	xin|zhuang	x	上海	城市
+48	柘城	zhe|cheng	z	河南	城市
+49	涪陵	fu|ling	f	重庆	城市
+50	莒县	ju|xian	j	山东	城市
+51	大城	dai|cheng	d	dài	城市
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
