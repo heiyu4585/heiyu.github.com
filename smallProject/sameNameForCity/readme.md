@@ -1,3 +1,27 @@
+
+#返回城市首字母,用来减少对城市中多音字的影响
+
+
+## 生成js文件:
+执行方法: `npm app2.js`
+
+引用文件位置:
+
+`finalResult.js`
+
+
+
+## 生成json文件
+
+执行方法: `npm app.js`
+
+引用文件位置:
+
+`finalResult.json`
+
+
+
+
 项目
 解决的问题: 城市有多音字时如何处理
  * csv转为json使用库 https://github.com/Keyang/node-csvtojson
