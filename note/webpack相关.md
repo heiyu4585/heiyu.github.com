@@ -119,3 +119,15 @@ resolve('test'),resolve('node_modules/bootstrap-vue/lib')]
 
 `sudo ln -s /opt/node-v6.9.2-linux-x64/bin/npm /usr/local/bin/npm`
 
+##### webpack uglifyjsplugin 报错
+
+使用webpack2.5.0时,原有的uglifyjsplugin报错
+使用插件形式的,未配置其他
+```
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+ plugins: [
+        new UglifyJSPlugin({
+        })
+    ]
+```
+
