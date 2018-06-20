@@ -1454,6 +1454,9 @@ axios({
  
 ## 参考资料 
 
+### 待处理
+[node前后端同构的踩坑经历](https://www.cnblogs.com/woodk/p/8353573.html)
+
 ### 官方资料
 
 [vue-ssr](https://ssr.vuejs.org/zh/)
