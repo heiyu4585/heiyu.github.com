@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/rxjs/5.5.9/Rx.js"></script>
+
+</head>
+<body>
+<input id="text">
+<script>
+    // var text = document.querySelector('#text');
+    // text.addEventListener('keyup', (e) =>{
+    //     var searchText = e.target.value;
+    //     // 发送输入内容到后台
+    //     $.ajax({
+    //         url: `https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3615916065,2552557143&fm=85&s=B1B0E9362EA26A8696A0B4C60300E0A1`,
+    //         success: data => {
+    //             // 拿到后台返回数据，并展示搜索结果
+    //             render(data);
+    //         }
+    //     });
+    // });
+    //
+    // var text = document.querySelector('#text');
+    // var inputStream = Rx.Observable.fromEvent(text, 'keyup')
+    //     .debounceTime(250)
+    //     .pluck('target', 'value')
+    //     .switchMap(url => Http.get(url))
+    //     .subscribe(data => render(data));
+
+    var clicks = Rx.Observable.fromEvent(document, 'click');
+    var positions = clicks.map(ev => ev.clientX);
+    console.log(positions);
+    positions.subscribe(x => console.log(x));
+</script>
+</body>
+</html>
