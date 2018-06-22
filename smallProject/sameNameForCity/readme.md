@@ -2,6 +2,14 @@
 #返回城市首字母,用来减少对城市中多音字的影响
 
 
+
+http://blog.sina.com.cn/s/blog_69192d610102wnfc.html
+https://wenku.baidu.com/view/26737bef9b89680203d825f7.html
+https://www.zhihu.com/question/26813834
+http://www.360doc.com/content/11/0727/20/178233_136211351.shtml
+
+
+
 ## 生成js文件:
 执行方法: `npm app2.js`
 
