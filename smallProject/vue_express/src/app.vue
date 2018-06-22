@@ -1,9 +1,8 @@
 <template>
     <div id="app">
-        <div>hello , this app vue31111333!</div>
+        <div>hello , this app 33!</div>
 
         <div>hhhh</div>
-        <router-view></router-view>
     </div>
 
 </template>
@@ -14,6 +13,6 @@
     }
 </script>
 
-<style scoped>
+<style >
     body{color:red;}
 </style>
