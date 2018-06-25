@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="login-container ">
       <div class="alert alert-danger">{{error}}</div>
-      <form class="form-signin" method="post" action="/api/login" style="-webkit-box-shadow: 0 0 14px rgba(0,0,0,.1);-moz-box-shadow: 0 0 14px rgba(0,0,0,.1);box-shadow: 0 0 14px rgba(0,0,0,.1)">
+      <form class="form-signin" method="post" action="/login" style="-webkit-box-shadow: 0 0 14px rgba(0,0,0,.1);-moz-box-shadow: 0 0 14px rgba(0,0,0,.1);box-shadow: 0 0 14px rgba(0,0,0,.1)">
         <h2 class="form-signin-heading">阿尔萨斯平台133333333</h2>
         <div>
           <label class="" for="username">用户名：</label>
@@ -35,29 +35,29 @@
       }
     },
     mounted(){
-        var i =1;
-        setInterval(function () {
-            console.log(i++);
-        },300);
-      axios({
-        url:"/api/login",
-        method:"post",
-        data:{
-          scene:2,
-          visitSiteId:2,
-          pageIndex:this.index,
-          pageSize:10
-        },
-        transformRequest:[data=>{
-          return "paramJson=" + JSON.stringify(data);
-        }],
-        header:{
-          "X-Requested-with":"XMLHttpRequest"
-        },
-        timeout:30000
-      }).then((res)=>{
-        console.log(res.data)
-      })
+      //   var i =1;
+      //   setInterval(function () {
+      //       console.log(i++);
+      //   },300);
+      // axios({
+      //   url:"/api/login",
+      //   method:"post",
+      //   data:{
+      //     scene:2,
+      //     visitSiteId:2,
+      //     pageIndex:this.index,
+      //     pageSize:10
+      //   },
+      //   transformRequest:[data=>{
+      //     return "paramJson=" + JSON.stringify(data);
+      //   }],
+      //   header:{
+      //     "X-Requested-with":"XMLHttpRequest"
+      //   },
+      //   timeout:30000
+      // }).then((res)=>{
+      //   console.log(res.data)
+      // })
 
     }
   }

@@ -383,8 +383,14 @@ $ npm owner rm <user> <package name>
 
 ## 遇到的问题
 
+### 用户不能正确添加
 
-- fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
+```
+  //添加用户不能使用此种方式,会出现用户不能添加的问题
+   //npm adduser --registry http://192.168.1.149:7001 --scope=@allin
+```
+
+### fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
      警告如下：
 ```
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
@@ -402,7 +408,7 @@ Set "private": true in your package.json to prevent it from being published at a
 https://docs.npmjs.com/misc/registry
 
 
-3. npm 私有包存储地址
+### npm 私有包存储地址
 
   默认地址
 ```
@@ -418,8 +424,7 @@ npm login --registry http://my_private_repo:1234 --scope=@swx --userconfig=$HOME
 [基于CNPM的本地私有库搭建](http://www.shaowenwu.cn/2016/03/27/npmsi-you-ku-ben-di-da-jian/)
 
 [cnpm同步文件的存储位置在哪里？](https://github.com/cnpm/cnpmjs.org/issues/635)
-
-1. 如何混合使用npm的公共仓库和cnpm搭建的私有仓库
+### 如何混合使用npm的公共仓库和cnpm搭建的私有仓库
 
 [如何混合使用npm的公共仓库和cnpm搭建的私有仓库](https://github.com/cnpm/cnpmjs.org/issues/929)
 

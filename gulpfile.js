@@ -7,9 +7,12 @@ gulp.task('default', function() {
     console.log(123);
     browserSync({
         server: {
-            baseDir: 'baiduife/2017'
-        }
+            // baseDir: 'smallProject/vue_express_ssr/output'
+            baseDir: 'smallProject/rxjsDemo'
+        },
+        port: 8090
     });
 
-    gulp.watch(['**/*.html', '**/*.css', '*.js'], {cwd: 'baiduife/2017'}, reload);
+    // gulp.watch(['**/*.html', '**/*.css', '*.js'], {cwd: 'baiduife/2017'}, reload);
+    gulp.watch(['**/*.html', '**/*.css', '*.js'], {cwd: 'smallProject/rxjsDemo'}, reload);
 });
