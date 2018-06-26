@@ -194,11 +194,8 @@ new Promise((resolve, reject) => {
 
 ```
 
-<<<<<<< HEAD
-[unhandled promise rejection](http://www.liyaoli.com/2017-06-26/unhandled-promise-rejection.html)
-=======
-[unhandled promise rejection](http://www.liyaoli.com/2017-06-26/unhandled-promise-rejection.html)
 
+[unhandled promise rejection](http://www.liyaoli.com/2017-06-26/unhandled-promise-rejection.html)
 
 ### nodejs 按行读取
 ```
@@ -217,4 +214,12 @@ rl.on('close', (line) => {
   console.log("读取完毕！");
 });
 ```
->>>>>>> origin/master
+
+
+### npm install 时遇到的 python 问题 
+
+http://doc.okbase.net/homeemail/archive/107294.html
+
+https://my.oschina.net/homeemail/blog/335961
+
+MSBUILD : error MSB3428: 未能加载 Visual C++ 组件“VCBuild.exe”  https://blog.csdn.net/baidu_34217927/article/details/78899510
