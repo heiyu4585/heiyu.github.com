@@ -408,6 +408,15 @@ Set "private": true in your package.json to prevent it from being published at a
 https://docs.npmjs.com/misc/registry
 
 
+5. npm install 时遇到的 python 问题 
+
+http://doc.okbase.net/homeemail/archive/107294.html
+
+https://my.oschina.net/homeemail/blog/335961
+```
+MSBUILD : error MSB3428: 未能加载 Visual C++ 组件“VCBuild.exe”  https://blog.csdn.net/baidu_34217927/article/details/78899510
+```
+
 ### npm 私有包存储地址
 
   默认地址
@@ -454,7 +463,6 @@ oss-cnpm：包本体存在阿里云 OSS 的插件。
 2. paas执行上传命令
 3. 邮箱提示
 
-参考:
 参考:
 
 [npm常用你应该懂的使用技巧](https://github.com/jiayisheji/blog/issues/5)

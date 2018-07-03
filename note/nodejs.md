@@ -216,10 +216,3 @@ rl.on('close', (line) => {
 ```
 
 
-### npm install 时遇到的 python 问题 
-
-http://doc.okbase.net/homeemail/archive/107294.html
-
-https://my.oschina.net/homeemail/blog/335961
-
-MSBUILD : error MSB3428: 未能加载 Visual C++ 组件“VCBuild.exe”  https://blog.csdn.net/baidu_34217927/article/details/78899510
