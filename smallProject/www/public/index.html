@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>HLMT5中input实现多种文件上传,视频上传,图片上传，调用手机摄像头，照相机，相册功能</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
+</head>
+video/*:<br><br>
+<input type="file" accept="video/*" multiple  id="updateVideo"  capture="camcorder"><br><br>
+<!--<input type="file" id="inputImage" name="file" accept="image/gif,image/jpg,image/jpeg,image/bmp,image/png">-->
+
+<br><br><br><br><br><br><br><br><br><br>
+
+
+*:<br><br>
+<input type="file" accept="*" multiple ><br><br>
+
+capture="" :<br><br>
+<input type="file" capture multiple><br><br>
+
+capture="camcorder":<br><br>
+<input type="file" capture="camcorder" multiple><br><br>
+
+video/*:<br><br>
+<input type="file" accept="video/*" multiple ><br><br>
+
+组合:<br><br>
+*:capture="":<br><br>
+<input type="file" accept="*" multiple capture ><br><br>
+*:capture="camcorder":
+<input type="file" accept="*" multiple capture="camcorder" ><br><br>
+
+video+capture:<br><br>
+<input type="file" accept="video/*" capture multiple ><br><br>
+
+video capture:camcorder <br><br>
+<input type="file" accept="video/*" multiple capture="camcorder"><br><br>
+
+
+<br><br><br><br><br><br><br><br>
+
+<!--视频调用(调用相机 图片或者相册):<br><br>-->
+限定mp4:<input type="file" accept="video/mp4,video/3gp"  multiple><br><br>
+<!--限定mp4+camera:<br><br>-->
+<input type="file" accept="video/mp4,video/3gp" capture="camera" multiple><br><br>
+<!--限定mp4 + camcorder:<br><br>-->
+<input type="file" accept="video/mp4,video/3gp" capture="camcorder" multiple><br><br><br><br>
+
+
+
+
+
+<!--图片调用(调用相机 图片或者相册)<input type="file" accept="image/*" multiple><br><br><br><br>-->
+<!--限定png/jpg<input type="file" accept="image/png,image/jpg" capture="camera" multiple><br>-->
+
+
+
+<!--文件管理 在三星-->
+<!--<input type="file"   accept="video/*" multiple capture="camcorder"><br><br>-->
+<!--<input type="file"  accept="video/*" multiple><br><br><br><br><br><br>-->
+
+<!--直接调用拍照<input type="file" accept="image/*" capture="camera" multiple><br>-->
+<!--直接调用录像<input type="file" accept="video/*" capture="camcorder" multiple><br>-->
+<!--录音音频<input type="file" accept="audio/*" capture="microphone" multiple><br>-->
+
+
+<!--限定image/gif,image/jpg,image/jpeg,image/bmp,image/png<input type="file" id="inputImage" name="file" accept="image/gif,image/jpg,image/jpeg,image/bmp,image/png" multiple>-->
+
+
+<!--<br><br><br><br>-->
+<!--此外,安卓手机上可以同时使用上述两个属性,实现拍照和选择照片两个功能,但是苹果手机会直接调用手机的拍照功能,不能调用选择图片这一项<br>-->
+
+<!--<input id="fileImage" class="fileImage" type="file"  accept="image/*" capture="camera" size="30"><br>-->
+
+<!--accept="image/*;capture=camera" 直接调用相机-->
+
+    <!--<input type="submit" value="Submit" />-->
+<!--</form>-->
+
+</body>
+
+<script>
+//    function readURL(input) {
+//        if (input.files && input.files[0]) {
+//            var reader = new FileReader();
+//            reader.onload = function (e) {
+//               alert(e.target.result);
+//            }
+//            reader.readAsDataURL(input.files[0])
+//        }
+//    }
+    $("#updateVideo").change(function(){
+        alert("onchenage执行")
+//        readURL(this);
+    });
+
+//var oFiles = document.querySelector('input');
+//oFiles.addEventListener('change', updateImageDisplay);
+//function updateImageDisplay() {
+//    readURL(oFiles);
+//// 实例化一个表单数据对象
+//    var formData = new FormData();
+//// 遍历图片文件列表，插入到表单数据中
+//    for (var i = 0, file; file = oFiles[i]; i++) {
+//        // 文件名称，文件对象
+//        formData.append(file.name, file);
+//    }
+//}
+</script>
+
+</html>
