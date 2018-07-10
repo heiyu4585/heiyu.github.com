@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./vConsole.js"></script>
+<!--<script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/2.5.1/vconsole.min.js"></script>-->
+<script>
+    // Make a request for a user with a given ID
+    window.vConsole = vConsole;
+    console.log('Hello world');
+    axios.get('/users')
+        .then(function (response) {
+            // handle success
+            console.log(response);
+            alert(response.data.a)
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+
+    axios({
+        url: "/users",
+        method: "POST",
+        data: {
+
+        },
+        transformRequest: [function (data) {
+            return "paramJson=" + JSON.stringify(data);
+        }],
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        timeout: 30000
+    }).then(function (res) {
+        alert(res.data.a)
+    })
+
+</script>
+</body>
+</html>
