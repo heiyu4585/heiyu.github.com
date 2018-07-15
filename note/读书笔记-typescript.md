@@ -1,5 +1,8 @@
 # typescript
 
+## 为什么要学 ts
+
+
 ## 类型注解
 ```
 function greeter(person:string){
@@ -12,6 +15,7 @@ document.body.innerHTML = greeter(user);
 ```
 
 ## 接口
+
 ```
 function greeter(person) {
     return 'hello,' + person.firstName + " " + person.lastName;
