@@ -1,5 +1,41 @@
 # todolist
 
+## 2018.7.25
+
+总结axios在华为plus下兼容问题 的demo
+
+smallProject/www/public
+
+note/axios在华为p10 plus下兼容.md
+
+总结mocha和karma项目 demo
+
+## arthas TodoList:
+
+1.用户访问统计
+
+
+
+#待阅读的文章
+
+https://juejin.im/post/5b3adfe2e51d4555b17e85df?utm_source=gold_browser_extension
+
+https://juejin.im/post/5b4457c86fb9a04fe11ac8dc
+
+https://juejin.im/post/5b37534be51d4558d9236404
+
+https://webfe.kujiale.com/liao-yi-liao-qian-duan-tong-gou/  聊一聊前端「同构」
+
+[美团技术博客](https://tech.meituan.com/)
+
+
+
+
+
+
+#以下项目总结已经无用
+
+
 ## 骨科遇到的技术难点
 
 ### 地区列表多音字无法识别，目前通过本地白名单解决，但可能仍有未覆盖到的地名。
@@ -61,14 +97,6 @@
 此项依赖云信IM,暂时不去深入了解.
 
 ### 其他项目(1,2,3,6)是骨科正在解决中或者偶现问题.
-
-
-
-
-
-
-
-
 
 
 --
