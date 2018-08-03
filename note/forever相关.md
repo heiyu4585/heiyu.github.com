@@ -9,6 +9,12 @@ nohup node app.js &
 
 `$ forever start --minUptime 1000 --spinSleepTime 1000  -c "npm run dev" ./`
 
+
+log_server启动方式
+
+`forever start --minUptime 1000 --spinSleepTime 1000  -c "npm run start" ./`
+
+
 日志按天分割
 
 `forever xxxx.js 2>&1 | cronolog /your/log/path/log_%Y%m%d.log`

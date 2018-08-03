@@ -2,13 +2,7 @@
 
 ## 2018.7.25
 
-总结axios在华为plus下兼容问题 的demo
 
-smallProject/www/public
-
-note/axios在华为p10 plus下兼容.md
-
-总结mocha和karma项目 demo
 
 ## arthas TodoList:
 
@@ -30,7 +24,16 @@ https://webfe.kujiale.com/liao-yi-liao-qian-duan-tong-gou/  聊一聊前端「�
 
 
 
+##用NodeJS实现HTTP/HTTPS代理
+[用NodeJS实现HTTP/HTTPS代理](http://www.nodeclass.com/articles/16694)
 
+[基于Node.js的HTTPS MITM(中间人)代理的原理和实现 ](https://www.bookstack.cn/read/https-mitm-proxy-handbook/doc-Chapter1.md)
+
+[node如何让一个端口同时支持https与http](https://www.cnblogs.com/dojo-lzz/p/5479870.html)
+
+
+## 其他文章
+[孟岩](https://blog.csdn.net/myan/article/list/5?t=1)
 
 
 #以下项目总结已经无用

@@ -3,6 +3,91 @@
 
 ## 坑
 
+#### Vue的报错：Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'
+
+刚刚运行一下以前的一个Vue+webpack的demo，运行之后没有出现想象中的效果，并且报错
+
+`Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'`
+
+ 
+
+点开错误的文件，标注错误的地方是这样的一段代码：
+```
+import {normalTime} from './timeFormat';
+
+module.exports={
+　　normalTime
+};
+```
+
+就是module.exports;
+
+ 
+
+百度查不到，google一查果然有。
+
+原因是：
+`The code above is ok. You can mix require and export. You can‘t mix import and module.exports.`
+
+翻译过来就是说，代码没毛病，在webpack打包的时候，可以在js文件中混用require和export。但是不能混用import 以及module.exports。
+
+因为webpack 2中不允许混用import和module.exports,
+
+解决办法就是统一改成ES6的方式编写即可.
+
+ 
+```
+import {normalTime} from './timeFormat';
+
+export default normalTime;
+
+```
+
+最后运行成功。
+
+#### 关于插件写法中 export ,module.exports 写法混用
+
+```
+//a.js
+let aa="aa"
+export {aa}
+
+//index.js
+import {aa} from './aa'
+console.log(aa) //"aa"
+```
+
+```
+//a.js
+let aa="aa"
+export {aa}
+//index.js
+let aa  = require("./aa");
+console.log(aa)  //Module {__esModule: true, Symbol(Symbol.toStringTag): "Module"}
+```
+
+```
+//a.js
+let aa="aa"
+module.exports =   aa;
+
+//index.js
+let aa  = require("./aa");
+console.log(aa)
+```
+
+
+因为在webpack中故所有统一为module.exports =   aa;
+
+
+
+#### npm ERR! Invalid name: "Hello World" 
+
+```
+I take it that you have "Hello World" as the "name" field in your package.json? Capital letters and spaces are not allows in the "name" field of package.json.
+```
+
+https://github.com/npm/npm/issues/6860
 #### webpack如何提取vue组件的css到独立文件中:`ExtractTextPlugin.extract`
 [ExtractTextPlugin.extract](https://segmentfault.com/q/1010000005363929)
 

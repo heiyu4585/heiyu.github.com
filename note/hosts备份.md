@@ -1,0 +1,13 @@
+#本地环境
+
+```
+# 唯医本地127.0.0.1	css.allinmd.cn127.0.0.1	img00.allinmd.cn127.0.0.1	www.allinmd.cn127.0.0.1	img01.allinmd.cn127.0.0.1	allinmd.cn192.168.1.40    api.allinmd.cn192.168.1.49    img05.allinmd.cn192.168.1.49    img06.allinmd.cn192.168.1.39    img04.allinmd.cn192.168.1.173	 img99.allinmd.cn127.0.0.1        m.allinmd.cn127.0.0.1       img50.allinmd.cn# 医栈本地
+127.0.0.1       www.medplus.net127.0.0.1       m.medplus.net127.0.0.1       app.medplus.net192.168.1.87   img05.medplus.net192.168.1.92   api.medplus.net192.168.1.72   d.medplus.net192.168.1.82   app.medplus.net192.168.1.39    img04.allinmd.cn192.168.1.39	  img99.allinmd.cn# 分诊本地
+127.0.0.1	www.tocure.cn192.168.1.55	api.tocure.cn192.168.1.192	img05.tocure.cn
+# 唯医会诊127.0.0.1	www.tocure.cn192.168.1.55	api.tocure.cn192.168.1.192	img05.tocure.cn192.168.1.41	www.allinmd.cn#paas 127.0.0.1   paas.allinmd.cn127.0.0.1   localhost```
+# 线下环境
+```
+
+```
+# 预上线环境
+
