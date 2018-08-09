@@ -2,7 +2,23 @@
 
 ## 2018.7.25
 
+## todolist
+[[小说] 程序猿生存指南（5）](https://juejin.im/post/5aceef62f265da23906c64f6)
 
+[程序员成长法则与进阶攻略](https://juejin.im/entry/5b5f40ae5188251af86bff34?utm_source=gold_browser_extension)
+
+
+[和牛](https://msg.cnblogs.com/inbox)
+
+[fundebug 插件监控vue.js](https://docs.fundebug.com/notifier/javascript/framework/vuejs.html)
+
+
+[fundebug 安装](https://docs.fundebug.com/notifier/javascript/integration/npm.html)
+
+[人生苦短，了解一下前端必须明白的http知识点](https://juejin.im/post/5b34e6ba51882574d20bbdd4?utm_source=gold_browser_extension)
+
+###重要
+[20118读书目录](https://wxnacy.com/2018-books/)
 
 ## arthas TodoList:
 

@@ -1,4 +1,170 @@
 # mongod
+## 入门
+[入门](http://www.runoob.com/nodejs/nodejs-mongodb.html)
+
+
+## mongoose
+
+### [中文api](https://mongoosedoc.top/docs/documents.html)
+#### 在项目中安装mongoose
+
+`cnpm install mongoose`
+
+做个简单项目的项目结构,对数据的增删改查,都是简单的操作,主要是引入mongoose的链接操作,复杂的增删改查在MongoDB的基础知识中学习
+MongoDB数据库框架mongoose
+
+```
+db.js 		连接数据库
+ 
+Model.js 	构建模型骨架,构建Model
+ 
+insert.js 	插入数据 	(增)
+ 
+delete.js 	删除数据	(删)
+ 
+update.js 	修改数据	(改)
+ 
+find.js 	查询数据	(查)
+ 
+MongoDB可视化工具robo 3t
+```
+
+##### 连接数据库,创建db.js文件
+
+```
+// 引入mongoose
+var mongoose = require("mongoose");
+ 
+// 连接数据库
+mongoose.connect("mongodb://127.0.0.1:27017/eleven");
+ 
+// 连接失败
+mongoose.connection.on("error", function(err){
+    console.error("数据库链接失败:"+ err);
+});
+ 
+// 连接成功
+mongoose.connection.on("open", function(){
+    console.log("数据库链接成功");
+});
+ 
+// 断开数据库
+mongoose.connection.on("disconnected", function(){
+    console.log("数据库断开");
+})
+ 
+// 将mongoose推出
+ 
+module.exports = mongoose;
+```
+
+####  构建模型骨架Schame,构建Model, 创建文件 Model.js
+
+```
+var mongoose = require('./db.js');
+ 
+ 
+// 模型骨架
+var Schema = new mongoose.Schema({
+    username: {type: String},
+    password: {type: Number, default: 123456},
+    time: {type: Date}
+});
+ 
+// 由schema构造生成Model
+var Model = mongoose.model('user',Schema);
+ 
+module.exports = Model;
+```
+
+#### 增加数据库, 创建文件 insert.js
+
+```
+var Model = require("./Model.js");
+ 
+// 插入数据
+/***/
+Model.create([
+    {
+        username: 'jason1',
+        password: 123456
+    },
+    {
+        username: 'zhaoerya1',
+        password: 654321
+    }
+],function(err,doc){
+    if(err){
+        console.error(err);
+    } else {
+        console.log(["SUCCESS"]);
+        console.log(doc);
+    }
+})
+```
+
+####删除数据, 创建文件 delete.js
+```
+var Model = require('./Model.js');
+ 
+// 删除数据
+Model.remove({username: 'jason'},function(err,res){
+	if(err){
+		console.error(err);
+	} else {
+		console.log(res);
+	}
+})
+```
+
+####修改数据, 创建文件 update.js
+```
+var Model = require("./Model.js");
+ 
+// 更新数据
+ 
+Model.update({username: 'jsrenyu'},{password: 4545454},function(err,res){
+	if(err){
+		console.error("Error: "+err);
+	} else {
+		console.log("Res: "+res);
+	}
+})
+```
+
+7. 查询数据, 创建文件 find.js
+
+```
+var Model = require("./Model.js");
+ 
+// 查询数据
+Model.find({username: 'jsrenyu'},function(err,res){
+	if(err){
+		console.log(err);
+	} else {
+		console.log(res);
+	}
+})
+```
+
+#### MongoDB的可视化工具
+
+ robo 3t MongoDB的可视化工具 robo 3t:
+ windows64版本直接下载链接: http://download.csdn.net/download/jason_renyu/10246478
+mac版本直接下载链接: http://download.csdn.net/download/jason_renyu/10246540
+ 其他版本下载: https://robomongo.org/download Robo 3T的界面为:
+
+#### mongoose资料参考: 
+mongoose中文文档 https://mongoose.shujuwajue.com/
+
+mongoose入门介绍 http://www.cnblogs.com/zhongweiv/p/mongoose.html
+
+mongoose简单案例增删改查和mongoose中文文档
+mongoose简单的案例,要了解mongoose需要有MongoDB的基础知识,
+MongoDB以及js操作MongoDB的学习博客(免费视频教程,前提也要有node的基础知识): 
+ 挑战全栈 MongoDB基础视频教程 http://jspang.com/2017/12/16/mongdb/
+MongoDB索引视频教程 http://jspang.com/2018/01/28/mongodb_index/
+MongoDB管理视频教程http://jspang.com/2018/02/06/mongodb/
 
 ## 命令行插入
 
@@ -8,7 +174,7 @@
 // 进入mongod命令行
 `/usr/local/Cellar/mongodb/bin/mongod`
 `$ cd /usr/local/Cellar/mongodb/bin/`
-`$./mongod`
+`$./mongo`
 //使用数据表格
 $ use bug
 switched to db bug
@@ -34,7 +200,104 @@ WriteResult({ "nInserted" : 1 })
 
 
 ## 遇到的问题
-1.Network is unreachable.
+### Network is unreachable.
 权限问题   使用  
 `sudo  mongod`
+
+### `(node:2528) DeprecationWarning: current URL string parser is deprecated, and will be removed in a future version. To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.`
+
+
+
+### 档中多了‘'__v‘'字段 (待解决)
+
+```
+var mySchema = new mongoose.Schema({
+    username:  'string'
+}, {versionKey: false}
+```
+
+[mongoose操作mongodb数据库发现文档中多了‘'__v‘'字段](https://blog.csdn.net/qq_36370731/article/details/79057732)
+
+### Mongoose动态创建collection
+
+```
+ const mongoose = this.app.mongoose;
+        const Schema = mongoose.Schema;
+        function getModel(token) {
+            var ErrorSchema = new Schema({
+                userAgent: {type: String},
+                currentUrl: {type: String},
+                host: {type: String},
+                timestamp: {type: Number},
+                projectType: {type: String},
+                flashVer: {type: String},
+                title: {type: String},
+                screenSize: {vw: {type: Number}, vh: {type: Number}},
+                referer: {type: String},
+                colNum: {type: Number},
+                rowNum: {type: Number},
+                msg: {type: String},
+                level: {type: Number},
+                targetUrl: {type: String},
+                ext: {userData: {type: String}},//todo 格式可能有问题
+                appVersion: {type: String},
+                reportVersion: {type: String},
+                token: {type: Number}
+            });
+
+            return mongoose.model("ErrorSchema"+ Date.now(), ErrorSchema, "error_mintor_"+token, {cache: true});
+        }
+
+        // console.log(num)
+        // let errorSchema = new Schema(schemaOptions, {collection: "error_montior_"+num,strict: false});
+        //
+        // let errorModel = mongoose.model('ErrorSchema', errorSchema);
+
+        // console.log(params.token);
+
+        getModel(params.token).create([
+            {
+                userAgent: params.userAgent,
+                currentUrl: params.currentUrl,
+                host: params.host,
+                timestamp: params.timestamp,
+                projectType: params.projectType,
+                flashVer: params.flashVer,
+                title: params.title,
+                screenSize: {vw: params.screenSize.vw, vh: params.screenSize.vh},
+                referer: params.referer,
+                colNum: params.colNum,
+                rowNum: params.rowNum,
+                msg: params.msg,
+                level: params.level,
+                targetUrl: params.targetUrl,
+                // ext:{userData:params.ext.userData},
+                appVersion: params.appVersion,
+                reportVersion: params.reportVersion,
+                token: params.token,
+            }
+        ], function (err, doc) {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(["SUCCESS"]);
+                console.log(doc);
+                return doc;
+            }
+        })
+    }
+
+```
+
+### 更改collection的名字：
+
+```
+1.xxschema = new Schema({
+…
+}, {collection: “your collection name”});
+
+2.mongoose.model(‘User’, UserSchema, “your collection name”);
+```
+
+[https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea](https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea)
 
