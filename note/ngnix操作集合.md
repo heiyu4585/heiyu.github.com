@@ -86,7 +86,8 @@ Linux查看公网IP
 - nginx -t 测试配置
 - ngnix -s reload
 - brew uninstall nginx  卸载nginx
-
+### 首先执行命令找到nginx路径
+ps aux | grep nginx
 ## 配置文件结构
 ```
 // 简单指令

@@ -146,3 +146,59 @@ header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE')
 在ajax中出现options请求，也是一种提前探测的情况，ajax跨域请求时，如果请求的是json，就属于复杂请求，因此需要提前发出一次options请求，用以检查请求是否是可靠安全的，如果options获得的回应是拒绝性质的，比如404\403\500等http状态，就会停止post、put等请求的发出。
 
 虽然在下面的参考文献中有人提出可以取消options请求，但是实测后发现是不行的，jquery封装之后，更不能轻易取消。因此，靠javascript客户端取消options请求是不可能的，只能通过服务端对options请求做出正确的回应，这样才能保证options请求之后，post、put等请求可以被发出。但是，我们不能允许所有的options请求，而应该是有条件的，所以最好是通过一个特殊的机制，去验证客户端发出的options请求数据是否是符合服务端的条件的，如果不满足，返回403，则客户端会取消原有的post计划。
+
+
+
+## 跨域：The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed
+
+使用Ajax跨域请求资源，Nginx作为代理，出现：The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed 错误。
+
+服务端允许跨域配置：
+
+```
+            #region 设置允许跨域，允许复杂请求
+            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+            {
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH,OPTIONS");
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
+                //HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
+                HttpContext.Current.Response.End();
+            }
+            #endregion
+            
+```
+Nginx的配置：
+
+	add_header 'Access-Control-Allow-Origin' '*';
+        location / {
+			if ($request_method = 'OPTIONS') {
+			add_header Access-Control-Allow-Origin *;
+				add_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,PATCH,OPTIONS;
+				return 200;
+			}
+			proxy_pass http://xx:8002/;
+			#proxy_pass http://localhost:62249/;
+        }
+看上面错误提示，contains multiple values "*" 意思就是设置了2次跨域，但是只有一个是允许的，移除其中的任意一个就好了。如果服务器设置了允许跨域，使用Nginx代理里面就不需要了（或者就不用使用Nginx了）
+
+[跨域：The 'Access-Control-Allow-Origin' header contains multiple values '*, *', but only one is allowed](https://blog.csdn.net/q646926099/article/details/79082204)
+
+
+## nginx 代理 options 不能正常返回数据
+
+```
+         add_header Access-Control-Allow-Origin *;
+         add_header Access-Control-Allow-Headers X-Requested-With,Content-Type;
+         add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
+  
+           location ~ ^/ams/ {
+                  if ($request_method = 'OPTIONS') {
+                          return 204;
+                     }
+                proxy_pass http://arthasMonitor;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+```

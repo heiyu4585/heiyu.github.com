@@ -78,5 +78,25 @@ var newObject = ObjectId()
 > newObject.getTimestamp()
 ISODate("2017-11-25T07:21:10Z")
 ```
+### mongoose 可以不定义Schema直接存储json么
+
+描述:
+mongoose 可以不定义Schema直接存储json么，我想保存微信发过来的XML转JSON，我不确定微信有多少种XML，另外微信的规则会不会变，我都不确定，所以无法确定字段的情况下如何使用mongoose保存，另外如果是mysql保存这样的数据，大家又有什么想法、方案？
+
+```
+// 设置strict为false，如：
+var UserSchema = new Schema({
+    username: String,
+    age: Number,
+    createTime: {
+        type: Number,
+        default: Date.now()
+    },
+    updateTime: Number
+}, {
+    strict: false,
+    versionKey: false
+});
+```
 
 
