@@ -1,5 +1,279 @@
 # XMLHttpRequest
 
+##  ie8跨域原生ajax post问题
+
+### 方案一   jquery+juqery插件 (尝试后未成功) 
+
+
+```
+   <script src="http://code.jquery.com/jquery-1.5.2.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.2/jquery.xdomainrequest.min.js"></script>
+
+// POST
+$.ajax({
+  url: 'http://frozen-woodland-5503.herokuapp.com/cors.json',
+  data: 'this is data being posted to the server',
+  contentType: 'text/plain',
+  type: 'POST',
+  dataType: 'json'
+}).done(function(data) {
+  console.log(data.name.last);
+});
+```
+
+
+[Cross-Domain AJAX for IE8 and IE9](https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest)
+
+[IE8、IE9不支持CORS跨域该如何解决？](https://segmentfault.com/a/1190000014871352)
+
+#### 方案二 formData方式 
+```
+    function send_request(){
+        var xmlhttp = null;
+        if (window.XMLHttpRequest){
+            xmlhttp=new XMLHttpRequest();
+        }else if (window.ActiveXObject){
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        if (xmlhttp!=null){
+            var requrl = 'http://10.0.1.128:7001/ams/catch';//url可以是相对路径也可以是绝对
+            xmlhttp.open( "POST",requrl,true);//第一个参数指明访问方式，第二次参数是目标url，第三个参数是“是否异步”，true表示异步，false表示同步
+            xmlhttp.onreadystatechange=function(){//异步需要指定回调函数
+                if (xmlhttp.readyState==4 && xmlhttp.status==200){//readyState为4，表示ajax请求已经完成，status是目标url返回的http状态码，200表示服务器响应成功
+                    typeof fn === "function" && fn.call(this, xhr.responseText && JSON.parse(xhr.responseText));
+
+                    // 处理返回结果
+                }
+            }
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded"); //post需要设置Content-type，防止乱码
+            xmlhttp.send("username=zhangsan&age=10");//post需要将参数放在send方法，当然参数放在url也还是可以的，但不好
+        }else{
+            alert("您的浏览器不支持AJAX！");
+        }
+    };
+
+    send_request();
+```
+
+### 方案三
+
+```
+crossDomainAjax('http://www.somecrossdomaincall.com/?blah=123', function (data) {
+    // success logic
+});
+
+function crossDomainAjax (url, successCallback) {
+
+    // IE8 & 9 only Cross domain JSON GET request
+    if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+
+        var xdr = new XDomainRequest(); // Use Microsoft XDR
+        xdr.open('get', url);
+        xdr.onload = function () {
+            var dom  = new ActiveXObject('Microsoft.XMLDOM'),
+                JSON = $.parseJSON(xdr.responseText);
+
+            dom.async = false;
+
+            if (JSON == null || typeof (JSON) == 'undefined') {
+                JSON = $.parseJSON(data.firstChild.textContent);
+            }
+
+            successCallback(JSON); // internal function
+        };
+
+        xdr.onerror = function() {
+            _result = false;  
+        };
+
+        xdr.send();
+    } 
+
+    // IE7 and lower can't do cross domain
+    else if (navigator.userAgent.indexOf('MSIE') != -1 &&
+             parseInt(navigator.userAgent.match(/MSIE ([\d.]+)/)[1], 10) < 8) {
+       return false;
+    }    
+
+    // Do normal jQuery AJAX for everything else          
+    else {
+        $.ajax({
+            url: url,
+            cache: false,
+            dataType: 'json',
+            type: 'GET',
+            async: false, // must be set to false
+            success: function (data, success) {
+                successCallback(data);
+            }
+        });
+    }
+}
+```
+### 最终方案
+
+1.ie8/9为了数据接口一直,采用get方法跨域.要注意数据结构中,尽量不要有对象中包含子对象
+
+```
+            function postData(data, url, fn) {
+                debugLog("send Data------")
+                debugLog(data);
+
+                // IE8 & 9 only Cross domain JSON GET request
+                if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+                    var xdr = new XDomainRequest(); // Use Microsoft XDR
+                    xdr.open('get', url+'?' + toQueryString(data));
+                    xdr.onload = function () {
+                        typeof fn === "function" && fn.call(this, xdr.responseText);
+                    };
+
+                    xdr.onerror = function() {
+                        console.log("ajaxError")
+                    };
+
+                    xdr.send();
+                }else{
+                    var postData = JSON.stringify(data);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, true);
+                    xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");  // 添加http头，发送信息至服务器时内容编码类型
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {  // 304未修改
+                            typeof fn === "function" && fn.call(this, xhr.responseText);
+                        }
+                    };
+                    xhr.send(postData);
+                }
+            }
+
+            //对象转换为URL查询参数
+            function toQueryPair(key, value) {
+                if (typeof value === 'undefined') return key;
+                return key + '=' + encodeURIComponent(value === null ? '' : String(value));
+            }
+
+            //对象转换为URL查询参数
+            function toQueryString(obj) {
+                var ret = [];
+                for (var key in obj) {
+                    key = encodeURIComponent(key);
+                    var values = obj[key];
+                    if (values && values.constructor == Array) {   //数组
+                        var queryValues = [];
+                        for (var i = 0, len = values.length, value; i < len; i++) {
+                            value = values[i];
+                            queryValues.push(toQueryPair(key, value));
+                        }
+                        ret = ret.concat(queryValues);
+                    } else { //字符串
+                        ret.push(toQueryPair(key, values));
+                    }
+                }
+                return ret.join('&');
+            }
+```
+
+[jq如何实现ie 8 下跨域的？用原生该怎么写呢？](https://segmentfault.com/q/1010000010371623)
+
+[跨域](https://stackoverflow.com/questions/3362474/jquery-ajax-fails-in-ie-on-cross-domain-calls#11267937)(很不错)
+
+[CSSPod—AJAX 及其跨域实现](https://csspod.com/ajax-and-cors/)(看起来很好,但是没起作用)
+
+#### 原生格式化方式(考虑兼容性)
+```
+var _Url = 'http://baidu.com/login';
+var _Data = {user:'xiaomi',password:'123456'};
+    
+if (window.XDomainRequest) _Url = _Url + '?' + toQueryString(_Data); 
+$.ajax({
+     url: _Url,
+     data: _Data,
+     type: _Method,
+     dataType: 'json'
+     }).done(function (oResult) {
+          console.log(oResult)
+     })
+     
+//对象转换为URL查询参数
+function toQueryPair(key, value) {
+    if (typeof value === 'undefined') return key;
+    return key + '=' + encodeURIComponent(value === null ? '' : String(value));
+}
+
+//对象转换为URL查询参数
+function toQueryString(obj) {
+    var ret = [];
+    for (var key in obj) {
+        key = encodeURIComponent(key);
+        var values = obj[key];
+        if (values && values.constructor == Array) {   //数组
+            var queryValues = [];
+            for (var i = 0, len = values.length, value; i < len; i++) {
+                value = values[i];
+                queryValues.push(toQueryPair(key, value));
+            }
+            ret = ret.concat(queryValues);
+        } else { //字符串
+            ret.push(toQueryPair(key, values));
+        }
+    }
+    return ret.join('&');
+}
+```
+### 格式化方式(不考虑兼容性)
+```
+<head>
+
+</head>
+
+<body>
+<script>
+let obj = {
+
+    a:'aaa',
+    b:'bbbb',
+    c:{
+            c1:'c1c1c1',
+            c2:'c2c2c2',
+            c3:{
+            c3a:'c3ac3a',
+            c3b:'c3bc3b'
+            }
+    },
+    d:'ddd',
+}
+
+function encodeUrl(obj){
+
+let url ='';
+(function (obj){
+
+    let kvArr = Object.entries(obj);
+    kvArr.forEach(v=>{
+            if(Object.prototype.toString.call(v[1]) =='[object Object]')
+{
+
+                    arguments.callee(v[1]);
+            }else{
+                    url += v.join('=')+'&'
+            }
+    })
+    
+})(obj)
+return url.substring(0,url.length-1);
+}
+
+let res =encodeUrl(obj);
+console.log(res);
+</script>
+</body>
+```
+
+##  ActiveXObject 
+
+`IE 中可以使用 ActiveXObject 创建 Automation 对象，同时该对象得方法及属性名称大小写不敏感。其他浏览器均不支持此技术。为了最好的兼容性，应尽量避免使用这种技术`
+
+[BT9021: IE 中可以使用 ActiveXObject 创建 Automation 对象，同时该对象的方法及属性名称大小写不敏感](http://www.w3help.org/zh-cn/causes/BT9021)
 
 ## Form Data vs Request Payload区别
 

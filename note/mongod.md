@@ -301,3 +301,4 @@ var mySchema = new mongoose.Schema({
 
 [https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea](https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea)
 
+[collection是否需要动态创建](https://github.com/chemdemo/chemdemo.github.io/blob/master/issues/mongoose_collection.md )
