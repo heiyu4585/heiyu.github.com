@@ -302,3 +302,45 @@ var mySchema = new mongoose.Schema({
 [https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea](https://cnodejs.org/topic/4f71363f8a04d82a3d1e4aea)
 
 [collection是否需要动态创建](https://github.com/chemdemo/chemdemo.github.io/blob/master/issues/mongoose_collection.md )
+
+### mongosse 动态新增的 字段 无法查询
+
+mongoose的lean的用法
+
+项目中遇到一个问题，我使用find方法查询出来的结果，想通过JSON.stringify()将其序列化，发现没法操作，然后在stackoverflow找到了一个答案：
+
+`http://stackoverflow.com/questions/9952649/convert-mongoose-docs-to-json`
+这里使用到了lean方法
+
+官方解释：
+
+```
+Documents returned from queries with the lean option enabled are plain javascript objects,
+not MongooseDocuments. They have no save method, getters/setters or other Mongoose magic applied.
+```
+
+使用该方法，查询出来的数据是一个javascript对象，不是一个mongoose文档，不再具有save，getters/setters和其它mongoose提供的方法。
+
+Example:
+```
+new Query().lean() // true
+new Query().lean(true)
+new Query().lean(false)
+
+Model.find().lean().exec(function (err, docs) {
+  docs[0] instanceof mongoose.Document // false
+});
+
+
+http://mongoosejs.com/docs/api.html#query_Query-lean
+```
+[http://jiangli373.github.io/2014/11/21/mongoose%E7%9A%84lean%E7%9A%84%E7%94%A8%E6%B3%95/](http://jiangli373.github.io/2014/11/21/mongoose%E7%9A%84lean%E7%9A%84%E7%94%A8%E6%B3%95/)
+
+[Mongoose返回数据修改中遇到的坑](https://github.com/MrErHu/blog/issues/13)
+
+### 对于mongodb自动生成的_id如何查询？
+
+```
+> db.Users.find({"_id":ObjectId("54fd4c7102886ede83e02d28")})
+{ "_id" : ObjectId("54fd4c7102886ede83e02d28"), "name" : "foo" }
+```
