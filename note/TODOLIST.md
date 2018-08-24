@@ -10,13 +10,22 @@
 
 [和牛](https://msg.cnblogs.com/inbox)
 
-[fundebug 插件监控vue.js](https://docs.fundebug.com/notifier/javascript/framework/vuejs.html)
-
-
-[fundebug 安装](https://docs.fundebug.com/notifier/javascript/integration/npm.html)
 
 [人生苦短，了解一下前端必须明白的http知识点](https://juejin.im/post/5b34e6ba51882574d20bbdd4?utm_source=gold_browser_extension)
 
+
+[BAT前端经典面试问题：史上最最最详细的手写Promise教程](https://juejin.im/post/5b2f02cd5188252b937548ab)
+
+[ES7 Decorator 装饰者模式](https://juejin.im/entry/5b74e0525188256143054663?utm_source=gold_browser_extension)
+
+[小程序异常监控收集](https://juejin.im/post/5b1794f16fb9a01e2a0e4b01)
+
+[Vuex框架原理与源码分析](https://tech.meituan.com/vuex_code_analysis.html)
+
+
+[如何用保险保障自己的一生](https://www.zhihu.com/question/22316395/answer/100909780?from=profile_answer_card)
+
+[前端武林秘籍.txt](https://github.com/WsmDyj/Interview/blob/master/%E5%89%8D%E7%AB%AF%E6%AD%A6%E6%9E%97%E7%A7%98%E7%B1%8D.txt?1534755584470)
 ###重要
 [20118读书目录](https://wxnacy.com/2018-books/)
 
