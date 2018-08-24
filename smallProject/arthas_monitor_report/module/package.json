@@ -1,0 +1,15 @@
+{
+  "name": "@allin/arthas_monitor_report",
+  "version": "0.0.9",
+  "description": "arthas监控平台",
+  "main": "arthas_monitor_report.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
