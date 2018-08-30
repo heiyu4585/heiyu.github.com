@@ -66,3 +66,8 @@ git config --global credential.helper store
 
 [credential] 
 helper = store
+
+
+##参考资料
+
+[learngitbranching.js.org](http://learngitbranching.js.org/?demo)

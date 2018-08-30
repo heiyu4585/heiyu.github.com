@@ -44,3 +44,12 @@ server {
 https://eggjs.org/zh-cn/basics/controller.html#ctxhost
 
 nginx 那边要配 X-Forwarded-For，egg 这边开启 config.proxy
+
+
+todolist:
+
+1. 文件夹的插拔
+[官方gitter](https://gitter.im/eggjs/egg)
+
+
+2. [基于webpack的前端工程解决方案和egg+vue服务端客户端渲染项目实践 ]( http://hubcarl.github.io/blog/2017/04/15/webpack-project/)
