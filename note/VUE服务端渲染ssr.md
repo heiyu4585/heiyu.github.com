@@ -1,4 +1,5 @@
-****# vue服务端渲染ssr
+# vue服务端渲染ssr
+(已发博客 - 2018.8.24)
 
 ## ssr是什么
 
@@ -1524,6 +1525,3 @@ https://github.com/hilongjw/vue-ssr-hmr-template/issues/4
 #### 组件的异步加载模式,2.router,store为什么要改成 异步
 
 应用程序的代码分割或惰性加载，有助于减少浏览器在初始渲染中下载的资源体积，可以极大地改善大体积 bundle 的可交互时间 (TTI - time-to-interactive)。这里的关键在于，对初始首屏而言，"只加载所需"。
-
-
-
