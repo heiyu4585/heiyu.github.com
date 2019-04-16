@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>超多内推大奖</title>
+    <script src="/js/third-party/flexible.js"></script>
+    <link rel="stylesheet" href="./css/page01.css">
+</head>
+<body>
+<section class="wrap">
+    <div data-v-045992dd="" id="capture"><div data-v-045992dd="" class="top"></div> <div data-v-045992dd="" class="result"><p data-v-045992dd="" class="A0"><span data-v-045992dd="" class="a0-age">颈椎年龄</span><span data-v-045992dd="" class="num">73</span><span data-v-045992dd="" class="age-span">岁</span></p> <p data-v-045992dd="" class="A1">您的颈椎患病风险非常高，长期不正确使用或劳损极有可能严重伤害了您的颈椎，您需要尽快去医院就诊，或识别下方二维码，立即联系颈椎专家。</p> <ul data-v-045992dd="" class="A2TA4"><li data-v-045992dd=""><div data-v-045992dd=""><h3 data-v-045992dd="">韧带健康指数</h3> <ul data-v-045992dd=""><li data-v-045992dd=""></li><li data-v-045992dd=""></li><li data-v-045992dd=""></li></ul></div> <p data-v-045992dd="">劳损预警，要注意保护啦！</p></li> <li data-v-045992dd=""><div data-v-045992dd=""><h3 data-v-045992dd="">肌肉健康指数</h3> <ul data-v-045992dd=""><li data-v-045992dd=""></li><li data-v-045992dd=""></li></ul></div> <p data-v-045992dd="">有点小紧绷，有必要适当锻炼颈部</p></li> <li data-v-045992dd=""><div data-v-045992dd=""><h3 data-v-045992dd="">神经健康指数</h3> <ul data-v-045992dd=""><li data-v-045992dd=""></li></ul></div> <p data-v-045992dd="">您的颈部神经极有可能受到严重压迫，必须去医院就诊。</p></li></ul> <img data-v-045992dd="" src="/static/image/selfTesting/dengji03.png" alt="" class="dengji"> <div data-v-045992dd="" class="hr"></div> <div data-v-045992dd="" class="QRcode"><div data-v-045992dd="" class="QRcodeLeft"><img data-v-045992dd="" src="/static/image/selfTesting/WXcode.png" alt=""> <div data-v-045992dd=""><p data-v-045992dd="">扫描你的二维码</p> <p data-v-045992dd="">测试你的颈椎年龄</p></div></div> <div data-v-045992dd="" class="QRcodecenter"></div> <div data-v-045992dd="" class="QRcodeRight"><p data-v-045992dd="">本测试用例仅供参考</p> <p data-v-045992dd="">不作为医疗诊断使用</p></div></div></div></div>
+    <div style="width: 300px;height:200px;">
+        <h4 style="color: #000; "><a href=""></a>点击下载</h4>
+    </div>
+</section>
+
+
+
+<script src="/js/lib/jquery/jquery-2.1.0.min.js"></script>
+<script src="/pages/column/transcript/js/third_part/html2canvas.min.js"></script>
+<script src="./js/canvas2image.js"></script>
+<script>
+
+
+    function convert2canvas(ele) {
+        var cntElem = ele[0];
+        var shareContent = cntElem;//需要截图的包裹的（原生的）DOM 对象
+        var width = shareContent.offsetWidth; //获取dom 宽度
+        var height = shareContent.offsetHeight; //获取dom 高度
+        var canvas = document.createElement("canvas"); //创建一个canvas节点
+        var scale = 2; //定义任意放大倍数 支持小数
+        canvas.width = width * scale; //定义canvas 宽度 * 缩放
+        canvas.height = height * scale; //定义canvas高度 *缩放
+        canvas.getContext("2d").scale(scale, scale); //获取context,设置scale
+        var opts = {
+            scale: scale, // 添加的scale 参数
+            canvas: canvas, //自定义 canvas
+            // logging: true, //日志开关，便于查看html2canvas的内部执行流程
+            width: width, //dom 原始宽度
+            height: height,
+            useCORS: true // 【重要】开启跨域配置
+        };
+
+        html2canvas(shareContent, opts).then(function (canvas) {
+
+            var context = canvas.getContext('2d');
+            // 【重要】关闭抗锯齿
+            context.mozImageSmoothingEnabled = false;
+            context.webkitImageSmoothingEnabled = false;
+            context.msImageSmoothingEnabled = false;
+            context.imageSmoothingEnabled = false;
+
+            // 【重要】默认转化的格式为png,也可设置为其他格式
+            var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height);
+            // document.body.innerHTML="";
+            // document.body.appendChild(img);
+            ele.html("").append(img);
+            $(img).css({
+                "width": canvas.width / scale + "px",
+                "height": canvas.height / scale+ "px",
+            }).addClass('f-full');
+        });
+
+
+    }
+    // //下载
+    // function  downloadFile(fileName, content) {
+    //     let aLink = document.createElement('a');
+    //     let blob = this.base64ToBlob(content); //new Blob([content]);
+    //
+    //     let evt = document.createEvent("HTMLEvents");
+    //     evt.initEvent("click", true, true);//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+    //     aLink.download = fileName;
+    //     aLink.href = URL.createObjectURL(blob);
+    //
+    //     // aLink.dispatchEvent(evt);
+    //     //aLink.click()
+    //     aLink.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));//兼容火狐
+    // }
+    // //base64转blob
+    // function base64ToBlob(code) {
+    //     let parts = code.split(';base64,');
+    //     let contentType = parts[0].split(':')[1];
+    //     let raw = window.atob(parts[1]);
+    //     let rawLength = raw.length;
+    //
+    //     let uInt8Array = new Uint8Array(rawLength);
+    //
+    //     for (let i = 0; i < rawLength; ++i) {
+    //         uInt8Array[i] = raw.charCodeAt(i);
+    //     }
+    //     return new Blob([uInt8Array], {type: contentType});
+    // }
+
+
+
+
+
+    $(function () {
+
+        convert2canvas($("#capture"))
+        // setTimeout(function () {
+        //     let imgData = $("img").attr('src');
+        //     // downloadFile('1111111', imgData);
+        //
+        //     // 这里是获取到的图片base64编码,这里只是个例子哈，要自行编码图片替换这里才能测试看到效果
+        //     const imgUrl = imgData;
+        //     // 如果浏览器支持msSaveOrOpenBlob方法（也就是使用IE浏览器的时候），那么调用该方法去下载图片
+        //     if (window.navigator.msSaveOrOpenBlob) {
+        //         var bstr = atob(imgUrl.split(',')[1])
+        //         var n = bstr.length
+        //         var u8arr = new Uint8Array(n)
+        //         while (n--) {
+        //             u8arr[n] = bstr.charCodeAt(n)
+        //         }
+        //         var blob = new Blob([u8arr])
+        //         window.navigator.msSaveOrOpenBlob(blob, 'chart-download' + '.' + 'png')
+        //     } else {
+        //         // 这里就按照chrome等新版浏览器来处理
+        //         const a = document.createElement('a')
+        //         a.href = imgUrl
+        //         a.setAttribute('download', 'chart-download')
+        //         a.click()
+        //     }
+        // },1000)
+    })
+
+</script>
+</body>
+</html>
