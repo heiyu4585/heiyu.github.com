@@ -1,0 +1,51 @@
+﻿@charset "utf-8";
+
+@include normalize(mobile);
+
+@import "modules/_modalBox";
+@import "modules/_buttonModule";
+@import "modules/_loadingStatus";
+button, input, textarea {
+  outline: medium;
+  font-family: "microsoft yahei";
+  resize: none;
+}
+
+.main-inner-content {
+  height: 100%;
+  border: 1px solid transparent;
+}
+
+@keyframes submitIng {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+img {
+  content: normal !important;
+}
+
+html, body {
+  .picker{
+    bottom: 0;
+  }
+  .picker .picker-panel .picker-choose .cancel, .picker .picker-panel .picker-choose .confirm {
+    position: static;
+  }
+  .picker .picker-panel .picker-choose {
+    font-size: 28px;
+  }
+  .picker .picker-panel .picker-choose .cancel {
+    float: left;
+  }
+  .picker .picker-panel .picker-choose .confirm {
+    float: right;
+  }
+
+}

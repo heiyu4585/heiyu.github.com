@@ -1,0 +1,921 @@
+/**
+ * @Desc：患教终端模版UI H5 小程序 app
+ * @Usage:
+ * @Notify：
+ * @Depend：
+ *
+ * Created by jk on 2018/12/19.
+ */
+  .art-noDataList{
+    text-align: center;
+    margin-top: 200px;
+    color: #909090;
+    font-size: 40px;
+  }
+ .healthInfo{
+   padding-bottom: 100px;
+   #helthType{
+     display: none;
+     visibility: hidden;
+   }
+   .doctorSetTop{
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     padding: 20px 0;
+     background: #F5F9F9;
+     opacity: 1;
+     z-index: 2;
+     padding-left: 30px;
+     @include clearfix();
+     .xiding-Box-logo{
+       float: left;
+       img{
+         width: 48px;
+         height: 48px;
+         border-radius: 50%;
+       }
+     }
+     .xiding-Box-text{
+       padding-left: 20px;
+       overflow:hidden;
+       white-space:nowrap;
+       text-overflow:ellipsis;
+       .xd-text-first{
+         color: #25324D;
+         font-size: 34px;
+       }
+       .xd-text-second{
+        margin-left: 18px;
+        font-size: 32px;
+        color: #81858F;
+       }
+       .xd-text-third{
+        margin-left: 18px;
+        font-size: 32px;
+        color: #81858F;
+       }
+     }
+   }
+  //  头部
+  .doctorInfo{
+     .artBox-t-title{
+       color: #222222;
+       font-size: 46px;
+       font-weight: bold;
+       margin: 0 30px;
+       padding-bottom: 32px;
+       padding-top: 30px;
+       word-break: break-all;
+     }
+     .artical-publistTime{
+       font-size: 28px;
+       color: #AAAAAA;
+       margin-left: 30px;
+       padding-bottom: 32px;
+     }
+     .artBox-t-authorInfo{
+       &.app{
+         font-size: 30px;
+         .art-app-nameBox{
+          color: #999999;
+          margin-left: 30px;
+           .art-app-name{
+             color: #6175AE;
+             font-weight: bold;
+           }
+         }
+         .art-app-view{
+           color: #9B9B9B;
+           margin-left: 25px;
+         }
+         .art-app-like{
+           color: #9B9B9B;
+           margin-left: 25px;
+         }
+       }
+       &.one{
+          padding: 0 30px;
+          .content {
+            border-radius: 8px;
+            width: 100%;
+            min-height: 20vw;
+            box-sizing: border-box;
+            padding: 20px 30px;
+            position: relative;
+            background:#F3F7F7;
+            &.app{
+              border: 1px solid #A9CFFF;
+            }
+            img {
+              width: 96px;
+              height: 96px;
+              display: block;
+              float: left;
+              border-radius: 50%;
+              margin-right: 24px;
+            }
+            .message {
+              overflow: hidden;
+              .doctorName {
+                font-weight: bold;
+                font-size: 34px;
+                color: #25324D;
+                margin-right: 20px;
+                display: inline-block;
+                margin-bottom: 10px;
+              }
+              .doctorLevel {
+                display: inline-block;
+                font-size: 30px;
+                color: #9DA3AF;
+                letter-spacing: 0;
+                line-height: 30px;
+              }
+              .hospital {
+                font-size: 30px;
+                color: #25324D;
+                letter-spacing: 0;
+                line-height:1.5;
+                max-width: 370px;
+                @include ellipsis();
+              }
+            }
+            .icon-next {
+              color: #07B6AC;
+              position: absolute;
+              display: block;
+              right: 20px;
+              top: 50%;
+              height: 46px;
+              width: 132px;
+              border: 1px solid #07B6AC;
+              border-radius:4px;
+              margin-top: -23px;
+              -webkit-border-radius:4px;
+              -moz-border-radius:4px;
+              -ms-border-radius:4px;
+              -o-border-radius:4px;
+              text-align: center;
+              font-size: 28px;
+              line-height: 46px;
+            }
+          }
+       }
+       &.mult{
+        position: relative;
+        padding-bottom: 38px;
+         .artBox-t-mult{
+           text-align: center;
+           position: relative;
+           margin-bottom: 40px;
+           &.top{
+             color: #999999;
+            .art-t-lineLfet{
+              position: absolute;
+              display: inline-block;
+              left:30px;
+              width: 230px;
+              height: 1px;
+              background-color: #E3E5E9;
+              top: 50%;
+            }
+            .art-t-lineRight{
+             position: absolute;
+             display: inline-block;
+             right: 30px;
+             width: 230px;
+             height: 1px;
+             background-color: #E3E5E9;
+             top: 50%;
+           }
+           }
+         }
+         .artBox-t-mult{
+           &.doclist{
+             @include clearfix();
+             margin-left: 10px;
+             white-space:nowrap;
+             overflow-x: scroll;
+             overflow-y: hidden;
+            //  height: 140px;
+             margin-bottom: 0;
+             .docUlbox{
+                margin-right: 100px;
+                display: inline-block;
+             }
+             .artBox-t-docItem{
+               display: inline-block;
+               list-style: none;
+               margin: 0 20px;
+               a{
+                 display: inline-block;
+               }
+               .art-docItem-logo{
+                 display: inline-block;
+                 width: 96px;
+                 height: 96px;
+                 border-radius: 50%;
+               }
+               .art-docItem-name{
+                 color: #666666;
+                 font-size: 30px;
+                 display: block;
+                //  margin-bottom: 5px;
+               }
+             }
+           }
+         }
+         .artBox-t-docCover{
+          width: 110px;
+          height: 160px;
+          background-color: #FFFFFF;
+          opacity: 0.96;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+       }
+     }
+  }
+  //  内容区域
+  .artBox-center{
+    margin: 40px 30px 0 30px;
+    &.app{
+      margin-top: 40px;
+    }
+    //大标题
+    .art-center-largeTitle{
+      font-size: 40px;
+      color: #FF7E4D;
+      margin-top: 48px;
+      margin-bottom: 48px;
+      word-break: break-all;
+      font-weight: bold;
+    }
+    //小标题
+    .art-center-smileTitle{
+      font-size: 36px;
+      color: #222222;
+      margin-top: 48px;
+      margin-bottom: 48px;
+      font-weight: bold;
+    }
+    .art-center-mainListBox{
+      .art-center-mainListItem{
+        position: relative;
+        list-style: none;
+        padding-left: 24px;
+        @include clearfix();
+        .art-center-listItemIcon{
+          display: block;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #000000;
+          float: left;
+          margin-top: 16px;
+        }
+        .art-center-listItemText{
+          color: #333333;
+          font-size: 34px;
+          line-height: 56px;
+          padding-left: 16px;
+          margin-bottom: 4px;
+          word-break: break-all;
+        }
+      }
+      
+    }
+    .art-center-mainText{
+      font-size: 34px;
+      line-height: 56px;
+      color: #333333;
+      padding-left: 24px;
+      word-break: break-all;
+    }
+    .art-center-imgBox{
+      width: 100%;
+      font-size: 0;
+      margin: 68px 0;
+      img{
+        width:100%;
+        height:100%;
+      }
+    }
+    // video  
+    .art-center-videoBox{
+      margin-top: 68px;
+      margin-bottom: 68px;
+      .art-center-video{
+        display: none;
+        width: 100%;
+        height: 388px;
+      }
+      // 视频封面 默认图
+      .art-center-coverBox{
+        display: none;
+        width: 100%;
+        height: 388px;
+        position: relative;
+        .art-center-coverImg{
+          width: 100%;
+          height: 100%;
+        }
+        .art-center-playBtn{
+          position: absolute;
+          display: block;
+          width: 82px;
+          height: 82px;
+          top: 50%;
+          left: 50%;
+          margin-left: -41px;
+          margin-top: -41px;
+          background: url("/static/image/mp/index/1.1.5/videoPlayBtn.png") no-repeat center;
+          background-size: 100% 100%;
+
+        }
+        .art-center-time{
+          position: absolute;
+          display: block;
+          bottom: 20px;
+          right: 28px;
+          font-size: 28px;
+          color: #FFFFFF;
+        }
+      }
+      //转码中
+      .art-center-noPlay{
+        width: 100%;
+        height: 388px;
+        .art-center-noPlayImg{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    //audio
+    .art-center-audio {
+      width: 100%;
+      height: 100px;
+      white-space: nowrap;
+      line-height: 100px;
+      background: #F2F4F7;
+      border-radius: 8px;
+      .audioPlayIcon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+        margin-left: 40px;
+        margin-bottom: 0;
+      }
+      .audioPlayWire {
+        display: inline-block;
+        width: 420px;
+        height: 4px;
+        background: #DADDE4;
+        vertical-align: middle;
+        margin: 0 35px;
+      }
+      .audioPlayTime {
+        display: inline-block;
+        font-size: 30px;
+        color: #6483E9;
+        vertical-align: middle;
+      }
+    }
+    //app publish time
+    .artical-publishApp{
+      text-align: right;
+      font-size: 30px;
+      color: #9B9B9B;
+      padding-top: 30px;
+    }
+  }
+  //  分享 wx
+  .artBox-share-wx{
+     position: fixed;
+     bottom: 0;
+     width: 100%;
+     height: 100px;
+     text-align: center;
+     background: #FFFFFF;
+     box-shadow:0px -6px 22px 0px rgba(0,0,0,0.1);
+      .artBox-share-text{
+        text-align: center;
+        display: inline-block;
+        margin: 0 auto;
+        padding-left: 66px;
+        line-height: 100px;
+        position: relative;
+        .artBox-share-icon{
+          position: absolute;
+          display: block;
+          width: 54px;
+          height: 54px;
+          background: url("/static/image/mp/index/1.1.5/weixinshare.png") no-repeat center;
+          background-size: 52px 52px;
+          left: 0;
+          top: 50%;
+          margin-top: -27px;
+        }
+      }
+   }
+  .artBox-share-wxCover{
+    display: none;
+    .art-sharewx-cover{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width:100%;
+      height:100%;
+      background:#000000;
+      opacity:0.75;
+      z-index: 2;
+    }
+    .art-sharewx-contentBox{
+      position: fixed;
+      top: 0;
+      right: 120px;
+      z-index: 2;
+      .art-sharewx-content{
+        .art-sharewx-icon{
+          width: 100%;
+          height: 190px;
+          background: url("/static/image/mp/index/1.1.5/shou.png") no-repeat right;
+          background-size: 136px 190px;
+        }
+        p{
+          color: #ffffff;
+          font-size: 36px;
+          margin-top: 10px;
+        }
+        .art-sharewx-btn{
+          background: #ffffff;
+          height:45px;
+          background:rgba(255,253,250,1);
+          border-radius:8px;
+          font-size: 32px;
+          color: #07B6AC;
+          padding: 20px 0;
+          text-align: center;
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+  //  分享 h5
+  .artBox-share-h5{
+    display: none;
+    .art-shareH5-cover{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width:100%;
+      height:100%;
+      background:#000000;
+      opacity:0.75;
+      z-index: 2;
+    }
+    .art-shareH5-content{
+      position: fixed;
+      z-index: 2;
+      top: 50%;
+      background: #FFFFFF;
+      border-radius: 20px;
+      left: 60px;
+      right: 60px;
+      margin-top: -400px;
+      .shareh5-content-title{
+        text-align: center;
+        margin-top: 60px;
+        margin-bottom: 50px;
+        .shareh5-content-text{
+          font-size: 46px;
+          color: #222222;
+          display: inline-block;
+          position: relative;
+          padding-left: 72px;
+          .shareh5-content-icon{
+            position: absolute;
+            display:inline-block;
+            width: 60px;
+            height: 60px;
+            background: url("/static/image/mp/index/1.1.5/smile_big.png") no-repeat center;
+            background-size: 58px 58px;
+            left: 0;
+          }
+        }
+      }
+      .shareh5-content-listBox{
+        .shareh5-content-item{
+          font-size: 32px;
+          color: #444444;
+          position: relative;
+          padding-left: 84px;
+          margin-bottom: 10px;
+          .shareh5-content-itemIocn{
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            background: url("/static/image/mp/index/1.1.5/pointgreen.png") no-repeat center;
+            background-size: 24px 24px;
+            left: 44px;
+            top: 50%;
+            margin-top: -12px;
+          }
+        }
+      }
+      .shareh5-imgbox{
+        padding-top: 50px;
+        .shareh5-img{
+          display: block;
+          width: 258px;
+          height: 258px;
+          margin: 0 auto;
+        }
+        .shareh5-imgtext{
+          font-size: 34px;
+          color: #222222;
+          text-align: center;
+          margin-top: 40px;
+          padding-bottom: 60px;
+        }
+      }
+    }
+  }
+  //  悬浮窗
+  .artBox-fixTip{
+     display: none;
+     position: fixed;
+     z-index: 1;
+     right: 30px;
+     bottom: 140px;
+     width: 192px;
+     height: 154px;
+     background: url("/static/image/mp/index/1.1.5/qipao.png") no-repeat center;
+     background-size: 100% 100%;
+     .artBox-tipContent{
+      position: relative;
+      padding-top: 26px;
+      height: 100%;
+      box-sizing: border-box;
+       .art-docName{
+         color: #FFFFFF;
+         font-size: 30px;
+         text-align: center;
+       }
+       .closeTips-btn{
+         display: block;
+         position: absolute;
+         top: -22px;
+         right: -12px;
+         width: 52px;
+         height: 52px;
+         background: url("/static/image/mp/index/1.1.5/close.png") no-repeat center;
+         background-size: 100% 100%;
+       }
+     }
+  }
+  .art-app-docList-box{
+    display: none;
+    .art-appDoclist-cover{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width:100%;
+      height:100%;
+      background:#000000;
+      opacity:0.75;
+      z-index: 2;
+    }
+    .art-docList-contentBox{
+      position: fixed;
+      z-index: 2;
+      top: 160px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      left: 60px;
+      right: 60px;
+      .art-docList-showContetn{
+        .art-docList-title{
+          height: 120px;
+          width: 100%;
+          font-size: 36px;
+          text-align: center;
+          line-height: 120px;
+          color: #000000;
+        }
+        .art-docList-listItemBox{
+          max-height: 435px;
+          overflow-y: scroll;
+          // margin-top: 60px;
+          .art-border-line{
+            background: #E9EAED;
+            height: 1px;
+            width: 100%;
+          }
+          .art-docList-item{
+            list-style: none;
+
+            .art-doc-name{
+              position: relative;
+              display: block;
+              padding: 24px 24px 24px 102px;
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+              .art-docLogo{
+                position: absolute;
+                display: inline-block;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                left: 30px;
+                top: 50%;
+                margin-top: -28px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+ }
+
+ //老模版css
+ 
+ .healthInfo {
+  &.tmp {
+    margin-bottom: 130px;
+  }
+  header {
+    padding: 30px;
+    box-sizing: border-box;
+    height: 112px;
+    position: relative;
+    background: #fff;
+    text-align: center;
+    padding-bottom: 50px;
+    display: none;
+    &.browseEnv {
+      display: block;
+    }
+    .icon-back {
+      position: absolute;
+      display: block;
+      left: 30px;
+      top: 30px;
+      height: 40px;
+      width: 40px;
+      background: url("/static/image/img00/healthKnowledge/arrow.png") no-repeat;
+      background-size: 25px 40px;
+    }
+    .share {
+      position: absolute;
+      display: block;
+      right: 30px;
+      top: 30px;
+      width: 124px;
+      height: 52px;
+      line-height: 52px;
+      background: #07B6AC;
+      border-radius: 100px;
+      color: #fff;
+      font-size: 28px;
+      text-align: center;
+      .icon-share {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        margin-right: 8px;
+        background: url("/static/image/img00/healthKnowledge/share.png") no-repeat;
+        background-size: contain;
+        vertical-align: middle;
+      }
+    }
+  }
+  .main-title {
+    padding: 0 30px;
+    font-size: 46px;
+    color: #000000;
+    line-height: 1.5;
+    padding-top: 48px;
+    padding-bottom: 50px;
+    background: #fff;
+    font-weight: bold;
+    word-break: break-all;
+    .time {
+      margin-top:22px;
+      font-size: 28px;
+      color: #909090;
+      font-weight: normal;
+      .resourcesOrder {
+        display: none;
+        margin-left: 40px;
+        &.show{
+          display: inline;
+        }
+      }
+    }
+  }
+  .knowledgeInfo {
+    background: #fff;
+    padding: 80px 30px 30px;
+    overflow-x: hidden;
+    p {
+      font-size: 30px;
+      color: #444444;
+      line-height: 1.5;
+      margin-bottom: 32px;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+    img {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    video {
+      width: 100%;
+    }
+    .content.app .videoInfo .videoStyleOrder{
+      .videoPlayBox{
+        visibility: hidden;
+      }
+      .img-preview {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+      .videoPlayBtn {
+        display: block !important;
+        width: 144px;
+        height: 144px;
+        margin-bottom: 0;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 3;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .videoInfo {
+      padding: 0 0 80px;
+      background: #fff;
+      .videoStyleOrder {
+        width: 100%;
+        height:380px;
+        position: relative;
+        margin-bottom: 40px;
+        .videoPlayBox {
+          width: 100%;
+          height:380px;
+          //visibility: hidden;
+          @include iphoneX(){
+            object-fit: cover;
+          }
+        }
+        .img-preview {
+          display: none;
+          //position: absolute;
+          //top: 0;
+          //right: 0;
+          //bottom: 0;
+          //left: 0;
+          //width: 100%;
+          //height: 100%;
+          //z-index: 2;
+        }
+        .videoPlayBtn {
+          display: none;
+          // display: block;
+          // width: 144px;
+          // height: 144px;
+          // margin-bottom: 0;
+          // border-radius: 50%;
+          // position: absolute;
+          // left: 50%;
+          // top: 50%;
+          // z-index: 3;
+          // transform: translate(-50%, -50%);
+        }
+      }
+      .title {
+        font-size: 30px;
+        color: #444444;
+        line-height: 1.5;
+        margin-bottom: 40px;
+      }
+      .describe {
+        font-size: 30px;
+        color: #444444;
+        line-height: 1.5;
+      }
+    }
+    .audioInfo {
+      width: 100%;
+      height: 100px;
+      white-space: nowrap;
+      line-height: 100px;
+      background: #F2F4F7;
+      border-radius: 4px;
+      margin-top: 28px;
+      margin-bottom: 40px;
+      .audioPlayIcon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+        margin-left: 40px;
+        margin-bottom: 0;
+      }
+      .audioPlayWire {
+        display: inline-block;
+        width: 420px;
+        height: 4px;
+        background: #DADDE4;
+        vertical-align: middle;
+        margin: 0 35px;
+      }
+      .audioPlayTime {
+        display: inline-block;
+        font-size: 30px;
+        color: #29A3A3;
+        vertical-align: middle;
+      }
+    }
+  }
+  .skeleton_content{
+    border: 1px solid #B5E9E6;
+    border-radius: 8px;
+    width: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    .skeleton_logo{
+      width: 96px;
+      height: 96px;
+      display: block;
+      float: left;
+      border-radius: 50%;
+      margin-right: 24px;
+      background:#f4f4f4;
+    }
+    .skeleton_message{
+      overflow: hidden;
+      .skeleton_doctorName {
+        width:160px;
+        height:40px;
+        margin-right: 20px;
+        display: inline-block;
+        background:#f4f4f4;
+      }
+      .skeleton_doctorLevel {
+        display: inline-block;
+        width:120px;
+        height:40px;
+        background:#f4f4f4;
+      }
+      .skeleton_hospital {
+        margin-top:10px;
+        width:400px;
+        height:40px;
+        background:#f4f4f4;
+      }
+    }
+  }
+}
+
+.from-tmp-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 34px 0;
+  text-align: center;
+  background-color: #07B6AC;
+  z-index: 5;
+  span {
+    font-size: 32px;
+    color: #fff;
+  }
+}
+

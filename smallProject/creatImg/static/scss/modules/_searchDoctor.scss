@@ -1,0 +1,131 @@
+@import "../library/common-modules";
+$main-color:#5BD7CF;
+
+
+
+//医生列表
+.searchDoctorItem{
+  list-style:none;
+  &:last-child{
+    border-bottom: none;
+  }
+  &>a{
+    display: inline-block;
+    @include clearfix();
+  }
+  @include clearfix();
+  padding: 44px 40px 32px;
+  .searchDoctor-l{
+    float: left;
+    width:100px;
+    img{
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+    }
+    a{
+      display: inline-block;
+      width: 76px;
+      height: 76px;
+    }
+  }
+  .searchDoctor-r{
+    float: right;
+    width: 570px;
+    cursor:pointer;
+    em {
+      color: #00BEAF;
+      font-style: normal;
+    }
+    .searchDoctorInfo{
+      display: table;
+      .searchDoctorName{
+        font-size:18px;
+        color: #222222;
+        display: table-cell;
+        padding-right: 28px;
+        max-width: 234px;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
+      .searchDoctorPost{
+        font-size:16px;
+        display: table-cell;
+        color: #B3B9C4;
+
+      }
+    }
+    .searchDoctorHospital{
+      font-size:17px;
+      display: block;
+      margin-top:10px;
+      color: #555555;
+      line-height: 1;
+
+    }
+    .searchDoctorGood{
+      font-size:17px;
+      color: #909090;
+      padding-top:20px;
+      overflow : hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+
+//底部搜索条件
+.searchFooter{
+  position: fixed;
+  height: 88px;
+  width: 750px;
+  display: flex;
+  background: #FFFFFF;
+  box-shadow: 0 -1px 4px 0 #EFF1F6;
+  bottom: 0px;
+  div{
+    flex: 1;
+    line-height: 88px;
+    text-align: center;
+    span{
+      font-size:16px;
+      color: #546481;
+      &::after{
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        content: "";
+        margin-left: 12px;
+        background: url("/image/img00/directOperation/search doctor_default@2x.png") no-repeat center;
+        background-size: contain;
+      }
+    }
+    &.active{
+      span{
+        color: #00D6C6;
+        &::after{
+          background: url("/image/img00/directOperation/search doctor_activate@2x.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+    }
+  }
+  div + div{
+    position: relative;
+    &::before{
+      display: inline-block;
+      content: "";
+      width: 1px;
+      height: 30px;
+      background: #F3F6F7;
+      position: absolute;
+      left: 0;
+      top:50%;
+      margin-top: -15px;
+    }
+  }
+}

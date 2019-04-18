@@ -1,0 +1,217 @@
+/**
+ * @Desc：预约门诊日历表
+ * @Usage:
+ * @Notify：
+ * @Depend：
+ *
+ * Created by gubowen on 2017/5/3
+ */
+.data-diagram {
+  margin-top: 50px;
+  width: 100%;
+  position: relative;
+
+  header {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 30px;
+    color: #AAAAAA;
+    letter-spacing: 0;
+    line-height: 20px;
+    dl {
+      background: #F9FDFC;
+      box-shadow: 2px 0 5px 0 rgba(0, 0, 0, 0.10);
+      dd {
+        display: block;
+        width: 68px;
+        height: 148px;
+        line-height: 1.5;
+        text-align: center;
+        padding: 16px;
+        box-sizing: border-box;
+        position: relative;
+        &:first-child {
+          height: 120px;
+          border-top: 0;
+        }
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          width: 50%;
+          height: 1px;
+          left: 25%;
+          background: #DEDEDE;
+        }
+      }
+
+    }
+  }
+
+  .content {
+    width: 100%;
+    overflow: auto;
+    & > div {
+      .notClinic{
+        padding:0;
+        text-align:center;
+        line-height:565px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+      }
+      margin-left: 68px;
+      white-space: nowrap;
+
+      & > article {
+        display: inline-block;
+
+        vertical-align: top;
+        &:first-child {
+          border-width: 1px 1px 1px 1px;
+        }
+        ul {
+          width: auto;
+          border-color: #d8d8d8;
+          border-style: solid;
+          border-width: 1px 1px 1px 0;
+          li {
+            width: 148px;
+            height: 148px;
+            border-color: #d8d8d8;
+            border-style: solid;
+            border-width: 0 0 1px 0;
+            text-align: center;
+            .day {
+              padding-top: 40px;
+            }
+
+            .week {
+              padding-top: 12px;
+            }
+
+            i {
+              margin-top: 10px;
+              width: 60px;
+              height: 60px;
+              display: inline-block;
+            }
+
+
+
+            &:first-child {
+              height: 120px;
+              border-top: 0;
+              font-size: 26px;
+              color: #555555;
+              letter-spacing: 0;
+              line-height: 26px;
+            }
+
+          }
+        }
+
+      }
+    }
+
+  }
+
+  .explain {
+    ul {
+      li {
+        width: 32.5%;
+        display: inline-block;
+        height: 120px;
+        padding: 32px;
+        font-size: 24px;
+        color: #555;
+        letter-spacing: 0;
+        line-height: 24px;
+        text-align: center;
+        box-sizing: border-box;
+        position: relative;
+        i {
+          width: 40px;
+          height: 40px;
+          background-size: 100% 100%;
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 8px;
+        }
+
+        .money {
+          color: #909090;
+        }
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          right: 0;
+          height: 50%;
+          width: 1px;
+          top: 25%;
+          background: #DEDEDE;
+        }
+
+        &:last-child:after {
+          display: none;
+        }
+
+      }
+    }
+  }
+
+  .good {
+    background: url("/image/img00/doctorMain/order_common_unclickable@2x.png") no-repeat;
+    background-size: 100% 100%;
+    &.on {
+      background: url("/image/img00/doctorMain/order_common@2x.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+
+  .better{
+    background: url("/image/img00/doctorMain/order_specialist_unclickable@2x.png") no-repeat;
+    background-size: 100% 100%;
+    &.on {
+      background: url("/image/img00/doctorMain/order_specialist@2x.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+
+  .best {
+    background: url("/image/img00/doctorMain/order_particularly_unclickable@2x.png") no-repeat;
+    background-size: 100% 100%;
+    &.on {
+      background: url("/image/img00/doctorMain/order_particularly@2x.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}
+.select-hospital{
+  margin-top:60px;
+  color: #6B7698;
+  font-size:16px;
+  text-align: center;
+  line-height: 1;
+  .select-icon-down{
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+    background: url("/image/img00/doctorShare/spTemp_nav_two_bg_up.png") no-repeat center;
+    background-size: contain;
+    margin-left: 8px;
+    vertical-align: 6px;
+  }
+  .select-icon-up{
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+    background: url("/image/img00/doctorShare/spTemp_nav_two_bg_down.png") no-repeat center;
+    background-size: contain;
+    margin-left: 8px;
+    vertical-align: 6px;
+  }
+}

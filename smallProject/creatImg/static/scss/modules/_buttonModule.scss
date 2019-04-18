@@ -1,0 +1,52 @@
+/**
+ * @Desc：
+ * @Usage:
+ * @Notify：
+ * @Depend：
+ *
+ * Created by qiangkailiang on 2017/2/23
+ */
+
+.btn-primary {
+  border-radius: 9999px;
+  background-color: #00d6c6;
+  text-align: center;
+  padding: 15px 0;
+  box-sizing: border-box;
+  font-size:32px;
+  color: #fff;
+  outline: medium;
+  cursor: pointer;
+}
+
+.btn-hollow{
+  border-radius: 9999px;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 15px 0;
+  box-sizing: border-box;
+  font-size:32px;
+  color: #00beaf;
+  border: 1px solid #00D6C6;
+  outline: medium;
+}
+.btn-green{
+  display:inline-block;
+  margin-left:12px;
+  width:140px;
+  line-height:50px;
+  font-size:26px;
+  border-radius: 200px;
+  border:1px solid #00d6c6;
+  color:#00d6c6;
+}
+.btn-gray{
+  display:inline-block;
+  margin-left:12px;
+  width:140px;
+  line-height:50px;
+  font-size:26px;
+  border-radius: 200px;
+  border:1px solid #aaa;
+  color:#aaa;
+}

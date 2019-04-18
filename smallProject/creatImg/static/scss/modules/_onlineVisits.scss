@@ -1,0 +1,191 @@
+/**
+ * @Desc：网上门诊弹层
+ * @Usage:
+ * @Notify：
+ * @Depend：
+ *
+ * Created by wangjingrong on 2017/5/3
+ */
+.mask_layer {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.50);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  transition:all 0.4s ease-in-out;
+  &.show{
+    opacity: 1;
+    visibility: visible;
+    .onlineVisit_mask{
+      opacity: 1;
+      transform:translateY(0);
+
+    }
+  }
+  .onlineVisit_mask {
+    width: 100%;
+    background: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    transform:translateY(100%);
+    opacity: 0;
+    transition:all 0.2s 0.1s ease-in-out;
+    .swiper-slide {
+      width: 100%;
+      .icon_close_mask {
+        float: right;
+        margin-right: 20px;
+        padding-left: 40px;
+        width: 40px;
+        height: 40px;
+        background: url("/image/img00/doctorMain/pay_close@2x.png") no-repeat center;
+      }
+      .visit_tiny_tip {
+        padding: 36px 0 0 40px;
+        color: #aaa;
+        font-size:12px;
+      }
+      .inquiryType {
+        margin-top: 90px;
+        text-align: center;
+        font-weight: normal;
+        color: #222;
+        font-size:18px;
+        span {
+          padding-left: 16px;
+          color: #777;
+          font-size:15px;
+        }
+        &.inquiryType_normal:before {
+          display: inline-block;
+          content: '';
+          width: 40px;
+          height: 40px;
+          margin-right: 12px;
+          vertical-align: sub;
+          background: url("/image/img00/doctorMain/normal_inquiry.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.inquiryType_special:before {
+          display: inline-block;
+          content: '';
+          width: 40px;
+          height: 40px;
+          margin-right: 12px;
+          vertical-align: sub;
+          background: url("/image/img00/doctorMain/urgent_inquiry.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        &.inquiryType_urgent:before {
+          display: inline-block;
+          content: '';
+          width: 40px;
+          height: 40px;
+          margin-right: 12px;
+          vertical-align: sub;
+          background: url("/image/img00/doctorMain/specail_inquiry.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .dox_cando {
+        padding: 0 40px;
+        margin-top: 50px;
+        @include clearfix();
+        li {
+          float: left;
+          margin: 0 50px 30px 0;
+          color: #777;
+          font-size:13px;
+          &:before {
+            display: inline-block;
+            content: "";
+            margin-right: 15px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #909090;
+            vertical-align: 0.1rem;
+          }
+        }
+      }
+      .why_charge {
+        figcaption {
+          padding-left: 60px;
+          color: #aaa;
+          font-size:10px;
+          margin-bottom:50px;
+          &:before {
+            display: inline-block;
+            content: "";
+            margin-right: 6px;
+            width: 28px;
+            height: 28px;
+            background: url("/image/img00/doctorMain/pay_prompt@2x.png") no-repeat center;
+            background-size: 100% 100%;
+            vertical-align: middle;
+          }
+        }
+        .charge_reason {
+          margin: 24px 48px 56px;
+          padding: 30px;
+          background: #F9FBFB;
+          border-radius: 4px;
+          color: #aaa;
+          font-size:14px;
+          line-height: 40px;
+          display: none;
+        }
+      }
+      .go_payment {
+        display: block;
+        width: 570px;
+        line-height: 88px;
+        font-size:16px;
+        color: #fff;
+        text-align: center;
+        background: #00D6C6;
+        border-radius: 100px;
+        margin: 0 auto 48px;
+      }
+    }
+    .swiper-pagination {
+      .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 20px;
+        opacity: 0.1;
+      }
+      .swiper-pagination-bullet-active {
+        background: #aaa;
+        opacity: 1;
+      }
+    }
+  }
+}
+.moudle_title {
+  margin-left: 28px;
+  padding-top: 50px;
+  color: #555;
+  font-size:16px;
+  font-weight: normal;
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 3px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background: #00D6C6;
+  }
+}
+
+
+

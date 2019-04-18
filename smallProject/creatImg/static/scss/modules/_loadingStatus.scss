@@ -1,0 +1,48 @@
+/**
+ * @Desc：
+ * @Usage:
+ * @Notify：
+ * @Depend：
+ *
+ * Created by qiangkailiang on 2017/2/27
+ */
+
+.middle-tip-box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+
+}
+
+.middle-tip-modal {
+  @include middle-unknown();
+  .middle-tip-box-text {
+    & > img {
+      @include circle(40px,transparent);
+      animation:rotate 1s linear forwards infinite !important;
+    }
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.popup-tips{
+  background:rgba(0,0,0,0.8);
+  border-radius: 12px;
+  font-size:30px;
+  color: #fff;
+  padding:30px 30px;
+  z-index: 6;
+  transform-origin: 0 0;
+}
