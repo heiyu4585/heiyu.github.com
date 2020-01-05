@@ -1,5 +1,30 @@
 #nginx相关操作
+
+
+##mac相关
+
+
 mac装了两个nginx~
+
+
+log目录:`/usr/local/var/log/nginx`
+
+安装路径 `/usr/local/etc/nginx`
+
+默认配置:
+sudo nginx
+
+启动唯医:
+sudo nginx -c /usr/local/etc/nginx/weiyi.conf 
+sudo nginx -c /usr/local/etc/nginx/weiyi.conf  -s reload
+
+查看所有nginx进程
+
+ps -ef|grep nginx
+
+关闭所有的nginx进程
+sudo pkill -9 nginx 
+
 
 ## Nginx配置信息相关配置
 
@@ -22,10 +47,6 @@ Nginx全局配置`/etc/nginx/nginx.conf`
 
 - 看日志 `/usr/local/nginx/logs或/var/log/nginx`目录下找到`access.log`和`error.log`
 
-### mac 
-log目录:`/usr/local/var/log/nginx`
-
-安装路径 `/usr/local/etc/nginx`
 
 ### 192.168.1.172
 

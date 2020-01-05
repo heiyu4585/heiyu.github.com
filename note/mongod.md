@@ -6,6 +6,7 @@
 ## mongoose
 
 ### [中文api](https://mongoosedoc.top/docs/documents.html)
+
 #### 在项目中安装mongoose
 
 `cnpm install mongoose`
