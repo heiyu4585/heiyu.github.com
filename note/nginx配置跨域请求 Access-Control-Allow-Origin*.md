@@ -1,4 +1,4 @@
-# nginx|Nginx配置跨域请求 Access-Control-Allow-Origin *
+# nginx|Nginx配置跨域请求 Access-Control-Allow-Origin*
 
 当出现403跨域错误的时候 No 'Access-Control-Allow-Origin' header is present on the requested resource，需要给Nginx服务器配置响应的header参数：
 
